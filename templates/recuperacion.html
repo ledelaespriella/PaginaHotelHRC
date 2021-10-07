@@ -1,0 +1,27 @@
+{%extends 'bases/index.html'%}
+
+{%block styles %}
+    <link rel="stylesheet" href="/static/estilos/estiloRecuperacion.css">
+{% endblock %}
+
+
+{%block content %}
+<form>
+    <div class="">
+        <h1 class="h3 mb-3">Recupera tu cuenta</h1>
+    </div>
+    <div class="row blcok pt-3">
+        <label class="pt-2 h5 fw-normal">Ingresa tu correo electronico para recuperar tu cuenta</label>
+    </div>
+    <br>
+    <div class="form-floating">
+        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput">Correo electronico</label>
+    </div>
+    <br>
+    <div class="pt-3 form-input text-end">
+        <input class="btn btn-lg btn-primary" type="submit" value="Recuperar">
+    </div>
+    <br>
+</form>
+{%endblock%}

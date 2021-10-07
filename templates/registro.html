@@ -1,0 +1,47 @@
+{%extends 'bases/index.html'%}
+
+{%block styles %}
+    <link rel="stylesheet" href="/static/estilos/estiloRegistro.css">
+{% endblock %}
+
+
+
+{%block content %}
+<form>
+    <h1 class="h3 mb-3 fw-normal text-center">Registra tu cuenta</h1>
+    <br>
+    <div class="row g-2">
+        <div class="col-sm">
+            <input type="text" class="form-control" id="Primer_nombre" placeholder="Primer nombre">
+        </div>
+        <div class="col-sm">
+            <input type="text" class="form-control" id="Segundo_nombre" placeholder="Segundo nombre">
+        </div>
+    </div>
+    <br>
+    <div class="row g-2">
+        <div class="col-sm">
+            <input type="text" class="form-control" id="Primer_apellido" placeholder="Primer apellido">
+        </div>
+        <div class="col-sm">
+            <input type="text" class="form-control" id="Segundo_apellido" placeholder="Segundo apellido">
+        </div>
+    </div>
+    <br>
+    <div class="row g-2">
+        <div class="col-sm">
+            <input type="text" class="form-control" id="Primer_apellido" placeholder="Primer apellido">
+        </div>
+        <div class="col-sm">
+            <input type="text" class="form-control" id="Segundo_apellido" placeholder="Segundo apellido">
+        </div>
+    </div>
+    <br>
+
+
+    <div class="pt-3 text-center">
+        <input class="btn btn-lg btn-primary" type="submit" value="Registrarse">
+    </div>
+    <br>
+</form>
+{%endblock%}

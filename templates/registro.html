@@ -1,7 +1,7 @@
 {%extends 'bases/index.html'%}
 
 {%block styles %}
-    <link rel="stylesheet" href="/static/estilos/estiloRegistro.css">
+<link rel="stylesheet" href="/static/estilos/estiloRegistro.css">
 {% endblock %}
 
 
@@ -28,16 +28,32 @@
         </div>
     </div>
     <br>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">@</span>
+        <input type="email" class="form-control" id="correo" placeholder="Correo electronico">
+    </div>
     <div class="row g-2">
-        <div class="col-sm">
-            <input type="text" class="form-control" id="Primer_apellido" placeholder="Primer apellido">
+        <div class="col-sm-4">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Tipo ID</option>
+                <option value="1">Cedula</option>
+                <option value="2">Pasaporte</option>
+                <option value="3">Cedula Extranjeria</option>
+            </select>
         </div>
         <div class="col-sm">
-            <input type="text" class="form-control" id="Segundo_apellido" placeholder="Segundo apellido">
+            <input type="text" class="form-control" id="identificacion" placeholder="Numero de Identificación">
         </div>
     </div>
     <br>
-
+    <div class="row g-2">
+        <input type="password" class="form-control" id="contraseña" placeholder="Contraseña">
+    </div>
+    <br>
+    <div class="row g-2">
+        <input type="password" class="form-control" id="contraseña" placeholder="Confirmar contraseña">
+    </div>
+    <br>
 
     <div class="pt-3 text-center">
         <input class="btn btn-lg btn-primary" type="submit" value="Registrarse">

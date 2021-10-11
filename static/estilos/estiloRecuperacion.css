@@ -5,7 +5,6 @@ html,body {
 body{
     display: block;
     align-items: center;
-    padding-top: 90px;
     padding-bottom: 40px;
     background-color: #f5f5f5;
 }

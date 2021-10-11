@@ -6,7 +6,7 @@
 
 
 {%block content %}
-<form>
+<form action="{{ url_for('mensaje') }}" method="POST" name="formRecuperacion" onsubmit="validarRecuperacion()">
     <div class="">
         <h1 class="h3 mb-3">Recupera tu cuenta</h1>
     </div>
@@ -15,7 +15,7 @@
     </div>
     <br>
     <div class="form-floating">
-        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <input type="email" class="form-control" id="floatingInput" name="correo" placeholder="name@example.com">
         <label for="floatingInput">Correo electronico</label>
     </div>
     <br>
@@ -24,4 +24,5 @@
     </div>
     <br>
 </form>
+
 {%endblock%}

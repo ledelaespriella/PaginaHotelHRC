@@ -7,51 +7,51 @@
 
 
 {%block content %}
-<form>
+<form action="{{ url_for('registro') }}" method="POST" name="formRegistro" onsubmit="validarRegistro()">
     <h1 class="h3 mb-3 fw-normal text-center">Registra tu cuenta</h1>
     <br>
     <div class="row g-2">
         <div class="col-sm">
-            <input type="text" class="form-control" id="Primer_nombre" placeholder="Primer nombre">
+            <input name="firstName" type="text" class="form-control" id="Primer_nombre" placeholder="Primer nombre">
         </div>
         <div class="col-sm">
-            <input type="text" class="form-control" id="Segundo_nombre" placeholder="Segundo nombre">
+            <input name="secondName" type="text" class="form-control" id="Segundo_nombre" placeholder="Segundo nombre">
         </div>
     </div>
     <br>
     <div class="row g-2">
         <div class="col-sm">
-            <input type="text" class="form-control" id="Primer_apellido" placeholder="Primer apellido">
+            <input name="surName" type="text" class="form-control" id="Primer_apellido" placeholder="Primer apellido">
         </div>
         <div class="col-sm">
-            <input type="text" class="form-control" id="Segundo_apellido" placeholder="Segundo apellido">
+            <input name="SecondSurName"type="text" class="form-control" id="Segundo_apellido" placeholder="Segundo apellido">
         </div>
     </div>
     <br>
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">@</span>
-        <input type="email" class="form-control" id="correo" placeholder="Correo electronico">
+        <input name="email" type="email" class="form-control" id="correo" placeholder="Correo electronico">
     </div>
     <div class="row g-2">
         <div class="col-sm-4">
             <select class="form-select" aria-label="Default select example">
                 <option selected>Tipo ID</option>
-                <option value="1">Cedula</option>
-                <option value="2">Pasaporte</option>
-                <option value="3">Cedula Extranjeria</option>
+                <option name="cc" value="1">Cedula</option>
+                <option name="ps" value="2">Pasaporte</option>
+                <option name="ce" value="3">Cedula Extranjeria</option>
             </select>
         </div>
         <div class="col-sm">
-            <input type="text" class="form-control" id="identificacion" placeholder="Numero de Identificación">
+            <input name="NumberId" type="text" class="form-control" id="identificacion" placeholder="Numero de Identificación">
         </div>
     </div>
     <br>
     <div class="row g-2">
-        <input type="password" class="form-control" id="contraseña" placeholder="Contraseña">
+        <input name="password" type="password" class="col-sm form-control" id="contraseña" placeholder="Contraseña">
     </div>
     <br>
     <div class="row g-2">
-        <input type="password" class="form-control" id="contraseña" placeholder="Confirmar contraseña">
+        <input name="passwordVer" type="password" class="form-control" id="contraseña" placeholder="Confirmar contraseña">
     </div>
     <br>
 

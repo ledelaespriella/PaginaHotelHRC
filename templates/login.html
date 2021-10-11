@@ -4,24 +4,26 @@
 {% endblock %}
 
 {%block content %}
-<form action="" method="POST" name="login" onsubmit="validarLogin()">
+<form action="{{ url_for('pagina') }}" method="POST" name="login" onsubmit="validarLogin()">
     <img src="/static/imagenes/iconoIcontable.png" class="mb-4" alt="" height="57">
     <h1 class="h3 mb-3 fw-normal">Inicio de Sesion</h1>
     <br>
     <div class="form-floating">
-        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Usuario</label>
+        <input type="email" name="correo" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput">Correo electronico</label>
     </div>
     <div class="form-floating">
-        <input type="password" class="form-control" id="floatingPassword" placeholder="Contraseña">
-        <label for="floatingPassword">Contraseña</label>
+        <input type="password" name="pass" class="form-control" id="floatingPassword" placeholder="Contraseña">
+        <label for="floatingPassword">
+            Contraseña
+        </label>
     </div>
     <br>
     <input class="w-100 btn btn-lg btn-primary" type="submit" value="Iniciar sesion">
     <br>
     <div class="row text-center pt-3">
-        <div class="pt-2"><a href="recuperacion.html">¿Olvido su contraseña?</a></div>
-        <div class="pt-2"><a href="registro.html">Registrarse</a></div>
+        <div class="pt-2"><a href="\login\recuperacion">¿Olvido su contraseña?</a></div>
+        <div class="pt-2"><a href="\registro">Registrarse</a></div>
     </div>
 </form>
 {%endblock%}

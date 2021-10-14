@@ -100,12 +100,17 @@ def mensaje():
 @app.route('/habitaciones', methods=['GET', 'POST'])
 def pagina():
     
-    return "<h1>Pagina de prueba</h1>"
+    return render_template('habitaciones.html')
 
 @app.route('/admin/habitaciones', methods=['GET', 'POST'])
 def pagina_admin():
+    admin="admin@gmail.com"
     
-    return "<h1>Pagina de administrativa</h1>"
+    return render_template('habitaciones.html',usuario=admin)
+
+@app.route('/admin/dashboard', methods=['GET', 'POST'])
+def pagina_prueba():
+    return render_template('prueba.html')
 
 
 if __name__ == '__main__':

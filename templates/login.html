@@ -4,22 +4,23 @@
 {% endblock %}
 
 {%block content %}
-<form action="{{ url_for('pagina') }}" method="POST" name="login" onsubmit="validarLogin()">
-    <img src="/static/imagenes/iconoIcontable.png" class="mb-4" alt="" height="57">
+<form action="" method="POST" id="formularioLogin" name="login">
+    {{ form.hidden_tag() }}
+    {{csrf_token }}
     <h1 class="h3 mb-3 fw-normal">Inicio de Sesion</h1>
     <br>
     <div class="form-floating">
-        <input type="email" name="correo" class="form-control" id="floatingInput" placeholder="name@example.com">
+        {{form.correo()}}
         <label for="floatingInput">Correo electronico</label>
     </div>
     <div class="form-floating">
-        <input type="password" name="pass" class="form-control" id="floatingPassword" placeholder="Contraseña">
+        {{form.contrasena()}}
         <label for="floatingPassword">
             Contraseña
         </label>
     </div>
     <br>
-    <input class="w-100 btn btn-lg btn-primary" type="submit" value="Iniciar sesion">
+    {{form.enviar()}}
     <br>
     <div class="row text-center pt-3">
         <div class="pt-2"><a href="\login\recuperacion">¿Olvido su contraseña?</a></div>

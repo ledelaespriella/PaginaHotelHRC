@@ -79,5 +79,9 @@ def mensaje():
 def pagina():
     return "<h1>Pagina de prueba</h1>"
 
+@app.route('/reserva')
+def reservar():
+    return render_template('reserva.html')
+
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

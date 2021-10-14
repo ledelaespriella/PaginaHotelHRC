@@ -4,76 +4,139 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="estilosReserva.css" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/estilos/estiloReserva.css">
+    <link rel="stylesheet" href="/static/estilos/nicepage.css">
     <title>Document</title>
 </head>
-<body>
-    <header class="cabecero">
-        <img class="menu" src="images/menu.png" alt="">
-        <a class="logo-main" href="#">
-            <Span class="logo">RHC</Span>
-            <span class="lema">su resort por exelencia</span>
-        </a>
-        <div class="usuario">
-            <p class="username">Julian Mira</p>
-            <img class="user-ico" src="images/usuario.png" alt="">
-            <div class="arrow-div">
-                <img src="images/flecha.png" alt="" class="arrow">
-            </div>
-        </div> 
+<body class="" id="cuerpo">
+    <header class="u-clearfix u-header u-header cabecero">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <a href="\" class="u-image u-image-1 image">
+                <img src="/static/imagenes/default-logo.png" class="u-logo-image u-logo-image-1">
+            </a>
+
+            <!--<div class="menu">
+                <ul class="lista|">
+                    <li><a href="">Julian Montoya</a> 
+                        <ul>
+                            <li>mis Habitaciones</li>
+                        </ul>
+                        <ul>
+                            <li>Gestionar datos</li>
+                        </ul>
+                        <ul>
+                            <li>Cerrar sesión</li>
+                        </ul>
+                    </li>    
+                </ul>
+            </div>-->
+            <img src="/static/imagenes/usuario.png" class="user-ico float-end" alt="">
+            
+        </div>
     </header>
-    <div class="rutas">
+    <!--<div class="rutas"
         <a href="">Inicio</a>
         <a href="">> Habitaciones</a>
         <a href="">> Habitación 305</a>
         <a href="">> Reserva</a>
-    </div>
-    <div class="informacion">
-        <form action="">
-            <div class="dates">
-                <label class="checkin-L" for="">Check in</label>
-                <input class="checkin-I" type="date">
-                <label class="checkout-L" for="">Check out</label>
-                <input class="checkout-I" type="date">
-            </div>
+    </div>-->
 
-            <div class="data">
-                <input class="nombre" type="text" placeholder="Nombres">
-                <input class="apellido" type="text" placeholder="Apellidos">
-            </div>
-
-            <div class="contact">
-                <input class="telefono" type="text" placeholder="Telefono">
-                <input class="email" type="email" placeholder="E-mail">
-            </div>
-
-            <div class="preferencias">
-                <textarea class="preferencias-T" name="" id="" cols="53" rows="10" placeholder="Escribe acá tus preferencias"></textarea>
-            </div>            
-            <aside class="pago">
-                <label class="pago-T" for="">Informacion de pago</label>
-                <br>
-                <input class="pago-r1" name="typePay" type="radio">
-                <label class="pago-l1" for="">Pago en el hotel</label>
-                <br>
-                <input class="pago-r2" name="typePay" type="radio">
-                <label class="pago-l2" for="">Pago con tarjeta</label>
-                <br>
-                <input class="name-card border" type="text" placeholder="Nombre de la tarjeta">
-                <br>
-                <input class="number-card  border" type="text" placeholder="Numero">
-                <br>
-                <input class="cvc border" type="text" placeholder="CVC">
-                <br>
-                <input class="caducidad border" type="text" placeholder="MM/AA">
-                <br>
-                <input class="titular border" type="text" placeholder="Cedula del titular">
-                <input class="send" type="submit">
-            </aside>
+    <div class="main-container">
+        <form class="needs-validations" action="">
+            <div class="row g-3">
+                
+                <h5 class="" for="">Metodo de pago</h5>
+    
+                <div class="col-sm-6">
+                    <label for="checkin" class="form-label">Check in</label>
+                    <input class="form-control float-end" id="checkin" type="date">
+                </div>
+    
+                <div class="col-sm-6">
+                    <label class="form-label" for="checkout" >Check out</label>
+                    <input class="form-control float-end" id="checkout" type="date">
+                </div>
+                
+                <div class="col-sm-6">
+                    <input class="nombre form-control" type="text" placeholder="Nombres">
+                </div>
+                
+                <div class="col-sm-6">
+                    <input class="apellido form-control" type="text" placeholder="Apellidos">
+                </div>
+    
+                <div class="col-sm-6">
+                    <input class="telefono form-control" type="text" placeholder="Telefono">
+                </div>
+    
+                <div class="col-sm-6">
+                    <input class="email form-control" type="email" placeholder="E-mail">
+                </div>
+    
+                <div class="">
+                    <textarea class="form-control" name="" id="" cols="53" rows="10" placeholder="Escribe acá tus preferencias"></textarea>
+                </div> 
+    
+                <hr class="my-2">
+                <h5 class="" for="">Metodo de pago</h5>
+    
+                <div class="">
+                    <div class="form-check">
+                        <input class="form-check-input" id="check1" name="typePay" type="radio">
+                        <label class="form-check-label float-start" for="check1">Pago en el hotel</label>
+                    </div>
+                    
+                    <div class="form-check">
+                        <input class="form-check-input" id="check2" name="typePay" type="radio">
+                        <label class="form-check-label float-start" for="check2">Pago con tarjeta</label>
+                    </div>
+                </div>
+                
+                <div class="col-sm-6">
+                    <input class="form-control" type="text" placeholder="Nombre de la tarjeta">
+                </div>
+    
+                <div class="col-sm-6">
+                 <input class="number-card form-control" type="text" placeholder="Numero">
+                </div>
+            
+                <div class="short-data col-sm-6">
+                    <input class="cvc border form-control" type="text" placeholder="CVC">
+                </div>
+    
+                <div class="short-data col-sm-6">
+                    <input class="caducidad border form-control" type="text" placeholder="MM/AA">
+                </div>
+    
+                <div class="col-sm-6">
+                    <input class="titular border form-control" type="text" placeholder="Cedula del titular">
+                </div>
+            </div>    
+            <input class="send" type="submit">  
         </form>
     </div>
-    <aside class="al-lado">
-
+    <aside class="al-lado float-end">
+            <div class="container-habitacion">
+                <img class="habitacion" src="/static/imagenes/habitacion.jpg" alt="">
+            </div>
+            <hr style="width: 98%; margin-left: 1%">
+            <div class="dcp-container">
+                <h6 class="descripcion">Habitacion 301</h6>
+                <p class="descripcion">Lorem ipsum dolor sit amet consectetur adipisicing elit. In delectus quod, doloribus sit repellendus magni enim necessitatibus harum veniam inventore et accusamus nisi explicabo recusandae nihil quam natus assumenda illum!</p>
+                <h4 class="descripcion">Precio: *****</h4>
+                <div class="cal-L">
+                    <h1>En Desarrollo</h1>
+                </div>
+            </div>
     </aside>
+    
+    <footer class="pie">
+        <div class="">
+            <p class="u-small-text u-text u-text-variant u-text-1">© 2021 Hyatt Regency Colombo </p>
+        </div>
+    </footer>
+
+    <script src="/static/Script/reserva.js"></script>
 </body>
 </html>

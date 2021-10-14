@@ -28,7 +28,7 @@ def login():
         elif (user=="admin@gmail.com" and password == "admin1234*"):
             return redirect(url_for("pagina_admin"))
         else:
-            if(user != "luisdelaespriellaj@hotmail.com"):
+            if(user != "luisdelaespriellaj@hotmail.com" or user != "admin@gmail.com"):
                 flash('Usuario incorrecto')
             else:
                 flash('Verifique la contraseña e intente nuevamente')

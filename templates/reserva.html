@@ -1,129 +1,191 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/estilos/estiloReserva.css">
-    <link rel="stylesheet" href="/static/estilos/nicepage.css">
-    <title>Document</title>
-</head>
-<body class="" id="cuerpo">
-    <header class="u-clearfix u-header u-header cabecero">
-        <div class="u-clearfix u-sheet u-sheet-1">
-            <a href="\" class="u-image u-image-1 image">
-                <img src="/static/imagenes/default-logo.png" class="u-logo-image u-logo-image-1">
-            </a>
-            <!--
-               <img src="/static/imagenes/usuario.png" class="user-ico float-end" alt=""> 
-            -->
-            
-            
-        </div>
-    </header>
-    <!--<div class="rutas"
-        <a href="">Inicio</a>
-        <a href="">> Habitaciones</a>
-        <a href="">> Habitación 305</a>
-        <a href="">> Reserva</a>
-    </div>-->
+{% extends "bases/indexHome.html"%}
 
-    <div class="main-container">
-        <form class="needs-validations" action="">
-            <div class="row g-3">
-                
-                <h5 class="" for="">Metodo de pago</h5>
-    
-                <div class="col-sm-6">
-                    <label for="checkin" class="form-label">Check in</label>
-                    <input class="form-control float-end" id="checkin" type="date">
-                </div>
-    
-                <div class="col-sm-6">
-                    <label class="form-label" for="checkout" >Check out</label>
-                    <input class="form-control float-end" id="checkout" type="date">
-                </div>
-                
-                <div class="col-sm-6">
-                    <input class="nombre form-control" type="text" placeholder="Nombres">
-                </div>
-                
-                <div class="col-sm-6">
-                    <input class="apellido form-control" type="text" placeholder="Apellidos">
-                </div>
-    
-                <div class="col-sm-6">
-                    <input class="telefono form-control" type="text" placeholder="Telefono">
-                </div>
-    
-                <div class="col-sm-6">
-                    <input class="email form-control" type="email" placeholder="E-mail">
-                </div>
-    
-                <div class="">
-                    <textarea class="form-control" name="" id="" cols="53" rows="10" placeholder="Escribe acá tus preferencias"></textarea>
-                </div> 
-    
-                <hr class="my-2">
-                <h5 class="" for="">Metodo de pago</h5>
-    
-                <div class="">
-                    <div class="form-check">
-                        <input class="form-check-input" id="check1" name="typePay" type="radio">
-                        <label class="form-check-label float-start" for="check1">Pago en el hotel</label>
-                    </div>
-                    
-                    <div class="form-check">
-                        <input class="form-check-input" id="check2" name="typePay" type="radio">
-                        <label class="form-check-label float-start" for="check2">Pago con tarjeta</label>
-                    </div>
-                </div>
-                
-                <div class="col-sm-6">
-                    <input class="form-control" type="text" placeholder="Nombre de la tarjeta">
-                </div>
-    
-                <div class="col-sm-6">
-                 <input class="number-card form-control" type="text" placeholder="Numero">
-                </div>
-            
-                <div class="short-data col-sm-6">
-                    <input class="cvc border form-control" type="text" placeholder="CVC">
-                </div>
-    
-                <div class="short-data col-sm-6">
-                    <input class="caducidad border form-control" type="text" placeholder="MM/AA">
-                </div>
-    
-                <div class="col-sm-6">
-                    <input class="titular border form-control" type="text" placeholder="Cedula del titular">
-                </div>
-            </div>    
-            <input class="send" type="submit">  
-        </form>
+{%block style%}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/estilos/estiloReserva.css">
+{% endblock %}
+
+{%block listaNav1%}
+{%if usuario%}
+<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
+    <li class="u-nav-item"><a
+        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+        href="\admin\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
+    </li>
+    <li class="u-nav-item"><a
+        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+        href="\admin\dashboard" style="padding: 10px 20px;">Dashboard</a>
+    </li>
+    <li class="u-nav-item"><a
+        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+        href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
+    </li>
+</ul>
+
+{%else%}
+<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
+    <li class="u-nav-item"><a
+        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+        href="\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
+    </li>
+    <li class="u-nav-item"><a
+        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+        href="\misHabitaciones" style="padding: 10px 20px;">Mis habitaciones</a>
+    </li>
+    <li class="u-nav-item"><a
+        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+        href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
+    </li>
+</ul>
+{%endif%}
+{%endblock%}
+
+{%block listaNav2%}
+
+{%if usuario%}
+<div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+  <div class="u-inner-container-layout u-sidenav-overflow">
+    <div class="u-menu-close"></div>
+    <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+      <li class="u-nav-item"><a class="u-button-style u-nav-link" href="\habitaciones"
+          style="padding: 10px 20px;">Habitaciones</a>
+      </li>
+      <li class="u-nav-item"><a href="\admin\dashboard" class="u-button-style u-nav-link" style="padding: 10px 20px;">
+        Dashboard</a>
+      </li>
+      <li class="u-nav-item"><a href="\login" class="u-button-style u-nav-link" style="padding: 10px 20px;">
+          Cerrar Sesión</a>
+      </li>
+    </ul>
+  </div>
+</div>
+{%else%}
+<div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+    <div class="u-inner-container-layout u-sidenav-overflow">
+      <div class="u-menu-close"></div>
+      <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+        <li class="u-nav-item"><a class="u-button-style u-nav-link" href="\habitaciones"
+            style="padding: 10px 20px;">Habitaciones</a>
+        </li>
+        <li class="u-nav-item"><a href="\misHabitaciones" class="u-button-style u-nav-link" style="padding: 10px 20px;">
+            Mis habitaciones</a>
+        </li>
+        <li class="u-nav-item"><a href="\login" class="u-button-style u-nav-link" style="padding: 10px 20px;">
+            Cerrar Sesión</a>
+        </li>
+      </ul>
     </div>
-    <aside class="al-lado float-end">
-            <div class="container-habitacion">
-                <img class="habitacion" src="/static/imagenes/habitacion.jpg" alt="">
+  </div>
+{%endif%}
+{%endblock%}
+
+{%block content%}
+
+
+{% for message in get_flashed_messages() %}
+      <div class="flash"> {{message}} </div>
+    {%endfor%}
+
+<div class="main-container">
+    <form class="needs-validations" method="post" action="{{ url_for('reserva') }}">
+        <div class="row g-3">
+            
+            <h5 class="" for="">Metodo de pago</h5>
+
+            <div class="col-sm-6">
+                <label for="checkin" class="form-label">Check in</label>
+                <input name="checkin" class="form-control float-end" id="checkin" type="date">
             </div>
-            <hr style="width: 98%; margin-left: 1%">
-            <div class="dcp-container">
-                <h6 class="descripcion">Habitacion 301</h6>
-                <p class="descripcion">Lorem ipsum dolor sit amet consectetur adipisicing elit. In delectus quod, doloribus sit repellendus magni enim necessitatibus harum veniam inventore et accusamus nisi explicabo recusandae nihil quam natus assumenda illum!</p>
-                <h4 class="descripcion">Precio: *****</h4>
-                <div class="cal-L">
-                    <h1>En Desarrollo</h1>
+
+            <div class="col-sm-6">
+                <label class="form-label" for="checkout" >Check out</label>
+                <input name="checkout" class="form-control float-end" id="checkout" type="date" required>
+            </div>
+            
+            <div class="col-sm-6">
+                <input name="nombreR" class="nombre form-control" type="text" placeholder="Nombres" required>
+            </div>
+            
+            <div class="col-sm-6">
+                <input name="apellidosR" class="apellido form-control" type="text" placeholder="Apellidos" required>
+            </div>
+
+            <div class="col-sm-6">
+                <input name="numeroR" class="telefono form-control" type="text" placeholder="Telefono" required>
+            </div>
+
+            <div class="col-sm-6">
+                <input name="emailR" class="email form-control" type="email" placeholder="E-mail" required>
+            </div>
+
+            <div class="">
+                <textarea name="preferenciasR" class="form-control" id="" cols="53" rows="10" placeholder="Escribe acá tus preferencias"></textarea>
+            </div> 
+
+            <hr class="my-2">
+            <h5 class="" for="">Metodo de pago</h5>
+
+            <div class="">
+                <div class="form-check">
+                    <input class="form-check-input" id="check1" name="typePay" type="radio" value="hotel">
+                    <label class="form-check-label float-start" for="check1 " >Pago en el hotel</label>
+                </div>
+                
+                <div class="form-check">
+                    <input class="form-check-input" id="check2" name="typePay" type="radio" value="tarjeta">
+                    <label class="form-check-label float-start" for="check2">Pago con tarjeta</label>
                 </div>
             </div>
-    </aside>
-    
-    <footer class="pie">
+            
+            <div class="col-sm-6">
+                <input class="form-control" type="text" placeholder="Nombre de la tarjeta" name="name-card">
+            </div>
+
+            <div class="col-sm-6">
+                <input class="number-card form-control" type="text" placeholder="Numero de la tarjeta" name="number-card">
+            </div>
+        
+            <div class="short-data col-sm-6">
+                <input class="cvc border form-control" type="text" placeholder="CVC" name="cvc">
+            </div>
+
+            <div class="short-data col-sm-6">
+                <input class="caducidad border form-control" type="text" placeholder="MM/AA" name="caducidad">
+            </div>
+
+            <div class="col-sm-6">
+                <input class="titular border form-control" type="text" placeholder="Cedula del titular" name="titular">
+            </div>
+        </div>  
+        <div class="container-send">
+            <input class="send" type="submit" >  
+        </div>  
+        
+    </form>
+</div>
+<aside class="al-lado float-end">
+        <div class="container-habitacion">
+            <img class="habitacion" src="/static/imagenes/habitacion.jpg" alt="">
+        </div>
+        <hr style="width: 98%; margin-left: 1%">
+        <div class="dcp-container">
+            <h6 class="descripcion">Habitacion 301</h6>
+            <p class="descripcion">Lorem ipsum dolor sit amet consectetur adipisicing elit. In delectus quod, doloribus sit repellendus magni enim necessitatibus harum veniam inventore et accusamus nisi explicabo recusandae nihil quam natus assumenda illum!</p>
+            <h4 class="descripcion">Precio: *****</h4>
+            <div class="cal-L">
+                <h1>En Desarrollo</h1>
+            </div>
+        </div>
+</aside>
+
+{% endblock %}
+
+{%block footer%}
+  <!--<footer class="pie">
         <div class="">
             <p class="u-small-text u-text u-text-variant u-text-1">© 2021 Hyatt Regency Colombo </p>
         </div>
-    </footer>
+    </footer>-->
+{%endblock%}
 
-    <script src="/static/Script/reserva.js"></script>
-</body>
-</html>
+   

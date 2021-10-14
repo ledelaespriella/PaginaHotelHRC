@@ -14,6 +14,7 @@
   <meta name="generator" content="Nicepage 3.27.1, nicepage.com">
   <link id="u-theme-google-font" rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+  {% block style %} {%endblock%}
   <meta name="theme-color" content="#0354d8">
   <meta property="og:title" content="Home">
   <meta property="og:type" content="website">
@@ -57,12 +58,7 @@
   </header>
   {%block content%}{% endblock %}
 
-  <footer class="my-3 pt-2 text-muted text-center text-small">
-      <div class="text-center">
-        <p class="mb-1 text-center">© 2021 Hyatt Regency Colombo</p>
-      </div>
-    
-  </footer>
+  {%block footer%}{%endblock%}
 
   <script class="u-script" type="text/javascript" src="{{url_for('static', filename='Script/jquery-1.9.1.min.js')}}" defer=""></script>
   <script class="u-script" type="text/javascript" src="{{url_for('static', filename='Script/nicepage.js')}}" defer=""></script>

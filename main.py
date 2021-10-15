@@ -1,4 +1,4 @@
-from formularios import FormLogin
+from formularios import FormLogin,FormRegistro
 import os
 import utils
 from flask import Flask, request, flash
@@ -41,11 +41,13 @@ def login():
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
-
+    form=FormRegistro()
+    
     try:
-        if request.method == 'POST':
-            correo = request.form["email"]
-            passw = request.form["password"]
+        if (form.validate_on_submit()):
+            correo = form.correo.data
+            passw = form.contrasena.data
+            passwVerificacion = form.confirmacion_contrasena.data
             error = None
 
             if not utils.isEmailValid(correo):
@@ -56,16 +58,18 @@ def registro():
             if not utils.isPasswordValid(passw):
                 error = "Contraseña invalida por favor registre una correcta."
                 flash(error)
-                return render_template("registro.html")
-
-            yag = yagmail.SMTP("pruebasluismintic", "Darkluise2")
-            yag.send(to=correo, subject="Activa tu cuenta",contents="Bienvenido, usa este link para activar tu cuenta")
-            flash("Revisa tu correo para activar tu cuenta")
-            return redirect(url_for("login"))
+                return render_template("registro.html",form=form)
+            if passw!=passwVerificacion:
+                return render_template("registro.html",form=form)
+            else:
+                yag = yagmail.SMTP("pruebasluismintic", "Darkluise2")
+                yag.send(to=correo, subject="Activa tu cuenta",contents="Bienvenido, usa este link para activar tu cuenta")
+                flash("Hola {} {} Revisa tu correo para activar tu cuenta".format(form.Primer_nombre.data,form.Primer_apellido.data))
+                return redirect(url_for("login"))
         else:
-            return render_template('registro.html')
+            return render_template('registro.html',form=form)
     except:
-        return render_template('registro.html')
+        return render_template('registro.html',form=form)
     # guardar en un diccionario los datos
 
 
@@ -85,7 +89,7 @@ def recuperacion():
         else:
             error = "Correo no existe en la base de datos"
             flash(error)
-            return redirect(url_for("mensaje"))
+            return render_template('recuperacion.html')
             
 
     else:
@@ -108,6 +112,44 @@ def pagina_admin():
     
     return render_template('habitaciones.html',usuario=admin)
 
+'''
+    
+#rutas de adriana
+
+@app.route('/admin/panelAdm', methods=['GET'])
+def panelAdm():
+    admin="admin@gmail.com"
+    return render_template("panel_adm.html",usuario=admin)
+
+@app.route('/admin/panelAdm/gestionHab', methods=['GET'])
+def gestionHab():
+    admin="admin@gmail.com"
+    return render_template('habitaciones.html',usuario=admin)
+
+@app.route('/admin/panelAdm/gestionHab/agregarH', methods=['GET', 'POST'])
+def agregarH():
+    admin="admin@gmail.com"
+    return render_template("agregaHab.html",usuario=admin)
+
+@app.route('/admin/panelAdm/gestionHab/editarH', methods=['GET', 'POST']) 
+def editarH():
+    admin="admin@gmail.com"
+    return render_template("editarHab.html",usuario=admin)
+
+@app.route('/admin/panelAdm/gestionHab/eliminarH', methods=['GET'])
+def eliminarH():
+    admin="admin@gmail.com"
+    return render_template("eliminar.html",usuario=admin)
+
+#rutas de julian
+
+
+#rutas de jesus
+@app.route("/mis-habitaciones")
+def mishabitaciones():
+    return render_template("gestion_comentarios.html")
+    
+'''
 @app.route('/admin/dashboard', methods=['GET', 'POST'])
 def pagina_prueba():
     return render_template('prueba.html')

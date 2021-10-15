@@ -23,6 +23,11 @@ def recuperacion():
 def mensaje_recuperacion():
     return render_template('mensaje.html')
 
+@app.route("/mis-habitaciones")
+def mishabitaciones():
+    return render_template("gestion_comentarios.html")
+
+        
 '''
 
 @app.route('/',methods=['GET'])

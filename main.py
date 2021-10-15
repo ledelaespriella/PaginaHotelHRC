@@ -10,6 +10,7 @@ import yagmail
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+#luis
 @app.route('/', methods=['GET'])
 def inicio():
     return render_template('Home.html')
@@ -100,21 +101,18 @@ def recuperacion():
 def mensaje():
     return render_template('mensaje.html')
 
+#jose
 
 @app.route('/habitaciones', methods=['GET', 'POST'])
 def pagina():
-    
     return render_template('habitaciones.html')
 
 @app.route('/admin/habitaciones', methods=['GET', 'POST'])
 def pagina_admin():
     admin="admin@gmail.com"
-    
     return render_template('habitaciones.html',usuario=admin)
 
-'''
-    
-#rutas de adriana
+#rutas de adri
 
 @app.route('/admin/panelAdm', methods=['GET'])
 def panelAdm():
@@ -141,18 +139,49 @@ def eliminarH():
     admin="admin@gmail.com"
     return render_template("eliminar.html",usuario=admin)
 
-#rutas de julian
+#julian
+@app.route('/reserva')
+def load_reserva():
+    return render_template('reserva.html')
 
+@app.route('/reserva/mensaje_reserva', methods=["GET", "POST"])
+def reserva():
+    if request.method == 'POST':
+        checkin = request.form['checkin']
+        checkout = request.form['checkout']
+        nombres = request.form["nombreR"]
+        #apellido = request.form['apellidosR']
+        correo = request.form['emailR']
+        telefono = request.form['numeroR']
+        preferencia = request.form['preferenciasR']
+        check = request.form['typePay']
+        cardName = request.form['name-card']
+        cardNum = request.form['number-card']
+        cvc = request.form['cvc']
+        caducida = request.form['caducidad']
+        titular = request.form['titular']
+        
+        if utils.isEmailValid(correo):
+            if checkin == checkout:
+                flash('Las fechas de entrada y salida no pueden ser iguales')
+                return render_template('reserva.html')
+            if check == 'hotel':
+                text =  ("Reserva realizada con exito, su tipo de pago es " + check +
+                        "<br> Nos vemos en el hotel el dia " + checkin)
+                return text
+            elif check == 'tarjeta':
+                text =  ("Reserva realizada con exito, su tipo de pago es " + check +
+                        "<br> Nos vemos en el hotel el dia " + checkin)
+                return text
+        else:
+            return "<h1>Error al realizar la reserva</h1>"
 
-#rutas de jesus
-@app.route("/mis-habitaciones")
+#jesus
+
+@app.route("/misHabitaciones")
 def mishabitaciones():
     return render_template("gestion_comentarios.html")
-    
-'''
-@app.route('/admin/dashboard', methods=['GET', 'POST'])
-def pagina_prueba():
-    return render_template('prueba.html')
+
 
 
 if __name__ == '__main__':

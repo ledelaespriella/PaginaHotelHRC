@@ -1,0 +1,111 @@
+{%extends 'bases/indexHome.html'%}
+
+{%block stylepages%}
+<link rel="stylesheet" href="{{url_for('static', filename='estilos/estilos.css')}}" media="screen">
+{%endblock%}
+
+
+{%block listaNav1%}
+{%if usuario%}
+<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
+  <li class="u-nav-item"><a
+      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+      href="\admin\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
+  </li>
+  <li class="u-nav-item"><a
+      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+      href="\admin\panelAdm" style="padding: 10px 20px;">Dashboard</a>
+  </li>
+  <li class="u-nav-item"><a
+      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+      href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
+  </li>
+</ul>
+
+{%else%}
+<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
+  <li class="u-nav-item"><a
+      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+      href="\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
+  </li>
+  <li class="u-nav-item"><a
+      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+      href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
+  </li>
+</ul>
+{%endif%}
+{%endblock%}
+
+{%block listaNav2%}
+
+{%if usuario%}
+<div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+  <div class="u-inner-container-layout u-sidenav-overflow">
+    <div class="u-menu-close"></div>
+    <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+      <li class="u-nav-item"><a class="u-button-style u-nav-link" href="\habitaciones"
+          style="padding: 10px 20px;">Habitaciones</a>
+      </li>
+      <li class="u-nav-item"><a href="\admin\panelAdm" class="u-button-style u-nav-link" style="padding: 10px 20px;">
+          Dashboard</a>
+      </li>
+      <li class="u-nav-item"><a href="\login" class="u-button-style u-nav-link" style="padding: 10px 20px;">
+          Cerrar Sesión</a>
+      </li>
+    </ul>
+  </div>
+</div>
+{%else%}
+<div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+  <div class="u-inner-container-layout u-sidenav-overflow">
+    <div class="u-menu-close"></div>
+    <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+      <li class="u-nav-item"><a class="u-button-style u-nav-link" href="\habitaciones"
+          style="padding: 10px 20px;">Habitaciones</a>
+      </li>
+      <li class="u-nav-item"><a href="\login" class="u-button-style u-nav-link" style="padding: 10px 20px;">
+          Cerrar Sesión</a>
+      </li>
+    </ul>
+  </div>
+</div>
+{%endif%}
+{%endblock%}
+
+{%block content%}
+
+<div class="ventana">
+    <div class="encabezado">
+        <div class="name"><input type="text" id="nameHab" name="name_hab" placeholder="Nombre de Habitación" /></div>
+        <div class="id"><input type="text" id="idHab" name="id_hab" placeholder="ID de Habitación" /></div>
+    </div>
+    <div class="contenido">
+        <div class="grafico"><img src="{{ url_for('static',filename='imagenes/hab.jpeg')}}"></div>
+        <div class="form">
+            <div class="fila">&nbsp;</div>
+            <div class="fila">
+                <div class="c4"><input type="text" id="capMax" name="capacidad" placeholder="Cap.máx de huéspedes" />
+                </div>
+                <div class="c6">
+                    <p class="pa">COP</p><input type="text" id="precio" name="precio" placeholder="valor" />
+                </div>
+            </div>
+            <div class="sfila">
+                <div class="c4"><input type="text" id="numcam" name="numero_camas" placeholder="# de camas" /></div>
+                <div class="c6">
+                    <p class="pa">Tarifa por noche.<br> Impuestos incluidos</p>
+                </div>
+            </div>
+            <div class="sfila">
+                <div class="c6"><textarea id="desc" name="descripcion" cols="40"
+                        rows="4">"Describa la habitación"</textarea></div>
+                <div>&nbsp;</div>
+            </div>
+            <div class="fila">
+                <div class="c8">&nbsp;</div>
+                <div class="c2"><input type="button" onclick="agregar();" id="agregaHab" value="Guardar" /></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

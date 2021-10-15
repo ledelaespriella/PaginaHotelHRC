@@ -5,7 +5,7 @@ body {
 }
 
 #cuerpo{
-    height: 1100px;
+    height: 1000px;
 }
 
 input[type='date']{
@@ -31,12 +31,14 @@ textarea{
     margin-bottom: 35px;
     background-color: white;
     z-index: -1;
+    float: right;
 }
 
 .main-container{
     background-color: white;
     width: 100%;
     max-width: 600px;
+    height: 766px;
     padding: 15px;
     float: left;
     margin-left: 50px;
@@ -150,3 +152,30 @@ menu li a{
     top: 15px;
 }
 
+#pie{
+    position: absolute;
+    top: 90%;
+    text-align: center;
+    width: 100%;
+}
+
+@media (max-width: 1200px) {
+    .al-lado{
+        position: absolute;
+        top: 900px;
+        left: 25%;
+        float: none;
+        margin-right: 0px;
+    }
+
+    .main-container{
+        position: absolute;
+        left: 25%;
+        margin-left: 0px;
+    }
+    #cuerpo{
+        text-align: center;
+        height: 1800px;
+    }
+  }
+  

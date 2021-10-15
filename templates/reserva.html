@@ -81,7 +81,6 @@
 
 {%block content%}
 
-
 {% for message in get_flashed_messages() %}
       <div class="flash"> {{message}} </div>
     {%endfor%}
@@ -159,11 +158,11 @@
         </div>  
         <div class="container-send">
             <input class="send" type="submit" >  
-        </div>  
-        
+        </div>    
     </form>
 </div>
-<aside class="al-lado float-end">
+
+<aside class="al-lado">
         <div class="container-habitacion">
             <img class="habitacion" src="/static/imagenes/habitacion.jpg" alt="">
         </div>
@@ -176,8 +175,7 @@
                 <h1>En Desarrollo</h1>
             </div>
         </div>
-</aside>
-
+    </aside>
 {% endblock %}
 
 {%block footer%}

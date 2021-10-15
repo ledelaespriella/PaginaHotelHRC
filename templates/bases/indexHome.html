@@ -20,7 +20,7 @@
   <meta property="og:type" content="website">
 </head>
 
-<body class="u-body">
+<body class="u-body" id="cuerpo">
   <header class="u-clearfix u-header u-header" id="sec-ce38">
     <div class="u-clearfix u-sheet u-sheet-1">
       <a href="\" class="u-image u-logo u-image-1">
@@ -58,7 +58,9 @@
   </header>
   {%block content%}{% endblock %}
 
-  {%block footer%}{%endblock%}
+  <footer id="pie" class="my-3 pt-2 text-muted text-center text-small">
+    <p class="mb-1">© 2021 Hyatt Regency Colombo</p>
+  </footer>
 
   <script class="u-script" type="text/javascript" src="{{url_for('static', filename='Script/jquery-1.9.1.min.js')}}" defer=""></script>
   <script class="u-script" type="text/javascript" src="{{url_for('static', filename='Script/nicepage.js')}}" defer=""></script>

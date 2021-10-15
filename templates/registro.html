@@ -1,46 +1,64 @@
 {%extends 'bases/index.html'%}
 
 {%block styles %}
-    <link rel="stylesheet" href="/static/estilos/estiloRegistro.css">
+<link rel="stylesheet" href="/static/estilos/estiloRegistro.css">
 {% endblock %}
 
 
 
 {%block content %}
-<form>
+<form action="{{ url_for('registro') }}" method="POST" name="formRegistro" onsubmit="validarRegistro()">
+    {{ form.hidden_tag() }}
+    {{csrf_token }}
     <h1 class="h3 mb-3 fw-normal text-center">Registra tu cuenta</h1>
     <br>
     <div class="row g-2">
         <div class="col-sm">
-            <input type="text" class="form-control" id="Primer_nombre" placeholder="Primer nombre">
+            {{form.Primer_nombre()}}
         </div>
         <div class="col-sm">
-            <input type="text" class="form-control" id="Segundo_nombre" placeholder="Segundo nombre">
+            {{form.Segundo_nombre()}}
         </div>
     </div>
     <br>
     <div class="row g-2">
         <div class="col-sm">
-            <input type="text" class="form-control" id="Primer_apellido" placeholder="Primer apellido">
+            {{form.Primer_apellido()}}
         </div>
         <div class="col-sm">
-            <input type="text" class="form-control" id="Segundo_apellido" placeholder="Segundo apellido">
+            {{form.Segundo_apellido()}}
+        </div>
+    </div>
+    <br>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">@</span>
+        {{form.correo()}}
+    </div>
+    <div class="row g-2">
+        <div class="col-sm-4">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Tipo ID</option>
+                <option name="cc" value="1">Cedula</option>
+                <option name="ps" value="2">Pasaporte</option>
+                <option name="ce" value="3">Cedula Extranjeria</option>
+            </select>
+        </div>
+        <div class="col-sm">
+            {{form.identificacion()}}
         </div>
     </div>
     <br>
     <div class="row g-2">
-        <div class="col-sm">
-            <input type="text" class="form-control" id="Primer_apellido" placeholder="Primer apellido">
-        </div>
-        <div class="col-sm">
-            <input type="text" class="form-control" id="Segundo_apellido" placeholder="Segundo apellido">
-        </div>
+        {{form.contrasena()}}
     </div>
     <br>
-
+    <div class="row g-2">
+        {{form.confirmacion_contrasena()}}
+    </div>
+    <br>
 
     <div class="pt-3 text-center">
-        <input class="btn btn-lg btn-primary" type="submit" value="Registrarse">
+        {{form.enviar_registro()}}
     </div>
     <br>
 </form>

@@ -1,0 +1,181 @@
+body {
+    display: block;
+    padding-bottom: 40px;
+    background-color: whitesmoke;
+}
+
+#cuerpo{
+    height: 1000px;
+}
+
+input[type='date']{
+    width: 190px;
+}
+
+textarea{
+    width: 98%;
+    resize: none;
+}
+
+.short-data{
+    width: 145px;
+}
+
+.al-lado{
+    width: 100%;
+    max-width: 600px;
+    height: 766px;
+    box-shadow: 0px 0px 4px 0px black;
+    margin-right: 50px;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    background-color: white;
+    z-index: -1;
+    float: right;
+}
+
+.main-container{
+    background-color: white;
+    width: 100%;
+    max-width: 600px;
+    height: 766px;
+    padding: 15px;
+    float: left;
+    margin-left: 50px;
+    box-shadow: 0px 0px 4px 0px black;
+    border-radius: 5px;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+.user-ico{
+    position: relative;
+    width: 46px;
+    right: 4px;
+    top: -50px;
+}
+
+.main-container hr{
+    width: 97%;
+}
+
+.cabecero{
+    background-color: white;
+    height: 94px;
+}
+
+.user-name{
+    display: inline-block;
+    position: relative;
+    top: -7px;
+    left: 4px;
+}
+
+.user{
+    width: 220px;
+    height: 54px;
+    border: solid 1px black;
+    position: absolute;
+    top: -90px;
+}
+
+.pie{
+    width: 100%;
+    height: 120px;
+    position: absolute;
+    bottom: 0px;
+    text-align: center;  
+    background-color: gray; 
+}
+
+.menu{
+    position: relative;
+    display: inline-block;
+    top: -50px;
+    width: 200px;
+    height: 200px; 
+    left: 900px;
+}
+
+menu li a{
+    background-color: black;
+}
+
+.menu ul{
+    background-color: gray;
+    margin: 0px;
+    position: relative;
+    left: 30px;
+    padding-left: 0px;
+    list-style: none;
+}
+.menu .lista{
+    background-color: black;
+}
+.menu li{
+    float: left;
+}
+
+.menu li ul{
+    display: block;
+}
+
+.menu li:hover > ul{
+    display: block;
+}
+
+.habitacion{
+    position: relative;
+    margin-left: 5%;
+    margin-top: 5%;
+    width: 90%;
+}
+
+.descripcion{
+    margin-left: 20px;
+}
+
+.cal-L{
+    width: 94%;
+    height: 120px;
+    border: solid 1px black;
+    margin-left: 4%;
+}
+
+.cal-L h1{
+    text-align: center;
+}
+
+.container-send{
+    text-align: center;
+    position: relative;
+    top: 15px;
+}
+
+#pie{
+    position: absolute;
+    top: 90%;
+    text-align: center;
+    width: 100%;
+}
+
+@media (max-width: 1200px) {
+    .al-lado{
+        position: absolute;
+        top: 900px;
+        left: 25%;
+        float: none;
+        margin-right: 0px;
+    }
+
+    .main-container{
+        position: absolute;
+        left: 25%;
+        margin-left: 0px;
+    }
+    #cuerpo{
+        text-align: center;
+        height: 1800px;
+    }
+  }
+  

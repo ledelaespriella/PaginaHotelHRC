@@ -75,33 +75,30 @@
 {%block content%}
 
 <div class="ventana">
-    <div class="encabezado">
-        <div class="name"><input type="text" id="nameHab" name="name_hab" value="Suite Estándar"/></div>
-        <div class="id"><input type="text" id="idhab" name="id_hab" value="ID: H00101"/></div>
-    </div>
-    <div class="contenido">
-        <div class="grafico"><img src="/CP08/static/imagenes/Hab01.jpg" /></div>
-        <div class="form">
-            <div class="fila">&nbsp;</div>
-            <div class="fila">
-                <div class="c4"><input type="text" id="capMax" name="capacidad" value="Cap.máx 4 huéspedes"/></div>
-                <div class="c6"><p>COP</p><input type="text" id="precio" name="precio" value="250.000"/></div>
-            </div>
-            <div class="fila">
-                <div class="c4"><input type="text" id="numcam" name="numero_camas" value="2 camas tipo Queen"/></div>
-                <div ><p>Tarifa por noche. Impuestos incluidos"</p></div>
-            </div>
-            <div class="sfila">
-                <div class="c6"><textarea id="desc" name="descripcion" cols="40" rows="4" >"Amplia habitación equipada con 2 camas Queen, closet, baño privado, TV LED, TV-Cable, Wi-Fi gratis, escritorio, minibar."</textarea></div>
-                <div class="c2">&nbsp;</div>
-            </div>
-            <div class="fila">
-                <div class="c6">&nbsp;</div>
-                <div class="c2"><input type="button" onclick="edit();" id="editHab" value="Editar" /></div>                    
-                <div class="c2"><input type="button" onclick="eliminar();" id="eliminarHab" value="Eliminar" /></div>
-            </div>
-        </div>
-    </div>
+    <table>
+        <tr>
+            <th class="encabezado"><input type="text" id="nameHab" name="name_hab" value="Suite Estándar" /></th>
+            <th></th>
+            <th class="id"><input type="text" id="idHab" name="id_hab" value="ID: H00101" /></th>
+        </tr>
+        <tr> 
+            <td rowspan="5" class="grafico"><img src="{{ url_for('static',filename='imagenes/hab.jpeg')}}" /></td>
+            <td class="campo"><input type="text" id="capMax" name="capacidad" value="Cap.máx 4 huéspedes"></td>
+            <td><label>COP $</label><input type="number" id="precio" name="precio" value="250.000" ></td>
+        </tr>
+        <tr>
+            <td class="campo"><input type="text" id="numcam" name="numero_camas" value="2 camas tipo Queen"></td>
+            <td class="info">Tarifa por noche.<br> Impuestos incluidos</td>
+        </tr>
+        <tr>
+            <td class="campo"><textarea id="desc" name="descripcion" cols="35" rows="4" maxlength="120" >Amplia habitación equipada con 2 camas Queen, closet, baño privado, TV LED, TV-Cable, Wi-Fi gratis, escritorio, minibar.</textarea></td>
+        </tr>
+        <tr>
+            <td class="boton"><input type="button" onclick="edit();" id="editHab" value="Editar"></td>
+            <td class="boton"><input type="submit" id="eliminarHab" value="Eliminar"></td>
+        </tr>
+    </table>
+
 </div>
 
 {% endblock %}

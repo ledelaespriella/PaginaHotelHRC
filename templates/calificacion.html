@@ -1,0 +1,103 @@
+{% extends "bases/indexHome.html"%}
+
+{%block style}
+    <link rel="stylesheet" href="/static/estilos/estiloReserva.css">
+{% endblock %}
+
+{%block listaNav1%}
+{%if usuario%}
+<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
+    <li class="u-nav-item"><a
+        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+        href="\admin\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
+    </li>
+    <li class="u-nav-item"><a
+        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+        href="\admin\dashboard" style="padding: 10px 20px;">Dashboard</a>
+    </li>
+    <li class="u-nav-item"><a
+        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+        href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
+    </li>
+</ul>
+
+{%else%}
+<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
+    <li class="u-nav-item"><a
+        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+        href="\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
+    </li>
+    <li class="u-nav-item"><a
+        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+        href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
+    </li>
+</ul>
+{%endif%}
+{%endblock%}
+
+{%block listaNav2%}
+
+{%if usuario%}
+<div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+  <div class="u-inner-container-layout u-sidenav-overflow">
+    <div class="u-menu-close"></div>
+    <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+      <li class="u-nav-item"><a class="u-button-style u-nav-link" href="\habitaciones"
+          style="padding: 10px 20px;">Habitaciones</a>
+      </li>
+      <li class="u-nav-item"><a href="\admin\dashboard" class="u-button-style u-nav-link" style="padding: 10px 20px;">
+        Dashboard</a>
+      </li>
+      <li class="u-nav-item"><a href="\login" class="u-button-style u-nav-link" style="padding: 10px 20px;">
+          Cerrar Sesión</a>
+      </li>
+    </ul>
+  </div>
+</div>
+{%else%}
+<div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+    <div class="u-inner-container-layout u-sidenav-overflow">
+      <div class="u-menu-close"></div>
+      <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+        <li class="u-nav-item"><a class="u-button-style u-nav-link" href="\habitaciones"
+            style="padding: 10px 20px;">Habitaciones</a>
+        </li>
+        <li class="u-nav-item"><a href="\login" class="u-button-style u-nav-link" style="padding: 10px 20px;">
+            Cerrar Sesión</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+{%endif%}
+{%endblock%}
+
+{%block content%}
+
+    <body>
+        <form id="formulario">
+            <p class="cal" id="cali">
+                0.0
+            </p>
+            <p class="clasificacion">
+                    <input id="radio1" type="radio" name="estrellas" value="5"><!--
+                --><label for="radio1" class="labels">★</label><!--
+                --><input id="radio2" type="radio" name="estrellas" value="4"><!--
+                --><label for="radio2" class="labels">★</label><!--
+                --><input id="radio3" type="radio" name="estrellas" value="3"><!--
+                --><label for="radio3" class="labels">★</label><!--
+                --><input id="radio4" type="radio" name="estrellas" value="2"><!--
+                --><label for="radio4" class="labels">★</label><!--
+                --><input id="radio5" type="radio" name="estrellas" value="1"><!--
+                --><label for="radio5" class="labels">★</label>
+                
+            </p>
+            
+        </form>
+            <div class="buttons">
+                <button id="send" onclick="enviar()">Enviar</button>
+                <button id="cancel" onclick="limpiar()">Cancelar</button> 
+            </div>
+        <script src="/static/Script/calificacion.js"></script>
+    </body>
+
+{% endblock %}

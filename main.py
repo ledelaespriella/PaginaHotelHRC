@@ -1,11 +1,11 @@
-from formularios import FormLogin,FormRegistro
+from formularios import FormLogin,FormRegistro,FormCrearHab
 import os
 import utils
 from flask import Flask, request, flash
 from flask import render_template
 from flask.helpers import url_for
 from werkzeug.utils import redirect
-import yagmail
+#import yagmail
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -126,8 +126,20 @@ def gestionHab():
 
 @app.route('/admin/panelAdm/gestionHab/agregarH', methods=['GET', 'POST'])
 def agregarH():
+    form = FormCrearHab()
     admin="admin@gmail.com"
-    return render_template("agregaHab.html",usuario=admin)
+    if request.method == 'POST':
+        nomHabitacion = form.nombre.data
+        idHabitacion = form.id.data
+        try:
+            with sqlite3.connect("HRC.db") as con:
+                cur = con.cursor()
+                cur.execute(" INSERT INTO habitaciones(nombre, id) VALUES(?,?)",(nomHabitacion, idHabitacion))
+                con.commit()
+                return "Guardado satisfactoriamente"
+        except Error:
+            print(Error)
+    return render_template("agregaHab.html",usuario=admin, form=form)
 
 @app.route('/admin/panelAdm/gestionHab/editarH', methods=['GET', 'POST']) 
 def editarH():

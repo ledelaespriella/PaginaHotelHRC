@@ -20,3 +20,10 @@ class FormRegistro(FlaskForm):
     contrasena=PasswordField('Contraseña', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Contraseña','class':'form-control','id':'pass'})
     confirmacion_contrasena=PasswordField('Confirmar contraseña', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Confirmar contraseña','class':'form-control','id':'passVer'})
     enviar_registro=SubmitField('Registrarse',render_kw={'onclick':'validarRegistro()','class':'btn btn-lg btn-primary'})
+
+class FormCrearHab(FlaskForm):
+    nomHabitacion = StringField('Nombre', validators=[DataRequired(message='No dejar vacío')], render_kw={'placeholder':'Nombre de Habitación','class':'form_control'})
+    idHabitacion = StringField('Id', validators=[DataRequired(message='No dejar vacío')], render_kw={'placeholder':'Id de Habitación','class':'form_control'})
+
+    guardar = SubmitField('Guardar', render_kw={'onclick':'guardarHab()', 'class':'form_boton'})
+    salir = SubmitField('Salir', render_kw={'onclick':'guardarHab()', 'class':'form_boton'})

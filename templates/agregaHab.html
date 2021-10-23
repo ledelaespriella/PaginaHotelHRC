@@ -1,5 +1,9 @@
 {%extends 'bases/indexHome.html'%}
 
+{% block title %}
+Agrega Habitaciones
+{% endblock %}
+
 {%block stylepages%}
 <link rel="stylesheet" href="{{url_for('static', filename='estilos/estilos.css')}}" media="screen">
 {%endblock%}
@@ -75,27 +79,29 @@
 {%block content%}
 
 <div class="ventana">
-    <table>
-       <tr>
-           <th class="encabezado"><input type="text" id="nameHab" name="name_hab" placeholder="Nombre de Habitación" /></th>
-           <th></th>
-           <th class="id"><input type="text" id="idHab" name="id_hab" placeholder="ID de Habitación" /></th>
-       </tr>
-       <tr> 
-           <td rowspan="5" class="grafico"><img src="{{ url_for('static',filename='imagenes/hab.jpeg')}}" /></td>
-           <td class="campo"><input type="text" id="capMax" name="capacidad" placeholder="Capacidad máx"></td>
-           <td><label>COP $</label><input type="number" placeholder="valor" ></td>
-       </tr>
-       <tr>
-           <td class="campo"><input type="text" id="numcam" name="numero_camas" placeholder="Número de camas"></td>
-           <td class="info">Tarifa por noche.<br> Impuestos incluidos</td>
-       </tr>
-       <tr>
-           <td class="campo"><textarea id="desc" name="descripcion" cols="35" rows="4" maxlength="120" placeholder="Describa la habitación"></textarea></td>
-       </tr>
-       <tr>
-           <td colspan="2" class="boton"><input type="submit" id="agregaHab" value="Guardar"></td>
-       </tr>
-   </table>
+  <table>
+    <tr>
+      <th class="encabezado"><input type="text" id="nameHab" name="name_hab" placeholder="Nombre de Habitación" /></th>
+      <th></th>
+      <th class="id"><input type="text" id="idHab" name="id_hab" placeholder="ID de Habitación" /></th>
+    </tr>
+    <tr>
+      <td rowspan="5" class="grafico"><img src="{{ url_for('static',filename='imagenes/hab.jpeg')}}" /></td>
+      <td class="campo"><input type="text" id="capMax" name="capacidad" placeholder="Capacidad máx"></td>
+      <td><label>COP $</label><input type="number" placeholder="valor"></td>
+    </tr>
+    <tr>
+      <td class="campo"><input type="text" id="numcam" name="numero_camas" placeholder="Número de camas"></td>
+      <td class="info">Tarifa por noche.<br> Impuestos incluidos</td>
+    </tr>
+    <tr>
+      <td class="campo"><textarea id="desc" name="descripcion" cols="35" rows="4" maxlength="120"
+          placeholder="Describa la habitación"></textarea></td>
+    </tr>
+    <tr>
+      <td class="boton"><input type="submit" id="guardar" value="Guardar"></td>
+      <td class="boton"><input type="submit" id="salir" value="Salir"></td>
+    </tr>
+  </table>
 </div>
 {% endblock %}

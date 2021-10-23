@@ -96,3 +96,16 @@ label{
     display: inline;
     float: left;
 }
+.form_boton{
+    color: #0099CC;
+    width: 75px;
+    border-radius: 6px;
+    padding: 2px;
+}
+.form_control{
+    font-family: Arial;
+    font-size: 18px;
+    font-weight: 400;
+    color: #652de7;
+    background: #d8dadb;
+}

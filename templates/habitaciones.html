@@ -6,7 +6,7 @@
 
 
 {%block listaNav1%}
-{%if task == 'admin' or task == 'supAdmin' %}
+{%if rol == 'admin' or rol == 'supAdmin' %}
 <ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
   <li class="u-nav-item"><a
       class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
@@ -37,320 +37,88 @@
 {%endblock%}
 
 {%block content%}
-{%if  task == 'admin' or task == 'supAdmin' %}
-<div>
-  <div id="nav">
-    <nav style="padding-left: 30px;">
-      <a href="">Inicio</a>
-      <a href="">>Habitaciones</a>
-    </nav>
-  </div>
-  <div class="busqueda">
-    <p style="padding-left: 30px;"><u>Criterios de busqueda </u></p>
-    <label for="id" name="id" id="ide" style="padding-left: 30px;">ID:</label>
-    <input type="text" name="id" id="id" autocomplete="off">
-    <input type="button" value="Buscar" id="boton" onclick="Buscar()">
-  </div>
-  <div id="101" class="predeterminado">
-    <section class="contenedor">
-      <div class="habitaciones">
-        <div>
-          <img src="{{url_for('static', filename='imagenes/Habitacion.jpg')}}" alt="Habitacion" width="250" height="250"
-            id="imgHab">
-        </div>
-        <div>
-          <h1 style="text-align:left;">Habitacion 101</h1><br>
-          <p id="descripHab">****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-          </p><br>
-          <p style="text-align:left;">Estado: Disponible Max: 4 personas #Camas: 2</p>
-        </div>
-        <div id="otrosHab">
-          <h1 style="text-align:left;">&#9733; <span>5,0</span></h1><br>
-          <p style="text-align:left;">(10 comentarios)</p><br>
-          <p style="text-align:left; font-size:20px"><b>$100.000</b></p>
-          <a href="\admin\panelAdm\gestionHab\editarH">Ver más</a>
-        </div>
-      </div>
-    </section>
-  </div>
-  <div id="102" class="mostrar" style="display: none;">
-    <section class="contenedor">
-      <div class="habitaciones">
-        <div>
-          <img src="{{url_for('static', filename='imagenes/Habitacion.jpg')}}" alt="Habitacion" width="250" height="250"
-            id="imgHab">
-        </div>
-        <div>
-          <h1 style="text-align:left;">Habitacion 102</h1><br>
-          <p id="descripHab">****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-          </p><br>
-          <p style="text-align:left;">Estado: Disponible Max: 4 personas #Camas: 2</p>
-        </div>
-        <div id="otrosHab">
-          <h1 style="text-align:left;">&#9733; <span>5,0</span></h1><br>
-          <p style="text-align:left;">(10 comentarios)</p><br>
-          <p style="text-align:left; font-size:20px"><b>$100.000</b></p>
-          <a href="\admin\panelAdm\gestionHab\editarH">Ver más</a>
-        </div>
-      </div>
-    </section>
-  </div>
-  <div id="103" class="mostrar" style="display: none;">
-    <section class="contenedor">
-      <div class="habitaciones">
-        <div>
-          <img src="{{url_for('static', filename='imagenes/Habitacion.jpg')}}" alt="Habitacion" width="250" height="250"
-            id="imgHab">
-        </div>
-        <div>
-          <h1 style="text-align:left;">Habitacion 103</h1><br>
-          <p id="descripHab">****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-          </p><br>
-          <p style="text-align:left;">Estado: Disponible Max: 4 personas #Camas: 2</p>
-        </div>
-        <div id="otrosHab">
-          <h1 style="text-align:left;">&#9733; <span>5,0</span></h1><br>
-          <p style="text-align:left;">(10 comentarios)</p><br>
-          <p style="text-align:left; font-size:20px"><b>$100.000</b></p>
-          <a href="\admin\panelAdm\gestionHab\editarH">Ver más</a>
-        </div>
-      </div>
-    </section>
-  </div>
-  <div id="104" class="mostrar" style="display: none;">
-    <section id="103" class="contenedor">
-      <div class="habitaciones">
-        <div>
-          <img src="{{url_for('static', filename='imagenes/Habitacion.jpg')}}" alt="Habitacion" width="250" height="250"
-            id="imgHab">
-        </div>
-        <div>
-          <h1 style="text-align:left;">Habitacion 104</h1><br>
-          <p id="descripHab">****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-          </p><br>
-          <p style="text-align:left;">Estado: Disponible Max: 4 personas #Camas: 2</p>
-        </div>
-        <div id="otrosHab">
-          <h1 style="text-align:left;">&#9733; <span>5,0</span></h1><br>
-          <p style="text-align:left;">(10 comentarios)</p><br>
-          <p style="text-align:left; font-size:20px"><b>$100.000</b></p>
-          <a href="\admin\panelAdm\gestionHab\editarH">Ver más</a>
-        </div>
-      </div>
-    </section>
-  </div>
-  <div id="105" class="mostrar" style="display: none;">
-    <section id="103" class="contenedor">
-      <div class="habitaciones">
-        <div>
-          <img src="{{url_for('static', filename='imagenes/Habitacion.jpg')}}" alt="Habitacion" width="250" height="250"
-            id="imgHab">
-        </div>
-        <div>
-          <h1 style="text-align:left;">Habitacion 105</h1><br>
-          <p id="descripHab">****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-          </p><br>
-          <p style="text-align:left;">Estado: Disponible Max: 4 personas #Camas: 2</p>
-        </div>
-        <div id="otrosHab">
-          <h1 style="text-align:left;">&#9733; <span>5,0</span></h1><br>
-          <p style="text-align:left;">(10 comentarios)</p><br>
-          <p style="text-align:left; font-size:20px"><b>$100.000</b></p>
-          <a href="\admin\panelAdm\gestionHab\editarH">Ver más</a>
-        </div>
-      </div>
-    </section>
-  </div>
-  <div id="mostrarHab">
-    <hr width="80%">
-    <button id="btn2" onclick="Mostrar()">Mostrar mas habitaciones</button>
-    <button id="btn3" onclick="Ocultar()" style="display: none;">Mostrar menos</button>
-  </div>
 
-</div>
-{%else%}
-<div>
-  <div id="nav">
-    <nav style="padding-left: 30px;">
-      <a href="">Inicio</a>
-      <a href="">>Habitaciones</a>
-    </nav>
-  </div>
-  <div class="busqueda">
-    <p style="padding-left: 30px;"><u>Criterios de busqueda </u></p>
-    <label for="id" name="id" id="ide" style="padding-left: 30px;">ID:</label>
-    <input type="text" name="id" id="id" autocomplete="off">
-    <input type="button" value="Buscar" id="boton" onclick="Buscar()">
-  </div>
-  <div id="101" class="predeterminado">
-    <section class="contenedor">
-      <div class="habitaciones">
-        <div>
-          <img src="{{url_for('static', filename='imagenes/Habitacion.jpg')}}" alt="Habitacion" width="250" height="250"
-            id="imgHab">
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li style='background-color:red; color:aliceblue; font-size: 30px;'>
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith%}
+    <header>
+        <div class="header">
+            <div id="logo">
+                <img src="{{url_for('static', filename='imagenes/RHC_.png')}}" alt="Logo" id="imgRHC">
+            </div>
+            <div id="user">
+                <h3>Usuario</h3>
+                <img src="{{url_for('static', filename='imagenes/avatar.png')}}" alt="Avatar" id="imgAvatar">
+            </div>
+        </div>
+    </header>
+    <div id="nav">
+        <nav style="padding-left: 30px;">
+            <a href="/inicio">Inicio</a>
+            <a href="/habitaciones">>Habitaciones</a>
+        </nav>
+    </div>
+    <form action="/habitaciones" id="formulario" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="busqueda">
+            <p style="padding-left: 30px;"><u>Criterios de busqueda </u></p>
+            <div>
+                {{ form.idHabitacion.label }}
+                {{ form.idHabitacion(size=20) }}
+                {{ form.estado() }}
+                {{ form.estado.label }}
+                {{ form.buscar(size=9) }}
+            </div>
         </div>
         <div>
-          <h1 style="text-align:left;">Habitacion 101</h1><br>
-          <p id="descripHab">****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-          </p><br>
-          <p style="text-align:left;">Estado: Disponible Max: 4 personas #Camas: 2</p>
+    </form>
+    {% block contentHab %}
+    {% if row %}
+    <div>
+        <section class="contenedor">
+            <div class="habitaciones">
+                <div>
+                    <img src="{{url_for('static', filename='imagenes/Habitacion.jpg')}}" alt="Habitacion" width="250"
+                        height="250" id="imgHab">
+                </div>
+                <div>
+                    <h1 style="text-align:left;"><span>{{ row["nombre"] }}</span></h1>
+                    <h1 style="text-align:left;">Habitacion <span>{{ row["id"] }}</span></h1>
+                    <p id="descripHab">
+                        {{ row["descripcion"] }}
+                    </p>
+                    <p style="text-align:left;"><b>Estado:</b> <span>{{ row["disponibilidad"] }}</span> <b>Max:</b> 4
+                        personas
+                        <b>#Camas:</b> 2
+                    </p>
+                </div>
+                <div id="otrosHab">
+                    <h1 style="text-align:left;">&#9733; <span>{{row["calificacion"]}}</span></h1><br>
+                    <p style="text-align:left;">(10 comentarios)</p><br>
+                    <p style="text-align:left; font-size:20px"><b>${{ row["precio"] }}</b></p>
+                    <a href="">Ver más</a>
+                </div>
+            </div>
+        </section>
+    </div>
+    {% endif %}
+    </div>
+    <form action="/habitaciones" id="formularios" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        <div id="mostrarHab">
+            <hr width="80%">
+            {{ form.listar(size=9) }}
         </div>
-        <div id="otrosHab">
-          <h1 style="text-align:left;">&#9733; <span>5,0</span></h1><br>
-          <p style="text-align:left;">(10 comentarios)</p><br>
-          <p style="text-align:left; font-size:20px"><b>$100.000</b></p>
-          <a href="\reserva">Ver más</a>
-        </div>
-      </div>
-    </section>
-  </div>
-  <div id="102" class="mostrar" style="display: none;">
-    <section class="contenedor">
-      <div class="habitaciones">
-        <div>
-          <img src="{{url_for('static', filename='imagenes/Habitacion.jpg')}}" alt="Habitacion" width="250" height="250"
-            id="imgHab">
-        </div>
-        <div>
-          <h1 style="text-align:left;">Habitacion 102</h1><br>
-          <p id="descripHab">****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-          </p><br>
-          <p style="text-align:left;">Estado: Disponible Max: 4 personas #Camas: 2</p>
-        </div>
-        <div id="otrosHab">
-          <h1 style="text-align:left;">&#9733; <span>5,0</span></h1><br>
-          <p style="text-align:left;">(10 comentarios)</p><br>
-          <p style="text-align:left; font-size:20px"><b>$100.000</b></p>
-          <a href="">Ver más</a>
-        </div>
-      </div>
-    </section>
-  </div>
-  <div id="103" class="mostrar" style="display: none;">
-    <section class="contenedor">
-      <div class="habitaciones">
-        <div>
-          <img src="{{url_for('static', filename='imagenes/Habitacion.jpg')}}" alt="Habitacion" width="250" height="250"
-            id="imgHab">
-        </div>
-        <div>
-          <h1 style="text-align:left;">Habitacion 103</h1><br>
-          <p id="descripHab">****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-          </p><br>
-          <p style="text-align:left;">Estado: Disponible Max: 4 personas #Camas: 2</p>
-        </div>
-        <div id="otrosHab">
-          <h1 style="text-align:left;">&#9733; <span>5,0</span></h1><br>
-          <p style="text-align:left;">(10 comentarios)</p><br>
-          <p style="text-align:left; font-size:20px"><b>$100.000</b></p>
-          <a href="\reserva">Ver más</a>
-        </div>
-      </div>
-    </section>
-  </div>
-  <div id="104" class="mostrar" style="display: none;">
-    <section id="103" class="contenedor">
-      <div class="habitaciones">
-        <div>
-          <img src="{{url_for('static', filename='imagenes/Habitacion.jpg')}}" alt="Habitacion" width="250" height="250"
-            id="imgHab">
-        </div>
-        <div>
-          <h1 style="text-align:left;">Habitacion 104</h1><br>
-          <p id="descripHab">****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-          </p><br>
-          <p style="text-align:left;">Estado: Disponible Max: 4 personas #Camas: 2</p>
-        </div>
-        <div id="otrosHab">
-          <h1 style="text-align:left;">&#9733; <span>5,0</span></h1><br>
-          <p style="text-align:left;">(10 comentarios)</p><br>
-          <p style="text-align:left; font-size:20px"><b>$100.000</b></p>
-          <a href="\reserva">Ver más</a>
-        </div>
-      </div>
-    </section>
-  </div>
-  <div id="105" class="mostrar" style="display: none;">
-    <section id="103" class="contenedor">
-      <div class="habitaciones">
-        <div>
-          <img src="{{url_for('static', filename='imagenes/Habitacion.jpg')}}" alt="Habitacion" width="250" height="250"
-            id="imgHab">
-        </div>
-        <div>
-          <h1 style="text-align:left;">Habitacion 105</h1><br>
-          <p id="descripHab">****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-            ****************************************************************
-          </p><br>
-          <p style="text-align:left;">Estado: Disponible Max: 4 personas #Camas: 2</p>
-        </div>
-        <div id="otrosHab">
-          <h1 style="text-align:left;">&#9733; <span>5,0</span></h1><br>
-          <p style="text-align:left;">(10 comentarios)</p><br>
-          <p style="text-align:left; font-size:20px"><b>$100.000</b></p>
-          <a href="\reserva">Ver más</a>
-        </div>
-      </div>
-    </section>
-  </div>
-  <div id="mostrarHab">
-    <hr width="80%">
-    <button id="btn2" onclick="Mostrar()">Mostrar mas habitaciones</button>
-    <button id="btn3" onclick="Ocultar()" style="display: none;">Mostrar menos</button>
-  </div>
-
-</div>
-{%endif%}
-
+    </form>
+    {% endblock %}
 
 <script src="{{url_for('static', filename='Script/habitaciones.js')}}"></script>
 {% endblock %}

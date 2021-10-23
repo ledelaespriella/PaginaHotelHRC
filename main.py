@@ -1,11 +1,12 @@
 from sqlite3.dbapi2 import Error
-from formularios import FormLogin,FormRegistro
+from formularios import FormLogin,FormRegistro, formHabitaciones
 import os
 import utils
-from flask import Flask, request, flash
+from flask import Flask, request, flash, session
 from flask import render_template
 from flask.helpers import url_for
 from werkzeug.utils import redirect
+from markupsafe import escape
 import yagmail
 import sqlite3
 
@@ -23,31 +24,34 @@ def login():
     form= FormLogin()
     if request.method == 'POST':
         user = form.correo.data
-        password = form.contrasena.data
+        passw = form.contrasena.data
         userRequest = None
         passwordRequest = None
         try:
             with sqlite3.connect("HRC.db") as con:
                 cur = con.cursor()
-                consulta = cur.execute("SELECT email, password, rol FROM usuarios WHERE password = ?", [password]).fetchone()
+                consulta = cur.execute("SELECT email, password, rol FROM usuarios WHERE email=? and password = ?", [user, passw]).fetchone()
                 print(consulta)
-                con.commit
+                con.commit()
                 userRequest = consulta[0]
                 passwordRequest = consulta[1]
                 rol = consulta[2]
         except Error: 
-            return 'Error al conectar con la base de datos'
-        if (user == userRequest and password == passwordRequest):
+            flash('Error al conectar con la base de datos')
+        if (user == userRequest and passw == passwordRequest):
+            session['rol'] = rol
+            print(session)
             if(rol == 'final'):
-                return redirect(url_for("pagina"))
+                print(session['rol'])
+                return redirect(url_for("home"))
             elif(rol == 'admin'):
-                return redirect(url_for("pagina"))
+                return redirect(url_for("home"))
             elif(rol == 'supAdmin'):
-                return redirect(url_for("pagina"))
+                return redirect(url_for("home"))
         else:
             if(user != userRequest):
                 flash('Usuario incorrecto')
-            elif(password != passwordRequest):
+            elif(passw != passwordRequest):
                 flash('Verifique la contraseña e intente nuevamente')
             return render_template('login.html',form=form)
     else:
@@ -89,15 +93,17 @@ def registro():
                         cur = con.cursor()
                         cur.execute('INSERT INTO usuarios(cedula, pNombre, sNombre, pApellido, sApellido, email, password, rol) VALUES (?,?,?,?,?,?,?,?)', (cedula, primerNombre, segudoNombre, primerApellido, segudoApellido, correo, passw, rol))
                         con.commit()
-                        return '<p>Conexion exitosa</p>'
+                        flash("Revisa tu correo para activar tu cuenta")
+                        return redirect(url_for("login"))
                 except Error:
-                        print('Conexion incompletada')
-                        return '<p>Conexion no exitosa</p>'
+                        flash("Error al guardar el usuario, por favor intente de nuevo.")
+                        return render_template('registro.html',form=form)
         else:
             return render_template('registro.html',form=form)
     except:
         return render_template('registro.html',form=form)
     # guardar en un diccionario los datos
+
 @app.route('/login/recuperacion', methods=['GET', 'POST'])
 def recuperacion():
     if request.method == 'POST':
@@ -127,14 +133,102 @@ def mensaje():
 
 #jose
 
-@app.route('/habitaciones/<rol>', methods=['GET', 'POST'])
-def pagina():
-    return render_template('habitaciones.html', task = rol)
+
+@app.route("/habitaciones", methods=['GET', 'POST'])
+def home():
+    if request.method == 'GET':
+        form = formHabitaciones()
+        try:
+            with sqlite3.connect("HRC.db") as con:
+                con.row_factory = sqlite3.Row 
+                cur = con.cursor()
+                cur.execute("SELECT * FROM habitacion")
+                row = cur.fetchone()
+                if row is None:
+                    flash("Habitacion no existente")
+                return render_template("habitaciones.html",form=form, row=row)
+        except Error:
+            #con.rollback()
+            print(Error)
+            return "Error en el método"
+    elif request.method == 'POST':
+        form = formHabitaciones()
+        try:
+            with sqlite3.connect("HRC.db") as con:
+                con.row_factory = sqlite3.Row 
+                cur = con.cursor()
+                cur.execute("SELECT * FROM habitacion")
+                row = cur.fetchone()
+                if row is None:
+                    flash("Habitacion no existente")
+                return render_template("habitaciones.html",form=form, row=row)
+        except Error:
+            #con.rollback()
+            print(Error)
+    else:
+        return "Error en el método"
+
+    
+
+@app.route("/habitaciones/get", methods=['GET', 'POST'])
+def Habitaciones_get():
+    form = formHabitaciones()
+    if request.method == 'POST':
+        idHabitacion = form.idHabitacion.data
+        try:
+            with sqlite3.connect("HRC.db") as con:
+                con.row_factory = sqlite3.Row
+                cur = con.cursor()
+                cur.execute("SELECT * FROM habitacion WHERE id = ?", [idHabitacion])
+                row = cur.fetchone()
+                if row is None:
+                    flash("Habitacion no existente")
+                return render_template("habitacionesGet.html",form=form, row=row)
+        except Error:
+            #con.rollback()
+            print(Error)
+    return "Error en el método"
 
 
-@app.route('/habitaciones', methods=['GET', 'POST'])
-def pagina():
-    return render_template('habitaciones.html')
+
+@app.route("/habitaciones/list", methods=["GET", "POST"])
+def Habitaciones_list():
+    form = formHabitaciones()
+    try:
+         with sqlite3.connect("HRC.db") as con:
+             con.row_factory = sqlite3.Row 
+             cur = con.cursor()
+             cur.execute("SELECT * FROM habitacion")
+             row = cur.fetchall()
+             return render_template("habitacionesList.html",form=form, row=row)
+    except  Error:
+         #con.rollback()
+         print(Error)
+
+
+
+@app.route("/habitaciones/disp", methods=['GET', 'POST'])
+def Habitaciones_disp():
+    form = formHabitaciones()
+    if request.method == 'POST':
+        estado = form.estado.data
+        if estado:
+            estado = 1
+        else:
+            estado = 0
+        try:
+            with sqlite3.connect("HRC.db") as con:
+                con.row_factory = sqlite3.Row 
+                cur = con.cursor()
+                cur.execute("SELECT * FROM habitacion WHERE  disponibilidad = ?", [estado])
+                row = cur.fetchall()
+                if row is None:
+                    flash("No hay habitaciones disponibles")
+                return render_template("habitacionesList.html",form=form, row=row)
+        except Error:
+            #con.rollback()
+            print(Error)
+    return "Error en el método"
 
 @app.route('/admin/habitaciones', methods=['GET', 'POST'])
 def pagina_admin():

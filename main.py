@@ -55,9 +55,11 @@ def login():
 
 
 
+
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
     form=FormRegistro()
+    
     try:
         if request.method == 'POST':
             primerNombre = form.Primer_nombre.data
@@ -96,10 +98,8 @@ def registro():
     except:
         return render_template('registro.html',form=form)
     # guardar en un diccionario los datos
-
-
 @app.route('/login/recuperacion', methods=['GET', 'POST'])
-def recuperacion(): 
+def recuperacion():
     if request.method == 'POST':
         correo = request.form['correo']
         error=None
@@ -115,6 +115,7 @@ def recuperacion():
             error = "Correo no existe en la base de datos"
             flash(error)
             return render_template('recuperacion.html')
+            
 
     else:
         return render_template('recuperacion.html')
@@ -130,6 +131,16 @@ def mensaje():
 def pagina():
     return render_template('habitaciones.html', task = rol)
 
+
+@app.route('/habitaciones', methods=['GET', 'POST'])
+def pagina():
+    return render_template('habitaciones.html')
+
+@app.route('/admin/habitaciones', methods=['GET', 'POST'])
+def pagina_admin():
+    admin="admin@gmail.com"
+    return render_template('habitaciones.html',usuario=admin)
+
 #rutas de adri
 
 @app.route('/admin/panelAdm', methods=['GET'])
@@ -144,6 +155,7 @@ def gestionHab():
 
 @app.route('/admin/panelAdm/gestionHab/agregarH', methods=['GET', 'POST'])
 def agregarH():
+    admin="admin@gmail.com"
     if request.method == 'POST':
         nombreHab = request.form['name_hab_add']
         idHab = request.form['id_hab_add']
@@ -161,8 +173,7 @@ def agregarH():
         except sqlite3.Error:
             print (sqlite3.Error)
             return('<p>Error al realizar la operacion</p>')
-    return render_template("agregaHab.html")
-    
+    return render_template("agregaHab.html",usuario=admin)
 
 @app.route('/admin/panelAdm/gestionHab/editarH', methods=['GET', 'POST']) 
 def editarH():
@@ -215,6 +226,8 @@ def reserva():
 @app.route("/misHabitaciones")
 def mishabitaciones():
     return render_template("gestion_comentarios.html")
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

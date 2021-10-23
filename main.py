@@ -6,7 +6,7 @@ from flask import Flask, request, flash
 from flask import render_template
 from flask.helpers import url_for
 from werkzeug.utils import redirect
-import yagmail
+#import yagmail
 import sqlite3
 
 app = Flask(__name__)

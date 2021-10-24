@@ -132,17 +132,17 @@ def pagina():
 
 #rutas de adri
 
-@app.route('/admin/panelAdm', methods=['GET'])
+@app.route('/habitaciones/panelAdm', methods=['GET'])
 def panelAdm():
     admin="admin@gmail.com"
     return render_template("panel_adm.html",usuario=admin)
 
-@app.route('/admin/panelAdm/gestionHab', methods=['GET'])
+@app.route('/habitaciones/panelAdm/gestionHab', methods=['GET'])
 def gestionHab():
     admin="admin@gmail.com"
     return render_template('habitaciones.html',usuario=admin)
 
-@app.route('/admin/panelAdm/gestionHab/agregarH', methods=['GET', 'POST'])
+@app.route('/habitaciones/panelAdm/gestionHab/agregarH', methods=['GET', 'POST'])
 def agregarH():
     if request.method == 'POST':
         nombreHab = request.form['name_hab_add']
@@ -164,12 +164,12 @@ def agregarH():
     return render_template("agregaHab.html")
     
 
-@app.route('/admin/panelAdm/gestionHab/editarH', methods=['GET', 'POST']) 
+@app.route('/habitaciones/panelAdm/gestionHab/editarH', methods=['GET', 'POST']) 
 def editarH():
     admin="admin@gmail.com"
     return render_template("editarHab.html",usuario=admin)
 
-@app.route('/admin/panelAdm/gestionHab/eliminarH', methods=['GET'])
+@app.route('/habitaciones/panelAdm/gestionHab/eliminarH', methods=['GET'])
 def eliminarH():
     admin="admin@gmail.com"
     return render_template("eliminar.html",usuario=admin)

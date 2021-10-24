@@ -1,9 +1,16 @@
+let gestionHab=document.getElementById("gestHab");
+let nav = document.getElementById("nav");
+
+gestionHab.addEventListener("mouseover",gest_hab);
+
+
 function eliminar(){
     var btnElim = document.getElementById("eliminarHab").action="/admin/panelAdm";
 }
 
-function gestionHab(){
-    var btnHab = document.getElementById("gestHab");
+function gest_hab(){
+    nav.classList.toggle("mostrar");
+    alert("Alerta de eventos");
 }
 
 function agregarH(){

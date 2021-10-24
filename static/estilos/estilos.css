@@ -109,3 +109,33 @@ label{
     color: #652de7;
     background: #d8dadb;
 }
+.nav{
+    position: absolute;
+    top: 60px;
+    left:-100%; /*cuando cree el nav lo dejo en 0, despues lo cambio a -100% cuando vaya a crear la classe mostrar que la programo en el js*/
+    width: 100%;
+    transition: all 0.4s;/*Lo agrego solo despues de crear la clase mostrar*/
+}
+.menu{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.menulink{
+    display: block;
+    padding:15px;
+    background: #fba919;
+    color: #fff;
+    text-decoration: none; /*para que no aparezca el subrayado */
+}
+.menulink:hover{
+    background:#fff;
+    color:#fba919;
+}
+.mostrar{ /*Solo creo esta clase cuando programe el js*/
+    left: 0;
+}
+.select{
+    background:#fff;
+    color:#fba919;
+}

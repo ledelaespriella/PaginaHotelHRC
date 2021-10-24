@@ -36,8 +36,7 @@ def login():
             return render_template('login.html',form=form)
         
     else:
-        return render_template('login.html',form=form)
-
+        return render_template('login.html',form=form)  
 
 
 @app.route('/registro', methods=['GET', 'POST'])

@@ -1,8 +1,8 @@
 from sqlite3.dbapi2 import Error
-from formularios import FormLogin,FormRegistro
+from formularios import FormLogin,FormRegistro, formHabitaciones
 import os
 import utils
-from flask import Flask, request, flash
+from flask import Flask, request, flash, session
 from flask import render_template
 from flask.helpers import url_for
 from werkzeug.utils import redirect
@@ -29,21 +29,22 @@ def login():
         try:
             with sqlite3.connect("HRC.db") as con:
                 cur = con.cursor()
-                consulta = cur.execute("SELECT email, password, rol FROM usuarios WHERE password = ?", [password]).fetchone()
-                print(consulta)
-                con.commit
+                consulta = cur.execute("SELECT email, password, rol, cedula FROM usuarios WHERE email=? and password = ?", [user, password]).fetchone()
+                print(consulta)                                                                             
+                con.commit()
                 userRequest = consulta[0]
                 passwordRequest = consulta[1]
                 rol = consulta[2]
+                cedula = consulta[3]
         except Error: 
             return 'Error al conectar con la base de datos'
         if (user == userRequest and password == passwordRequest):
+            session['rol'] = rol
+            session['cedula'] = cedula
+            print(session)
             if(rol == 'final'):
-                return redirect(url_for("pagina"))
-            elif(rol == 'admin'):
-                return redirect(url_for("pagina"))
-            elif(rol == 'supAdmin'):
-                return redirect(url_for("pagina"))
+                print(session['rol'])
+                return redirect(url_for("home"))
         else:
             if(user != userRequest):
                 flash('Usuario incorrecto')
@@ -70,7 +71,6 @@ def registro():
             passwVerificacion = form.confirmacion_contrasena.data
             error = None
             rol = 'final'
-            print(rol)
             if not utils.isEmailValid(correo):
                 error = "Correo invalido."
                 flash(error)
@@ -126,23 +126,109 @@ def mensaje():
 
 #jose
 
-@app.route('/habitaciones/<rol>', methods=['GET', 'POST'])
-def pagina():
-    return render_template('habitaciones.html', task = rol)
+@app.route("/habitaciones", methods=['GET', 'POST'])
+def home():
+    if request.method == 'GET':
+        form = formHabitaciones()
+        try:
+            with sqlite3.connect("HRC.db") as con:
+                con.row_factory = sqlite3.Row 
+                cur = con.cursor()
+                cur.execute("SELECT * FROM habitacion")
+                row = cur.fetchone()
+                if row is None:
+                    flash("Habitacion no existente")
+                return render_template("habitaciones.html",form=form, row=row)
+        except Error:
+            print(Error)
+            return "Error en el método"
+    elif request.method == 'POST':
+        form = formHabitaciones()
+        try:
+            with sqlite3.connect("HRC.db") as con:
+                con.row_factory = sqlite3.Row 
+                cur = con.cursor()
+                cur.execute("SELECT * FROM habitacion")
+                row = cur.fetchone()
+                if row is None:
+                    flash("Habitacion no existente")
+                return render_template("habitaciones.html",form=form, row=row)
+        except Error:
+            print(Error)
+    else:
+        return "Error en el método"
+
+    
+
+@app.route("/habitaciones/get", methods=['GET', 'POST'])
+def Habitaciones_get():
+    form = formHabitaciones()
+    if request.method == 'POST':
+        idHabitacion = form.idHabitacion.data
+        try:
+            with sqlite3.connect("HRC.db") as con:
+                con.row_factory = sqlite3.Row
+                cur = con.cursor()
+                cur.execute("SELECT * FROM habitacion WHERE id = ?", [idHabitacion])
+                row = cur.fetchone()
+                if row is None:
+                    flash("Habitacion no existente")
+                return render_template("habitacionesGet.html",form=form, row=row)
+        except Error:
+            print(Error)
+    return "Error en el método"
+
+
+
+@app.route("/habitaciones/list", methods=["GET", "POST"])
+def Habitaciones_list():
+    form = formHabitaciones()
+    try:
+         with sqlite3.connect("HRC.db") as con:
+             con.row_factory = sqlite3.Row 
+             cur = con.cursor()
+             cur.execute("SELECT * FROM habitacion")
+             row = cur.fetchall()
+             return render_template("habitacionesList.html",form=form, row=row)
+    except  Error:
+         print(Error)
+
+
+
+@app.route("/habitaciones/disp", methods=['GET', 'POST'])
+def Habitaciones_disp():
+    form = formHabitaciones()
+    if request.method == 'POST':
+        estado = form.estado.data
+        if estado:
+            estado = 1
+        else:
+            estado = 0
+        try:
+            with sqlite3.connect("HRC.db") as con:
+                con.row_factory = sqlite3.Row 
+                cur = con.cursor()
+                cur.execute("SELECT * FROM habitacion WHERE  disponibilidad = ?", [estado])
+                row = cur.fetchall()
+                if row is None:
+                    flash("No hay habitaciones disponibles")
+                return render_template("habitacionesList.html",form=form, row=row)
+        except Error:
+            print(Error)
+    return "Error en el método"
+
 
 #rutas de adri
 
-@app.route('/admin/panelAdm', methods=['GET'])
+@app.route('/habitaciones/panelAdm', methods=['GET'])
 def panelAdm():
-    admin="admin@gmail.com"
-    return render_template("panel_adm.html",usuario=admin)
+    return render_template("panel_adm.html",)
 
-@app.route('/admin/panelAdm/gestionHab', methods=['GET'])
+@app.route('/habitaciones/panelAdm/gestionHab', methods=['GET'])
 def gestionHab():
-    admin="admin@gmail.com"
-    return render_template('habitaciones.html',usuario=admin)
+    return render_template('habitaciones.html', rol = session['rol'])
 
-@app.route('/admin/panelAdm/gestionHab/agregarH', methods=['GET', 'POST'])
+@app.route('/habitaciones/panelAdm/gestionHab/agregarH', methods=['GET', 'POST'])
 def agregarH():
     if request.method == 'POST':
         nombreHab = request.form['name_hab_add']
@@ -164,20 +250,27 @@ def agregarH():
     return render_template("agregaHab.html")
     
 
-@app.route('/admin/panelAdm/gestionHab/editarH', methods=['GET', 'POST']) 
+@app.route('/habitaciones/panelAdm/gestionHab/editarH', methods=['GET', 'POST']) 
 def editarH():
-    admin="admin@gmail.com"
-    return render_template("editarHab.html",usuario=admin)
+    rol = session['rol']
+    return render_template("editarHab.html", rol = rol)
 
-@app.route('/admin/panelAdm/gestionHab/eliminarH', methods=['GET'])
+@app.route('/habitaciones/panelAdm/gestionHab/eliminarH', methods=['GET'])
 def eliminarH():
     admin="admin@gmail.com"
     return render_template("eliminar.html",usuario=admin)
 
 #julian
-@app.route('/reserva')
-def load_reserva():
-    return render_template('reserva.html')
+@app.route('/reserva/<idHab>')
+def load_reserva(idHab=None):
+    try:
+        with sqlite3.connect('HRC.db') as con:
+            cur = con.execute('SELECT * FROM habitacion WHERE  id = ?', [idHab])
+            con.commit()
+            row = cur.fetchall()
+    except Error:
+        return redirect(url_for("home"))
+    return render_template('reserva.html', idHab = idHab) 
 
 @app.route('/reserva/mensaje_reserva', methods=["GET", "POST"])
 def reserva():
@@ -193,17 +286,37 @@ def reserva():
         cardName = request.form['name-card']
         cardNum = request.form['number-card']
         cvc = request.form['cvc']
-        caducida = request.form['caducidad']
+        usuario = session['cedula']
+        caducidad = request.form['caducidad']
+        idHab = request.form['habitacion']
         
         if utils.isEmailValid(correo):
             if checkin == checkout:
                 flash('Las fechas de entrada y salida no pueden ser iguales')
                 return render_template('reserva.html')
             if check == 'hotel':
+                try:
+                    with sqlite3.connect('HRC.db') as con:
+                        cur = con.cursor()
+                        print(checkin + checkout + check + idHab + usuario)
+                        cur.execute('INSERT INTO reserva(checkin, checkout, fPago, idhabitacion, cedula) VALUES (?,?,?,?,?)', (checkin, checkout, check, idHab, usuario))
+                        con.commit()
+                except:
+                    return "<h1>Error al realizar la reserva</h1>"
+
                 text =  ("Reserva realizada con exito, su tipo de pago es " + check +
                         "<br> Nos vemos en el hotel el dia " + checkin)
                 return text
             elif check == 'tarjeta':
+                try:
+                    with sqlite3.connect('HRC.db') as con:
+                        cur = con.cursor()
+                        print(checkin + checkout + check + idHab + usuario)
+                        cur.execute('INSERT INTO reserva(checkin, checkout, fPago, idhabitacion, cedula) VALUES (?,?,?,?,?)', (checkin, checkout, check, idHab, usuario))
+                        con.commit()
+                except:
+                    return "<h1>Error al realizar la reserva</h1>"
+
                 text =  ("Reserva realizada con exito, su tipo de pago es " + check +
                         "<br> Nos vemos en el hotel el dia " + checkin)
                 return text
@@ -211,6 +324,10 @@ def reserva():
             return "<h1>Error al realizar la reserva</h1>"
 
 #jesus
+
+@app.route('/habitaciones/panelAdm/gestionCom')
+def gestionar_usuario():
+    return render_template('gestion_comentarios.html')
 
 @app.route("/misHabitaciones")
 def mishabitaciones():

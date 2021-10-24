@@ -1,0 +1,38 @@
+{% extends "habitaciones.html" %}
+{% block contentHab %}
+{% if row %}
+<div>
+    <section class="contenedor">
+        <div class="habitaciones">
+            <div>
+                <img src="{{url_for('static', filename='imagenes/Habitacion.jpg')}}" alt="Habitacion" width="250"
+                    height="250" id="imgHab">
+            </div>
+            <div>
+                <h1 style="text-align:left;"><span>{{ row["nombre"] }}</span></h1>
+                <h1 style="text-align:left;">Habitacion <span>{{ row["id"] }}</span></h1>
+                <p id="descripHab">
+                    {{ row["descripcion"] }}
+                </p>
+                <p style="text-align:left;"><b>Estado:</b> <span>{{ row["disponibilidad"] }}</span> <b>Max:</b> 4 personas
+                    <b>#Camas:</b> 2
+                </p>
+            </div>
+            <div id="otrosHab">
+                <h1 style="text-align:left;">&#9733; <span>{{row["calificacion"]}}</span></h1><br>
+                <p style="text-align:left;">(10 comentarios)</p><br>
+                <p style="text-align:left; font-size:20px"><b>${{ row["precio"] }}</b></p>
+                <a href="/reserva/{{row['id']}}">Ver más</a>
+            </div>
+        </div>
+    </section>
+</div>
+{% endif %}
+<form action="/habitaciones" id="formularios" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    <div id="mostrarHab">
+        <hr width="80%">
+        {{ form.listar(size=9) }}
+    </div>
+</form>
+{% endblock %}

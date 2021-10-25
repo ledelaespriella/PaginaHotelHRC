@@ -1,0 +1,58 @@
+body{
+    text-align: center;
+}
+
+label{
+    font-size: 96px;
+    color: gray;
+}
+
+input[type = 'radio']{
+    display: none;
+}
+
+
+.cal{
+    position: relative;
+    float: left;
+    width: 150px;
+    height: 130px;
+    left: 20px;
+    font-size: 64px;
+    text-align: center;
+    top: -25px;
+}
+
+.clasificacion{
+    direction: rtl;/* right to left */
+    unicode-bidi: bidi-override;/* bidi de bidireccional */
+    text-align: center;
+    position: relative;
+    float: right;
+    right: 20px;
+    height: 130px;
+    top: -15px;
+}
+
+label:hover,label:hover ~ label {
+    color: yellow;
+    cursor: pointer;
+}
+
+input[type = "radio"]:checked ~ label{
+    color:yellow;
+}
+
+#formulario{
+    display: inline-block;
+    width:600px;
+    height: 160px;
+    border: solid 1px black;
+}
+
+.buttons{
+    position: relative;
+    top: -30px;
+    left: -160px;
+    display: inline;
+}

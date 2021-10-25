@@ -1,5 +1,4 @@
 {% extends "bases/indexHome.html"%}
-
 {%block stylepages%}
     <link rel="stylesheet" href="/static/estilos/estiloReserva.css">
 {% endblock %}
@@ -99,14 +98,6 @@
                 <label class="form-label" for="checkout" >Check out</label>
                 <input name="checkout" class="form-control float-end" id="checkout" type="date" required>
             </div>
-            
-            <div class="col-sm-6">
-                <input name="nombreR" class="nombre form-control" type="text" placeholder="Nombres" required>
-            </div>
-            
-            <div class="col-sm-6">
-                <input name="apellidosR" class="apellido form-control" type="text" placeholder="Apellidos" required>
-            </div>
 
             <div class="col-sm-6">
                 <input name="numeroR" class="telefono form-control" type="text" placeholder="Telefono" required>
@@ -119,6 +110,10 @@
             <div class="">
                 <textarea name="preferenciasR" class="form-control" id="" cols="53" rows="10" placeholder="Escribe acá tus preferencias"></textarea>
             </div> 
+
+            <div class="short-data col-sm-6">
+                <input class="form-control" type="text" name="habitacion" style="display: none;" value="{{idHab}}">
+            </div>
 
             <hr class="my-2">
             <h5 class="" for="">Metodo de pago</h5>
@@ -150,10 +145,6 @@
             <div class="short-data col-sm-6">
                 <input class="caducidad border form-control" type="text" placeholder="MM/AA" name="caducidad">
             </div>
-
-            <div class="col-sm-6">
-                <input class="titular border form-control" type="text" placeholder="Cedula del titular" name="titular">
-            </div>
         </div>  
         <div class="container-send">
             <input class="send" type="submit" >  
@@ -167,8 +158,8 @@
         </div>
         <hr style="width: 98%; margin-left: 1%">
         <div class="dcp-container">
-            <h6 class="descripcion">Habitacion 301</h6>
-            <p class="descripcion">Lorem ipsum dolor sit amet consectetur adipisicing elit. In delectus quod, doloribus sit repellendus magni enim necessitatibus harum veniam inventore et accusamus nisi explicabo recusandae nihil quam natus assumenda illum!</p>
+            <h6 class="descripcion">Habitacion {{ idHab}} </h6>
+            <p class="descripcion">descripcion {{row['descripcion']}}</p>
             <h4 class="descripcion">Precio: *****</h4>
             <div class="cal-L">
                 <h1>En Desarrollo</h1>
@@ -176,11 +167,3 @@
         </div>
     </aside>
 {% endblock %}
-
-{%block footer%}
-  <!--<footer class="pie">
-        <div class="">
-            <p class="u-small-text u-text u-text-variant u-text-1">© 2021 Hyatt Regency Colombo </p>
-        </div>
-    </footer>-->
-{%endblock%}

@@ -42,14 +42,6 @@
                 <label class="form-label" for="checkout" >Check out</label>
                 <input name="checkout" class="form-control float-end" id="checkout" type="date" required>
             </div>
-            
-            <div class="col-sm-6">
-                <input name="nombreR" class="nombre form-control" type="text" placeholder="Nombres" required>
-            </div>
-            
-            <div class="col-sm-6">
-                <input name="apellidosR" class="apellido form-control" type="text" placeholder="Apellidos" required>
-            </div>
 
             <div class="col-sm-6">
                 <input name="numeroR" class="telefono form-control" type="text" placeholder="Telefono" required>
@@ -59,17 +51,13 @@
                 <input name="emailR" class="email form-control" type="email" placeholder="E-mail" required>
             </div>
 
-            <div class="col-sm-6">
-                <input name="cedula" class="cedula form-control" type="number" placeholder="Cedula" required>
-            </div>
+            <div class="">
+                <textarea name="preferenciasR" class="form-control" id="" cols="53" rows="10" placeholder="Escribe acá tus preferencias"></textarea>
+            </div> 
 
             <div class="short-data col-sm-6">
-                <input class="form-control" type="text" name="habitacion" value={{idHab}} style="display: none;">
+                <input class="form-control" type="text" name="habitacion" style="display: none;" value="{{idHab}}">
             </div>
-
-            <div class="">
-                <textarea name="preferenciasR" class="form-control" id="" cols="53" rows="7" placeholder="Escribe acá tus preferencias"></textarea>
-            </div> 
 
             <hr class="my-2">
             <h5 class="" for="">Metodo de pago</h5>
@@ -114,9 +102,9 @@
         </div>
         <hr style="width: 98%; margin-left: 1%">
         <div class="dcp-container">
-            <h6 name='idHab' class="descripcion">Habitacion {{idHab}}</h6>
-            <p class="descripcion">{{desc}}</p>
-            <h4 class="descripcion">Precio: {{costo}}</h4>
+            <h6 class="descripcion">Habitacion {{ idHab}} </h6>
+            <p class="descripcion">descripcion {{row['descripcion']}}</p>
+            <h4 class="descripcion">Precio: *****</h4>
             <div class="cal-L">
                 <h1>En Desarrollo</h1>
             </div>

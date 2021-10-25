@@ -18,10 +18,11 @@ class FormRegistro(FlaskForm):
     contrasena=PasswordField('Contraseña', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Contraseña','class':'form-control','id':'pass'})
     confirmacion_contrasena=PasswordField('Confirmar contraseña', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Confirmar contraseña','class':'form-control','id':'passVer'})
     enviar_registro=SubmitField('Registrarse',render_kw={'onclick':'validarRegistro()','class':'btn btn-lg btn-primary'})
-
+    
 class formHabitaciones(FlaskForm):
     idHabitacion = StringField('ID', validators=[DataRequired(message='No dejar vacio')], render_kw={'placeholder':'Numero de Habitacion', 'id': 'numHab', 'class':'form_control', 'onclick':'deshCheck()'} )
     estado = BooleanField('Disponible', render_kw={ 'id': 'estadoHab', 'onclick':'clearNum()'})
+    
     buscar = SubmitField('Buscar', render_kw={'onclick':'buscarHab()', 'class':'form_boton'} )
     listar = SubmitField('Mostrar mas habitaciones', render_kw={'onclick':'listarHab()','id':'mostar', 'class':'form_boton'} )
     ocultar = SubmitField('Mostrar menos', render_kw={'onclick':'ocultarHab()','id':'ocultar', 'class':'form_boton'} )

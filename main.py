@@ -47,9 +47,14 @@ def login():
 
         if (user == userRequest and passw == passwordRequest):
             session['rol'] = rol
-            session['user'] = userRequest
-            session['cedula'] = userId
-            return redirect(url_for("home"))
+            #print(session)
+            if(rol == 'final'):
+                print(session['rol'])
+                return redirect(url_for("home"))
+            elif(rol == 'admin'):
+                return redirect(url_for("panelAdm"))
+            elif(rol == 'supAdmin'):
+                return redirect(url_for("panelAdm"))
         else:
             if(user != userRequest):
                 flash('Usuario incorrecto')
@@ -121,21 +126,24 @@ def recuperacion():
             error = "Correo invalido."
             flash(error)
             return render_template("recuperacion.html")
+        else:
+            try:
+                with sqlite3.connect("HRC.db") as con:
+                    cur = con.cursor()
+                    consulta = cur.execute("SELECT pNombre,pApellido,email FROM usuarios WHERE email=?", [correo]).fetchone()
+                    print(consulta)
+                    con.commit()
+                    if consulta!=None:
+                        return redirect(url_for("mensaje"))       
+                    else:
+                        error = "Correo no existe en la base de datos, por favor registrarse."
+                        flash(error)
+                        return redirect(url_for("registro"))
+            except Error: 
+                flash('Error al conectar con la base de datos')
+                return render_template('recuperacion.html')
         
-        try:
-            with sqlite3.connect("HRC.db") as con:
-                cur = con.cursor()
-                consulta = cur.execute("SELECT pNombre,pApellido,email FROM usuarios WHERE email=?", [correo]).fetchone()
-                print(consulta)
-                con.commit()
-                if consulta!=None:
-                    return redirect(url_for("mensaje"))       
-                else:
-                    error = "Correo no existe en la base de datos"
-                    flash(error)
-                    return render_template('recuperacion.html')
-        except Error: 
-            flash('Error al conectar con la base de datos')
+        
 
     else:
         return render_template('recuperacion.html')
@@ -260,7 +268,38 @@ def Habitaciones_disp():
 @app.route('/habitaciones', methods=['GET', 'POST'])
 def pagina_admin():
     if "rol" in session:
-        return render_template('habitaciones.html', rol=session['rol'])
+        rol=session["rol"]
+        if request.method == 'GET':
+            form = formHabitaciones()
+            try:
+                with sqlite3.connect("HRC.db") as con:
+                    con.row_factory = sqlite3.Row 
+                    cur = con.cursor()
+                    cur.execute("SELECT * FROM habitacion")
+                    row = cur.fetchone()
+                    if row is None:
+                        flash("Habitacion no existente")
+                    return render_template("habitaciones.html",form=form, row=row,rol=rol)
+            except Error:
+                #con.rollback()
+                print(Error)
+                return "Error en el método"
+        elif request.method == 'POST':
+            form = formHabitaciones()
+            try:
+                with sqlite3.connect("HRC.db") as con:
+                    con.row_factory = sqlite3.Row 
+                    cur = con.cursor()
+                    cur.execute("SELECT * FROM habitacion")
+                    row = cur.fetchone()
+                    if row is None:
+                        flash("Habitacion no existente")
+                    return render_template("habitaciones.html",form=form, row=row,rol=rol)
+            except Error:
+                #con.rollback()
+                print(Error)
+        else:
+            return "Error en el método"
     else:
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html')
@@ -337,10 +376,10 @@ def eliminarH():
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html')
 
-#------------------------------------------------JULIAN----------------------------------------------------------
-@app.route('/reserva/<idHab>', methods=['GET'])
-def load_reserva(idHab = None):
-    
+#------------------------------------------------JULIAN----------------------------------------------------------    
+#julian
+@app.route('/reserva')
+def load_reserva():
     if "rol" in session:
         try:
             with sqlite3.connect("D:\database\HRC.db") as con:

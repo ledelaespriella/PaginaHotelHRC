@@ -1,98 +1,25 @@
-{%extends 'bases/indexHome.html'%}
+{%extends 'bases/indexAdm.html'%}
 {% block title %}Dashboard {% endblock %}
-{%block stylepages%}
-<link rel="stylesheet" href="{{url_for('static', filename='estilos/estilos.css')}}" media="screen">
-{%endblock%}
-
-
-{%block listaNav1%}
-{%if usuario%}
-<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
-  </li>
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\habitaciones\panelAdm" style="padding: 10px 20px;">Dashboard</a>
-  </li>
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
-  </li>
-</ul>
-
-{%else%}
-<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
-  </li>
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
-  </li>
-</ul>
-{%endif%}
-{%endblock%}
-
-{%block listaNav2%}
-
-{%if usuario%}
-<div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
-  <div class="u-inner-container-layout u-sidenav-overflow">
-    <div class="u-menu-close"></div>
-    <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-      <li class="u-nav-item"><a class="u-button-style u-nav-link" href="\habitaciones"
-          style="padding: 10px 20px;">Habitaciones</a>
-      </li>
-      <li class="u-nav-item"><a href="\admin\panelAdm" class="u-button-style u-nav-link" style="padding: 10px 20px;">
-          Dashboard</a>
-      </li>
-      <li class="u-nav-item"><a href="\login" class="u-button-style u-nav-link" style="padding: 10px 20px;">
-          Cerrar Sesión</a>
-      </li>
-    </ul>
-  </div>
-</div>
-{%else%}
-<div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
-  <div class="u-inner-container-layout u-sidenav-overflow">
-    <div class="u-menu-close"></div>
-    <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-      <li class="u-nav-item"><a class="u-button-style u-nav-link" href="\habitaciones"
-          style="padding: 10px 20px;">Habitaciones</a>
-      </li>
-      <li class="u-nav-item"><a href="\login" class="u-button-style u-nav-link" style="padding: 10px 20px;">
-          Cerrar Sesión</a>
-      </li>
-    </ul>
-  </div>
-</div>
-{%endif%}
-
-<script>
-  $(document).ready(function(){
-    $(".dropdown-toggle").dropdown("toggle");
-  });
-  </script>
-{%endblock%}
 
 {%block content%}
 <div class="ventana">
-    <div class="fila"><h1>Panel Administrativo</h1></div>
-    <br>
-    <div class="fila"><p>Bienvenido al Panel Administrativo, presione uno de los botones para continuar</p></div>
-    <div class="fila">&nbsp;</div>
-    <div class="c3"><a class="btn btn-secondary" href="" onclick="gest_usr();" id="gestUsr">Gestión de Usuarios</a></div>
-    <div class="dropdown"><button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Gestión de Habitaciones<span class="caret"></span></button>
-      <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-        <li role="presentation"><a role="menuitem" tabindex="-1" href="/habitaciones/panelAdm/gestionHab/agregarH">Agregar Nueva Habitación</a></li>
-        <li role="presentation"><a role="menuitem" tabindex="-1" href="/habitaciones/panelAdm/gestionHab/editarH">Editar o Eliminar Habitación</a></li>
-      </ul>
-    </div>
-    <div class="c3"><a class="btn btn-secondary" href="" onclick="gest_com();" id="gestCom">Gestión de Comentarios</a></div>
-    </div>
+  <table>
+    <tr>
+      <th class="encabezado">
+        <h1>Panel Administrativo</h1>
+      </th>
+    </tr>
+    <tr class="fila">
+      <td><h4 >Bienvenido, presione uno de los botones para continuar</h4></td>
+    </tr>
+    <tr class="fila">&nbsp;</tr>
+    <tr class="fila">
+      <td class="c3"><a class="btn btn-primary" href="" onclick="gest_usr();" id="gestUsr">Gestión de Usuarios</a></td>
+      <td class="c3"><a class="btn btn-primary" href="/admin/panelAdm/gestionHab" onclick="gest_usr();" id="gestUsr">Gestión de Habitaciones</a></td>
+      <td class="c3"><a class="btn btn-primary" href="" onclick="gest_com();" id="gestCom">Gestión de Comentarios</a>
+      </td>
+    </tr>
+  </table>
 </div>
 
 {% endblock %}

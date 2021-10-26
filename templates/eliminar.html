@@ -1,4 +1,4 @@
-{%extends 'bases/indexHome.html'%}
+{%extends 'bases/indexAdm.html'%}
 {% block title %}
 Eliminar Habitación
 {% endblock %}
@@ -6,78 +6,12 @@ Eliminar Habitación
 <link rel="stylesheet" href="/static/estilos/estiloRecuperacion.css">
 {% endblock %}
 
-
-{%block listaNav1%}
-{%if usuario%}
-<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\admin\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
-  </li>
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\admin\panelAdm" style="padding: 10px 20px;">Dashboard</a>
-  </li>
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
-  </li>
-</ul>
-
-{%else%}
-<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
-  </li>
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
-  </li>
-</ul>
-{%endif%}
-{%endblock%}
-
-{%block listaNav2%}
-
-{%if usuario%}
-<div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
-  <div class="u-inner-container-layout u-sidenav-overflow">
-    <div class="u-menu-close"></div>
-    <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-      <li class="u-nav-item"><a class="u-button-style u-nav-link" href="\habitaciones"
-          style="padding: 10px 20px;">Habitaciones</a>
-      </li>
-      <li class="u-nav-item"><a href="\admin\panelAdm" class="u-button-style u-nav-link" style="padding: 10px 20px;">
-          Dashboard</a>
-      </li>
-      <li class="u-nav-item"><a href="\login" class="u-button-style u-nav-link" style="padding: 10px 20px;">
-          Cerrar Sesión</a>
-      </li>
-    </ul>
-  </div>
-</div>
-{%else%}
-<div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
-  <div class="u-inner-container-layout u-sidenav-overflow">
-    <div class="u-menu-close"></div>
-    <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-      <li class="u-nav-item"><a class="u-button-style u-nav-link" href="\habitaciones"
-          style="padding: 10px 20px;">Habitaciones</a>
-      </li>
-      <li class="u-nav-item"><a href="\login" class="u-button-style u-nav-link" style="padding: 10px 20px;">
-          Cerrar Sesión</a>
-      </li>
-    </ul>
-  </div>
-</div>
-{%endif%}
-{%endblock%}
-
 {%block content %}
-<main class="form-signin">
 
-    <form action="{{ url_for('panelAdm') }}" method="POST" name="elimina" onsubmit="eliminar()">
+<form action="/admin/panelAdm/gestionHab/eliminarH" id="formularioE" method="POST"  novalidate >
+    {{ form.hidden_tag() }}
+    <main class="form-signin">
+
         <div class="">
             <h1 class="h3 mb-3">Advertencia</h1>
         </div>
@@ -86,13 +20,9 @@ Eliminar Habitación
         </div>
         <br>
         <br>
-        <div class="pt-3 form-input text-end">
-            <input class="btn btn-lg btn-primary" type="submit" value="Eliminar">
-        </div>
+        <div> {{ form.eliminar(size=10) }} </div>
         <br>
-    </form>
+    </main>
 
-</main>
-
-
+</form>
 {%endblock%}

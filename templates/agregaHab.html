@@ -1,76 +1,39 @@
-{%extends 'bases/indexHome.html'%}
+{%extends 'bases/indexAdm.html'%}
+{% block title %}Edición Habitaciones{% endblock %}
 
-{% block title %}
-Agrega Habitaciones
-{% endblock %}
-
-{%block stylepages%}
-<link rel="stylesheet" href="{{url_for('static', filename='estilos/estilos.css')}}" media="screen">
-{%endblock%}
-
-
-{%block listaNav1%}
-<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\admin\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
-  </li>
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\admin\panelAdm" style="padding: 10px 20px;">Dashboard</a>
-  </li>
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
-  </li>
-</ul>
-{%endblock%}
-
-{%block listaNav2%}
-<div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
-  <div class="u-inner-container-layout u-sidenav-overflow">
-    <div class="u-menu-close"></div>
-    <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-      <li class="u-nav-item"><a class="u-button-style u-nav-link" href="\habitaciones"
-          style="padding: 10px 20px;">Habitaciones</a>
-      </li>
-      <li class="u-nav-item"><a href="\admin\panelAdm" class="u-button-style u-nav-link" style="padding: 10px 20px;">
-          Dashboard</a>
-      </li>
-      <li class="u-nav-item"><a href="\login" class="u-button-style u-nav-link" style="padding: 10px 20px;">
-          Cerrar Sesión</a>
-      </li>
-    </ul>
-  </div>
-</div>
-{%endblock%}
 
 {%block content%}
 
-<div class="ventana">
-  <table>
-    <tr>
-      <th class="encabezado"><input type="text" id="nameHab" name="name_hab" placeholder="Nombre de Habitación" /></th>
-      <th></th>
-      <th class="id"><input type="text" id="idHab" name="id_hab" placeholder="ID de Habitación" /></th>
+<table>
+    <tr>            
+        <th colspan="3">{{ row["nombre"] }} </th>
+        <td >&nbsp;</td>
+        <th colspan="2">{{ row["id"] }}</th>
     </tr>
     <tr>
-      <td rowspan="5" class="grafico"><img src="{{ url_for('static',filename='imagenes/hab.jpeg')}}" /></td>
-      <td class="campo"><input type="text" id="capMax" name="capacidad" placeholder="Capacidad máx"></td>
-      <td><label>COP $</label><input type="number" placeholder="valor"></td>
+        <td rowspan="4" ><img src="{{ url_for('static',filename='imagenes/hab.jpeg')}}" /></td>
+        <td colspan="2">{{ row["capMax"] }}</td>
+        <td >&nbsp;</td>
+        <td colspan="2">{{ row["precio"] }}
+            {{ form.precio(size=10) }}</td>
     </tr>
     <tr>
-      <td class="campo"><input type="text" id="numcam" name="numero_camas" placeholder="Número de camas"></td>
-      <td class="info">Tarifa por noche.<br> Impuestos incluidos</td>
+        <td colspan="2">{{ row["cantCamas"] }}</td>
+        <td>&nbsp;</td>
+        <td colspan="2">Tarifa por noche.<br> Impuestos incluidos</td>
     </tr>
     <tr>
-      <td class="campo"><textarea id="desc" name="descripcion" cols="35" rows="4" maxlength="120"
-          placeholder="Describa la habitación"></textarea></td>
+        <td colspan="3">{{ row["descripcion"] }}</td>
+        <td colspan="2">&nbsp;</td>
     </tr>
     <tr>
-      <td class="boton"><input type="submit" id="guardar" value="Guardar"></td>
-      <td class="boton"><input type="submit" id="salir" value="Salir"></td>
+        <td >{{ form.enviar(size=9) }}</td>
+        <td>{{ form.consultar(size=9) }}</td> 
+        <td>{{ form.listar(size=9) }}</td> 
+        <td>{{ form.actualizar(size=9) }}</td> 
+        <td>{{ form.eliminar(size=9) }}</td> 
     </tr>
-  </table>
-</div>
+    
+</table>
+
 {% endblock %}

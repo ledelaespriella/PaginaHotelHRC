@@ -1,25 +1,24 @@
-let gestionHab=document.getElementById("gestHab");
-let nav = document.getElementById("nav");
 
-gestionHab.addEventListener("mouseover",gest_hab);
-
-
-function eliminar(){
-    var btnElim = document.getElementById("eliminarHab").action="/admin/panelAdm";
+function guardarHab(){
+    document.getElementById("formulario").action="/admin/panelAdm/gestionHab/agregarH"
 }
 
-function gest_hab(){
-    nav.classList.toggle("mostrar");
-    alert("Alerta de eventos");
+function consultarHab(){
+    document.getElementById("formulario").action="/admin/panelAdm/gestionHab/get"
 }
 
-function agregarH(){
-    var btnAdd = document.getElementById("newHab").action="/habitaciones";
+function Habitaciones_list(){
+    document.getElementById("formulario").action="/habitaciones/list"
 }
-function guardar(){
-    var btnAdd = document.getElementById("guardar").action="/habitaciones";
+
+function actualizarHab(){
+    document.getElementById("formulario").action="/admin/panelAdm/gestionHab/editarH"
 }
-function editarH(){
-    var btnEdit = document.getElementById("editHab").action="/admin/panelAdm/gestionHab/editarHab";
-    var btnElim = document.getElementById("eliminarHab").action="/admin/panelAdm/gestionHab/eliminarH";
+
+function eliminaMsjH(){
+    document.getElementById("formulario").action="/admin/panelAdm/gestionHab/msjeliminarH"
+}
+
+function eliminarHab(){
+    document.getElementById("formularioE").action="/admin/panelAdm/gestionHab/eliminarH"
 }

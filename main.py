@@ -162,7 +162,7 @@ def home():
         if request.method == 'GET':
             form = formHabitaciones()
             try:
-                with sqlite3.connect("D:\database\HRC.db") as con:
+                with sqlite3.connect("HRC.db") as con:
                     con.row_factory = sqlite3.Row 
                     cur = con.cursor()
                     cur.execute("SELECT * FROM habitacion")
@@ -202,7 +202,7 @@ def Habitaciones_get():
         if request.method == 'POST':
             idHabitacion = form.idHabitacion.data
             try:
-                with sqlite3.connect("D:\database\HRC.db") as con:
+                with sqlite3.connect("HRC.db") as con:
                     con.row_factory = sqlite3.Row
                     cur = con.cursor()
                     cur.execute("SELECT * FROM habitacion WHERE id = ?", [idHabitacion])
@@ -224,7 +224,7 @@ def Habitaciones_list():
         rol=session["rol"]
         form = formHabitaciones()
         try:
-            with sqlite3.connect("D:\database\HRC.db") as con:
+            with sqlite3.connect("HRC.db") as con:
                 con.row_factory = sqlite3.Row 
                 cur = con.cursor()
                 cur.execute("SELECT * FROM habitacion")
@@ -248,7 +248,7 @@ def Habitaciones_disp():
             else:
                 estado = 0
             try:
-                with sqlite3.connect("D:\database\HRC.db") as con:
+                with sqlite3.connect("HRC.db") as con:
                     con.row_factory = sqlite3.Row 
                     cur = con.cursor()
                     cur.execute("SELECT * FROM habitacion WHERE  disponibilidad = ?", [estado])
@@ -324,7 +324,7 @@ def gestionHab():
             camas = request.form['numero_camasE']
             valor = request.form['precioE']
             try:
-                with sqlite3.connect('D:\database\HRC.db') as con:
+                with sqlite3.connect('HRC.db') as con:
                     cur = con.cursor()
                     cur.execute(f'UPDATE habitacion(nombre, descripcion, disponibilidad, cantCamas, capMax, precio) SET nombre ="{nombreHab}",  descripcion ="{descripcion}" , cantCamas = {camas}, capMax = {capacidad}, precio = {valor} WHERE id = ?', (idHab))
                     con.commit()
@@ -347,7 +347,7 @@ def agregarH():
             capacidad= request.form['capacidad_add']
             valor = request.form['valor_add']
             try:
-                with sqlite3.connect('D:\database\HRC.db') as con:
+                with sqlite3.connect('HRC.db') as con:
                     cur = con.cursor()
                     cur.execute('INSERT INTO habitacion(id, nombre, descripcion, disponibilidad, cantCamas, capMax, precio) VALUES (?,?,?,?,?,?,?)', (idHab, nombreHab, descripcion, disponibilidad, numCam, capacidad, valor))
                     con.commit()
@@ -381,7 +381,7 @@ def eliminarH():
 def load_reserva(idHab):
     if "rol" in session:
         try:
-            with sqlite3.connect("D:\database\HRC.db") as con:
+            with sqlite3.connect("HRC.db") as con:
                 con.row_factory = sqlite3.Row 
                 cur = con.cursor()
                 cur.execute("SELECT * FROM habitacion WHERE id = ?", [idHab])
@@ -420,7 +420,7 @@ def reserva():
                     flash('Las fechas de entrada y salida no pueden ser iguales')
                     return render_template('reserva.html')
                 try:
-                    with sqlite3.connect('D:\database\HRC.db') as con:
+                    with sqlite3.connect('HRC.db') as con:
                         cur = con.cursor()
                         cur.execute('ISERT INTO reserva(checkin, checkout, email, telefono, preferencia, fPago, idHabitacion, cedula) VALUES(?,?,?,?,?,?,?,?)', (checkin, checkout, correo, telefono, preferencia, check, idHab, cedula))
                         con.commit()

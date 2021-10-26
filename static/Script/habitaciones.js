@@ -1,4 +1,3 @@
-
 function limpiar(){
     document.getElementById("estadoHab").checked = false;
     document.getElementById("numHab").value="";

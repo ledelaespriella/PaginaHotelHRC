@@ -10,11 +10,11 @@
 <ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
   <li class="u-nav-item"><a
       class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\admin\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
+      href="\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
   </li>
   <li class="u-nav-item"><a
       class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\admin\panelAdm" style="padding: 10px 20px;">Dashboard</a>
+      href="\habitaciones\panelAdm" style="padding: 10px 20px;">Dashboard</a>
   </li>
   <li class="u-nav-item"><a
       class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
@@ -28,6 +28,10 @@
       class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
       href="\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
   </li>
+  <li class="u-nav-item"><a
+    class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+    href="\habitaciones" style="padding: 10px 20px;">Mis habitaciones</a>
+    </li>
   <li class="u-nav-item"><a
       class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
       href="\logout" style="padding: 10px 20px;">Cerrar sesion</a>
@@ -49,17 +53,6 @@
     </ul>
     {% endif %}
     {% endwith%}
-    <header>
-        <div class="header">
-            <div id="logo">
-                <img src="{{url_for('static', filename='imagenes/RHC_.png')}}" alt="Logo" id="imgRHC">
-            </div>
-            <div id="user">
-                <h3>Usuario</h3>
-                <img src="{{url_for('static', filename='imagenes/avatar.png')}}" alt="Avatar" id="imgAvatar">
-            </div>
-        </div>
-    </header>
     <div id="nav">
         <nav style="padding-left: 30px;">
             <a href="/inicio">Inicio</a>
@@ -104,10 +97,16 @@
                     <h1 style="text-align:left;">&#9733; <span>{{row["calificacion"]}}</span></h1><br>
                     <p style="text-align:left;">(10 comentarios)</p><br>
                     <p style="text-align:left; font-size:20px"><b>${{ row["precio"] }}</b></p>
-                    <a href="">Ver más</a>
+                    {%block vermas%}
+                        {%if rol == 'final'%}
+                        <a href='/reserva/{{ row["id"] }}'> Ver más </a>
+                        {%else%}
+                        <a href='/habitaciones/gestionHab'> Ver más </a>
+                        {%endif%}
+                    {%endblock%}
                 </div>
             </div>
-        </section>
+        </section>  
     </div>
     {% endif %}
     </div>
@@ -119,6 +118,8 @@
         </div>
     </form>
     {% endblock %}
+
+    <
 
 <script src="{{url_for('static', filename='Script/habitaciones.js')}}"></script>
 {% endblock %}

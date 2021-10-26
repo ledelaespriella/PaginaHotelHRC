@@ -1,4 +1,3 @@
-
 {% extends "habitaciones.html" %}
 {% block contentHab %}
 {% if row %}
@@ -23,7 +22,13 @@
                 <h1 style="text-align:left;">&#9733; <span>{{row["calificacion"]}}</span></h1><br>
                 <p style="text-align:left;">(10 comentarios)</p><br>
                 <p style="text-align:left; font-size:20px"><b>${{ row["precio"] }}</b></p>
-                <a href="">Ver más</a>
+                {%block vermas%}
+                {%if rol == 'final'%}
+                <a href='/reserva/{{ row["id"] }}'> Ver más </a>
+                {%else%}
+                <a href='/habitaciones/gestionHab'> Ver más </a>
+                {%endif%}
+                {%endblock%}
             </div>
         </div>
     </section>

@@ -3,7 +3,6 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Length, Email
 from wtforms.fields.html5 import EmailField
 
-
 class FormLogin(FlaskForm):
     correo = EmailField('usuario', validators=[DataRequired(message='No dejar vacio') ],render_kw={'placeholder':'name@example.com', 'class':'form-control'})
     contrasena = PasswordField('contrasena', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Contraseña', 'class':'form-control password1'})

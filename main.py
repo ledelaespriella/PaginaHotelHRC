@@ -287,7 +287,7 @@ def gestionHab():
             try:
                 with sqlite3.connect('D:\database\HRC.db') as con:
                     cur = con.cursor()
-                    cur.execute(f'UPDATE habitacion(nombre, descripcion, disponibilidad, cantCamas, capMax, precio) SET nombre ="{nombreHab}",  descripcion ="{descripcion}" , cantCamas = {camas}, capMax = {capacidad}, precio = {valor} WHERE id = ?', (idHab))
+                    cur.execute("UPDATE habitacion SET nombre=?, descripcion=?, cantCamas=?, capMax=?, precio=? WHERE id=?", [nombreHab, descripcion, camas, capacidad, valor, idHab])
                     con.commit()
             except Error:
                 return('<p>Error al realizar la operacion</p>')

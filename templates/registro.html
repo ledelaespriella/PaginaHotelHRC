@@ -8,29 +8,31 @@
 
 {%block content %}
 <form action="{{ url_for('registro') }}" method="POST" name="formRegistro" onsubmit="validarRegistro()">
+    {{ form.hidden_tag() }}
+    {{csrf_token }}
     <h1 class="h3 mb-3 fw-normal text-center">Registra tu cuenta</h1>
     <br>
     <div class="row g-2">
         <div class="col-sm">
-            <input name="firstName" type="text" class="form-control" id="Primer_nombre" placeholder="Primer nombre">
+            {{form.Primer_nombre()}}
         </div>
         <div class="col-sm">
-            <input name="secondName" type="text" class="form-control" id="Segundo_nombre" placeholder="Segundo nombre">
+            {{form.Segundo_nombre()}}
         </div>
     </div>
     <br>
     <div class="row g-2">
         <div class="col-sm">
-            <input name="surName" type="text" class="form-control" id="Primer_apellido" placeholder="Primer apellido">
+            {{form.Primer_apellido()}}
         </div>
         <div class="col-sm">
-            <input name="SecondSurName"type="text" class="form-control" id="Segundo_apellido" placeholder="Segundo apellido">
+            {{form.Segundo_apellido()}}
         </div>
     </div>
     <br>
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">@</span>
-        <input name="email" type="email" class="form-control" id="correo" placeholder="Correo electronico">
+        {{form.correo()}}
     </div>
     <div class="row g-2">
         <div class="col-sm-4">
@@ -42,21 +44,26 @@
             </select>
         </div>
         <div class="col-sm">
-            <input name="NumberId" type="text" class="form-control" id="identificacion" placeholder="Numero de Identificación">
+            {{form.identificacion()}}
         </div>
     </div>
     <br>
-    <div class="row g-2">
-        <input name="password" type="password" class="col-sm form-control" id="contraseña" placeholder="Contraseña">
+    <div class="input-group mb-3">
+        {{form.contrasena()}}
+        <span class="input-group-text show-password fa fa-fw fa-eye" id="basic-addon1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+              </svg>
+        </span>
     </div>
-    <br>
     <div class="row g-2">
-        <input name="passwordVer" type="password" class="form-control" id="contraseña" placeholder="Confirmar contraseña">
+        {{form.confirmacion_contrasena()}}
     </div>
     <br>
 
     <div class="pt-3 text-center">
-        <input class="btn btn-lg btn-primary" type="submit" value="Registrarse">
+        {{form.enviar_registro()}}
     </div>
     <br>
 </form>

@@ -11,15 +11,19 @@
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='estilos/normalize.css')}}">
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='estilos/nicepage.css')}}" media="screen">
   <link rel="stylesheet" href="{{url_for('static',filename='estilos/Home.css')}}" media="screen">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  {%block stylepages%}{%endblock%}
+  
   <meta name="generator" content="Nicepage 3.27.1, nicepage.com">
   <link id="u-theme-google-font" rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+  {% block style %} {%endblock%}
   <meta name="theme-color" content="#0354d8">
   <meta property="og:title" content="Home">
   <meta property="og:type" content="website">
 </head>
 
-<body class="u-body">
+<body class="u-body" id="cuerpo" >
   <header class="u-clearfix u-header u-header" id="sec-ce38">
     <div class="u-clearfix u-sheet u-sheet-1">
       <a href="\" class="u-image u-logo u-image-1">
@@ -57,7 +61,7 @@
   </header>
   {%block content%}{% endblock %}
 
-  <footer class="my-3 pt-2 text-muted text-center text-small">
+  <footer id="pie" class="my-3 pt-2 text-muted text-center text-small">
       <div class="text-center">
         <p class="mb-1 text-center">© 2021 Hyatt Regency Colombo</p>
       </div>
@@ -66,12 +70,15 @@
 
   <script class="u-script" type="text/javascript" src="{{url_for('static', filename='Script/jquery-1.9.1.min.js')}}" defer=""></script>
   <script class="u-script" type="text/javascript" src="{{url_for('static', filename='Script/nicepage.js')}}" defer=""></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
   <script type="application/ld+json">{
 		"@context": "http://schema.org",
 		"@type": "Organization",
 		"name": "",
 		"logo": "images/default-logo.png"
-}</script>
+  }</script>
 </body>
 
 </html>

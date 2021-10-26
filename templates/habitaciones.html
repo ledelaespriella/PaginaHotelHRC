@@ -1,74 +1,124 @@
 {%extends 'bases/indexHome.html'%}
 
-{%block listaNav1%}
-{%if usuario%}
-<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
-    <li class="u-nav-item"><a
-        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-        href="\admin\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
-    </li>
-    <li class="u-nav-item"><a
-        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-        href="\admin\dashboard" style="padding: 10px 20px;">Dashboard</a>
-    </li>
-    <li class="u-nav-item"><a
-        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-        href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
-    </li>
-</ul>
-
-{%else%}
-<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
-    <li class="u-nav-item"><a
-        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-        href="\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
-    </li>
-    <li class="u-nav-item"><a
-        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-        href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
-    </li>
-</ul>
-{%endif%}
+{%block stylepages%}
+<link rel="stylesheet" href="{{url_for('static', filename='estilos/habitaciones.css')}}">
 {%endblock%}
 
-{%block listaNav2%}
 
-{%if usuario%}
-<div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
-  <div class="u-inner-container-layout u-sidenav-overflow">
-    <div class="u-menu-close"></div>
-    <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-      <li class="u-nav-item"><a class="u-button-style u-nav-link" href="\habitaciones"
-          style="padding: 10px 20px;">Habitaciones</a>
-      </li>
-      <li class="u-nav-item"><a href="\admin\dashboard" class="u-button-style u-nav-link" style="padding: 10px 20px;">
-        Dashboard</a>
-      </li>
-      <li class="u-nav-item"><a href="\login" class="u-button-style u-nav-link" style="padding: 10px 20px;">
-          Cerrar Sesión</a>
-      </li>
-    </ul>
-  </div>
-</div>
+{%block listaNav1%}
+{%if rol == 'admin' or rol == 'supAdmin' %}
+<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
+  <li class="u-nav-item"><a
+      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+      href="\admin\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
+  </li>
+  <li class="u-nav-item"><a
+      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+      href="\admin\panelAdm" style="padding: 10px 20px;">Dashboard</a>
+  </li>
+  <li class="u-nav-item"><a
+      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+      href="\logout" style="padding: 10px 20px;">Cerrar sesion</a>
+  </li>
+</ul>
+
 {%else%}
-<div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
-    <div class="u-inner-container-layout u-sidenav-overflow">
-      <div class="u-menu-close"></div>
-      <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-        <li class="u-nav-item"><a class="u-button-style u-nav-link" href="\habitaciones"
-            style="padding: 10px 20px;">Habitaciones</a>
-        </li>
-        <li class="u-nav-item"><a href="\login" class="u-button-style u-nav-link" style="padding: 10px 20px;">
-            Cerrar Sesión</a>
-        </li>
-      </ul>
-    </div>
-  </div>
+<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
+  <li class="u-nav-item"><a
+      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+      href="\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
+  </li>
+  <li class="u-nav-item"><a
+      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+      href="\logout" style="padding: 10px 20px;">Cerrar sesion</a>
+  </li>
+</ul>
 {%endif%}
 {%endblock%}
 
 {%block content%}
 
-<H1>prueba</H1>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li style='background-color:red; color:aliceblue; font-size: 30px;'>
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith%}
+    <header>
+        <div class="header">
+            <div id="logo">
+                <img src="{{url_for('static', filename='imagenes/RHC_.png')}}" alt="Logo" id="imgRHC">
+            </div>
+            <div id="user">
+                <h3>Usuario</h3>
+                <img src="{{url_for('static', filename='imagenes/avatar.png')}}" alt="Avatar" id="imgAvatar">
+            </div>
+        </div>
+    </header>
+    <div id="nav">
+        <nav style="padding-left: 30px;">
+            <a href="/inicio">Inicio</a>
+            <a href="/habitaciones">>Habitaciones</a>
+        </nav>
+    </div>
+    <form action="/habitaciones" id="formulario" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="busqueda">
+            <p style="padding-left: 30px;"><u>Criterios de busqueda </u></p>
+            <div>
+                {{ form.idHabitacion.label }}
+                {{ form.idHabitacion(size=20) }}
+                {{ form.estado() }}
+                {{ form.estado.label }}
+                {{ form.buscar(size=9) }}
+            </div>
+        </div>
+        <div>
+    </form>
+    {% block contentHab %}
+    {% if row %}
+    <div>
+        <section class="contenedor">
+            <div class="habitaciones">
+                <div>
+                    <img src="{{url_for('static', filename='imagenes/Habitacion.jpg')}}" alt="Habitacion" width="250"
+                        height="250" id="imgHab">
+                </div>
+                <div>
+                    <h1 style="text-align:left;"><span>{{ row["nombre"] }}</span></h1>
+                    <h1 style="text-align:left;">Habitacion <span>{{ row["id"] }}</span></h1>
+                    <p id="descripHab">
+                        {{ row["descripcion"] }}
+                    </p>
+                    <p style="text-align:left;"><b>Estado:</b> <span>{{ row["disponibilidad"] }}</span> <b>Max:</b> 4
+                        personas
+                        <b>#Camas:</b> 2
+                    </p>
+                </div>
+                <div id="otrosHab">
+                    <h1 style="text-align:left;">&#9733; <span>{{row["calificacion"]}}</span></h1><br>
+                    <p style="text-align:left;">(10 comentarios)</p><br>
+                    <p style="text-align:left; font-size:20px"><b>${{ row["precio"] }}</b></p>
+                    <a href="">Ver más</a>
+                </div>
+            </div>
+        </section>
+    </div>
+    {% endif %}
+    </div>
+    <form action="/habitaciones" id="formularios" method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        <div id="mostrarHab">
+            <hr width="80%">
+            {{ form.listar(size=9) }}
+        </div>
+    </form>
+    {% endblock %}
 
+<script src="{{url_for('static', filename='Script/habitaciones.js')}}"></script>
 {% endblock %}

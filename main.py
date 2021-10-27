@@ -187,6 +187,10 @@ def mensaje():
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html') 
 
+@app.errorhandler(404)
+def page_not_found(error):
+	return render_template("errores.html",error="404 Pagina no encontrada",mensaje="Lo sentimos, se ha producido un error, no se ha encontrado la página solicitada."), 404
+
 #--------------------------------------------------------------JOSE------------------------------------------------------------------------
 @app.route("/habitaciones", methods=['GET', 'POST'])
 def home():

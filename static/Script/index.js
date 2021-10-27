@@ -55,3 +55,20 @@ window.addEventListener("load", function() {
     })
 
 });
+
+function validarContrasena() {
+
+    var pas1=document.formularioRecuperacionPassw.pass;
+    var pas2=document.formularioRecuperacionPassw.passVer;
+
+    var formatPass= /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/i;
+
+    if(!pas1.value.match(formatPass)){
+        alert("Error el crear contraseña. Debes ingresar una contraseña con las siguientes caracteristicas:\n\n-Minimo 1 letra mayuscula\n-Minimo 1 letra Miniscula\n-Minimo 1 caracter especial\n-Minimo 1 numero\n-Tamaño minimo de 8 caracteres")
+    }
+
+    if (pas1.value != pas2.value) {
+        alert("Las contraseñas deben de coincidir");
+    }
+
+}

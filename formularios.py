@@ -42,7 +42,4 @@ class formHab(FlaskForm):
     listar = SubmitField('Listar', render_kw={'onmouseover':'Habitaciones_list()', 'class':'form_boton'} )
     actualizar = SubmitField('Actualizar', render_kw={'onmouseover':'actualizarHab()', 'class':'form_boton'} )
 
-    elimina = SubmitField('Eliminar', render_kw={'onmouseover':'eliminaMsjH()', 'class':'form_boton'} )
-
-
-    eliminar = SubmitField('Aceptar', render_kw={'onmouseover':'eliminarHab()', 'class':'form_boton'} )
+    eliminar = SubmitField('Eliminar', render_kw={'onmouseover':'eliminarHab()', 'class':'form_boton'} )

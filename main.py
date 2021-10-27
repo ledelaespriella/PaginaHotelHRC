@@ -297,7 +297,7 @@ def nuevaH():
         try:
             with sqlite3.connect("HRC.db") as con:
                 cur = con.cursor() #Manipula la conexión a la BD
-                cur.execute("INSERT INTO habitacion(id, nombre, descripcion, cantCamas, capMax, precio) VALUES (?,?,?,?,?,?)", (idHabitacion, nombre, desc, numC, capM, precio) )
+                cur.execute("INSERT INTO habitacion(id, nombre, descripcion, disponibilidad, cantCamas, capMax, precio, calificacion) VALUES (?,?,?,True,?,?,?,0)", (idHabitacion, nombre, desc, numC, capM, precio) )
                 con.commit() #Confirmar la transacción
                 return "Guardado satisfactoriamente"
         except Error:
@@ -314,11 +314,11 @@ def buscaH():
             with sqlite3.connect("HRC.db") as con:
                 con.row_factory = sqlite3.Row #Convierte la respuesta de la BD en un diccionario
                 cur = con.cursor()
-                cur.execute("SELECT * FROM habitacion WHERE id = ?", [idHabitacion])
+                cur.execute("SELECT id, nombre, descripcion, cantCamas, capMax, precio FROM habitacion WHERE id = ?", [idHabitacion])
                 row = cur.fetchone()
                 if row is None:
                     flash("Estudiante no se encuentra en la BD")
-                return render_template("agregaHab.html", row=row) ################ REVISAR #####################
+                return render_template("agregaHab.html", row=row) 
         except Error:
             con.rollback()
             print(Error)
@@ -350,10 +350,6 @@ def editarH():
         finally:
             return mensaje
 
-@app.route('/admin/panelAdm/gestionHab/msjeliminarH',  methods=['GET', 'POST'])
-def msjelimina():
-    form = formHab()
-    return render_template("eliminar.html", form=form)
 
 @app.route('/admin/panelAdm/gestionHab/eliminarH',  methods=['GET', 'POST'])
 def eliminarH():

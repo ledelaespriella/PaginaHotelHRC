@@ -15,10 +15,6 @@ function actualizarHab(){
     document.getElementById("formulario").action="/admin/panelAdm/gestionHab/editarH"
 }
 
-function eliminaMsjH(){
-    document.getElementById("formulario").action="/admin/panelAdm/gestionHab/msjeliminarH"
-}
-
 function eliminarHab(){
-    document.getElementById("formularioE").action="/admin/panelAdm/gestionHab/eliminarH"
+    document.getElementById("formulario").action="/admin/panelAdm/gestionHab/eliminarH"
 }

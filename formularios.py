@@ -26,3 +26,8 @@ class formHabitaciones(FlaskForm):
     buscar = SubmitField('Buscar', render_kw={'onclick':'buscarHab()', 'class':'form_boton'} )
     listar = SubmitField('Mostrar mas habitaciones', render_kw={'onclick':'listarHab()','id':'mostar', 'class':'form_boton'} )
     ocultar = SubmitField('Mostrar menos', render_kw={'onclick':'ocultarHab()','id':'ocultar', 'class':'form_boton'} )
+
+class formCambio_password(FlaskForm):
+    contrasenaNueva=PasswordField('Contraseña Nueva', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Contraseña nueva','class':'form-control password1','id':'pass'})
+    confirmacion_contrasena=PasswordField('Confirmar contraseña', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Confirmar contraseña','class':'form-control password2','id':'passVer'})
+    enviar=SubmitField('Recuperar contraseña',render_kw={'onclick':'validarContrasena()','class':'btn btn-lg btn-primary'})

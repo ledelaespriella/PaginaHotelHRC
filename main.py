@@ -1,5 +1,5 @@
 from sqlite3.dbapi2 import Error
-from formularios import FormLogin,FormRegistro, formHabitaciones
+from formularios import FormLogin,FormRegistro, formCambio_password, formHabitaciones
 import os
 import utils
 from flask import Flask, request, flash, session
@@ -129,6 +129,8 @@ def recuperacion():
                     print(consulta)
                     con.commit()
                     if consulta!=None:
+                        usuario=consulta[2]
+                        session['user']=usuario
                         return redirect(url_for("mensaje"))       
                     else:
                         error = "Correo no existe en la base de datos, por favor registrarse."
@@ -137,16 +139,49 @@ def recuperacion():
             except Error: 
                 flash('Error al conectar con la base de datos')
                 return render_template('recuperacion.html')
-        
-        
-
     else:
         return render_template('recuperacion.html')
 
 
 @app.route('/login/recuperacion/mensaje', methods=['GET', 'POST'])
 def mensaje():
-    return render_template('mensaje.html')
+    if 'user' in session:
+        usuario = session['user']
+        form = formCambio_password()
+        if request.method == 'POST':
+            nuevoPassword = escape(form.contrasenaNueva.data)
+            confirmacionPassword = escape(form.confirmacion_contrasena.data)
+            
+            if not utils.isPasswordValid(nuevoPassword):
+                error = "Contraseña invalida por favor registre una correcta."
+                flash(error)
+                return render_template("recuperacionPassw.html",form=form)
+            
+            if nuevoPassword==confirmacionPassword:
+                try:
+                    with sqlite3.connect("HRC.db") as con:
+                        cur = con.cursor()
+                        consulta = cur.execute("UPDATE usuarios SET password=? WHERE email=?",[nuevoPassword,usuario])
+                        con.commit()
+                        if consulta!=None:
+                            return render_template('mensaje.html')        
+                        else:
+                            error = "Error en la consulta a la base de datos"
+                            flash(error)
+                            return render_template('recuperacionPassw.html',form=form)
+                except Error: 
+                    flash('Error al conectar con la base de datos')
+                    print (Error)
+                    return render_template('recuperacionPassw.html',form=form)
+            else:
+                error = "Contraseñas no coinciden. Por favor verifique e intente de nuevo"
+                flash(error)
+                return render_template('recuperacionPassw.html',form=form)
+        else:
+            return render_template('recuperacionPassw.html',form=form)
+    else:
+        flash("Accion no permita por favor inicie sesión")
+        return render_template('error.html') 
 
 #jose
 

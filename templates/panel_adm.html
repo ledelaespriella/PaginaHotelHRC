@@ -1,38 +1,24 @@
-{%extends 'bases/indexHome.html'%}
-
-{%block stylepages%}
-<link rel="stylesheet" href="{{url_for('static', filename='estilos/estilos.css')}}" media="screen">
-{%endblock%}
-
-
-{%block listaNav1%}
-<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
-  </li>
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\habitaciones\panelAdm" style="padding: 10px 20px;">Dashboard</a>
-  </li>
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
-  </li>
-</ul>
-{%endblock%}
+{%extends 'bases/indexAdm.html'%}
+{% block title %}Dashboard {% endblock %}
 
 {%block content%}
 <div class="ventana">
-    <div class="fila"><h1>Panel Administrativo</h1></div>
-    <br>
-    <div class="fila"><p>Bienvenido al Panel Administrativo, presione uno de los botones para continuar</p></div>
-    <br><br><br>
-    <div class="fila">
-        <div class="c3"><a class="btn btn-secondary" href="\admin\panelAdm\" onclick="gest_usr();" id="gestUsr">Gestión de Usuarios</a></div>
-        <div class="c3"><a class="btn btn-secondary" href="\habitaciones" onclick="gest_hab();" id="gestHab" >Gestión de Habitaciones</a></div>
-        <div class="c3"><a class="btn btn-secondary" href="\admin\panelAdm\" onclick="gest_com();" id="gestCom">Gestión de Comentarios</a></div>
-    </div>
-    <a href="/habitaciones/panelAdm/gestionHab/agregarH"> crear habitacion</a>
+  <table>
+    <tr>
+      <th class="encabezado">
+        <h1>Panel Administrativo</h1>
+      </th>
+    </tr>
+    <tr class="fila">
+      <td><h4 >Bienvenido, presione uno de los botones para continuar</h4></td>
+    </tr>
+    <tr class="fila">&nbsp;</tr>
+    <tr class="fila">
+      <td class="c3"><a class="btn btn-primary" href="" onclick="gest_usr();" id="gestUsr">Gestión de Usuarios</a></td>
+      <td class="c3"><a class="btn btn-primary" href="/admin/panelAdm/gestionHab" onclick="gest_hab();" id="gestHab">Gestión de Habitaciones</a></td>
+      <td class="c3"><a class="btn btn-primary" href="" onclick="gest_com();" id="gestCom">Gestión de Comentarios</a>
+      </td>
+    </tr>
+  </table>
 </div>
 {% endblock %}

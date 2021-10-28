@@ -1,5 +1,6 @@
+from flask.templating import render_template
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email
 from wtforms.fields.html5 import EmailField
 

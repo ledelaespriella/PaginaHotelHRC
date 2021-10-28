@@ -1,5 +1,5 @@
 from sqlite3.dbapi2 import Error
-from formularios import FormLogin,FormRegistro, formCambio_password, formHabitaciones
+from formularios import FormLogin,FormRegistro, formCambio_password, formHabitaciones,formHab
 import os
 import utils
 from flask import Flask, request, flash, session
@@ -357,78 +357,6 @@ def pagina_admin():
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html')
 
-@app.route('/habitaciones/panelAdm', methods=['GET'])
-def panelAdm():
-    if "rol" in session:
-        return render_template("panel_adm.html",rol=session['rol'])
-    else:   
-        flash("Accion no permita por favor inicie sesión")
-        return render_template('error.html')
-
-@app.route('/habitaciones/gestionHab', methods=['GET', 'POST']) 
-def gestionHab():
-    
-    if 'rol' in session:
-        if request.method == 'POST':
-            nombreHab = request.form['name_habE']
-            idHab = request.form['id_habE']
-            descripcion = request.form['descripcionE']
-            capacidad = request.form['capacidadE']
-            camas = request.form['numero_camasE']
-            valor = request.form['precioE']
-            try:
-                with sqlite3.connect('HRC.db') as con:
-                    cur = con.cursor()
-                    cur.execute(f'UPDATE habitacion(nombre, descripcion, disponibilidad, cantCamas, capMax, precio) SET nombre ="{nombreHab}",  descripcion ="{descripcion}" , cantCamas = {camas}, capMax = {capacidad}, precio = {valor} WHERE id = ?', (idHab))
-                    con.commit()
-            except Error:
-                return('<p>Error al realizar la operacion</p>')
-        return render_template('editarHab.html')
-    else:
-        flash('Accion no permita por favor inicie sesión')
-        return render_template('error.html')
-
-@app.route('/habitaciones/panelAdm/gestionHab/agregarH', methods=['GET', 'POST'])
-def agregarH():
-    if "rol" in session:
-        if request.method == 'POST':
-            nombreHab = request.form['name_hab_add']
-            idHab = request.form['id_hab_add']
-            descripcion = request.form['descripcion_add']
-            disponibilidad = 1
-            numCam = request.form['numero_camas_add']
-            capacidad= request.form['capacidad_add']
-            valor = request.form['valor_add']
-            try:
-                with sqlite3.connect('HRC.db') as con:
-                    cur = con.cursor()
-                    cur.execute('INSERT INTO habitacion(id, nombre, descripcion, disponibilidad, cantCamas, capMax, precio) VALUES (?,?,?,?,?,?,?)', (idHab, nombreHab, descripcion, disponibilidad, numCam, capacidad, valor))
-                    con.commit()
-                    return render_template("agregaHab.html", rol = session['rol'])
-            except sqlite3.Error:
-                print (sqlite3.Error)
-                return('<p>Error al realizar la operacion</p>')
-        return render_template("agregaHab.html", rol = session['rol'])
-    else:
-        flash("Accion no permita por favor inicie sesión")
-        return render_template('error.html')
-
-@app.route('/habitaciones/panelAdm/gestionHab/editarH', methods=['GET', 'POST']) 
-def editarH():
-    if "rol" in session:
-        return render_template("editarHab.html", rol=session['rol'])
-    else:
-        flash("Accion no permita por favor inicie sesión")
-        return render_template('error.html')
-
-@app.route('/habitaciones/panelAdm/gestionHab/eliminarH', methods=['GET'])
-def eliminarH():
-    if "rol" in session:
-        return render_template("eliminar.html",rol=session['rol'])
-    else:
-        flash("Accion no permita por favor inicie sesión")
-        return render_template('error.html')
-
 #julian
 @app.route('/reserva/<idHab>')
 def load_reserva(idHab):
@@ -444,10 +372,108 @@ def load_reserva(idHab):
                     flash("No hay habitaciones disponibles")
                 return render_template('reserva.html', idHab = idHab, row = row)
         except Error:
-            return 'Error al conectar la base de datos'
+            flash("Accion no permita por favor inicie sesión")
+            return render_template('error.html')
+
+@app.route('/admin/panelAdm', methods=['GET'])
+def panelAdm():
+    if "rol" in session:
+        admin="admin@gmail.com"
+        return render_template("panel_adm.html",usuario=admin)
     else:
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html')
+
+@app.route('/admin/panelAdm/gestionHab', methods=['GET', 'POST'])
+def gestHab():
+    form = formHab()
+    return render_template("editarHab.html", form=form)
+
+
+@app.route('/admin/panelAdm/gestionHab/agregarH', methods=['POST'])
+def nuevaH():
+    form = formHab()
+    if request.method == 'POST':
+        idHabitacion = form.idHab.data
+        nombre = form.nomHab.data
+        capM = form.capMax.data
+        precio = form.precio.data
+        numC = form.numCama.data
+        desc = form.descrip.data
+        try:
+            with sqlite3.connect("HRC.db") as con:
+                cur = con.cursor() #Manipula la conexión a la BD
+                cur.execute("INSERT INTO habitacion(id, nombre, descripcion, disponibilidad, cantCamas, capMax, precio, calificacion) VALUES (?,?,?,True,?,?,?,0)", (idHabitacion, nombre, desc, numC, capM, precio) )
+                con.commit() #Confirmar la transacción
+                return "Guardado satisfactoriamente"
+        except Error:
+            #con.rollback()
+            print(Error)
+    return "No se pudo guardar"
+
+@app.route("/admin/panelAdm/gestionHab/get", methods=['GET', 'POST'])
+def buscaH():
+    form = formHab()
+    if request.method == 'POST':
+        idHabitacion = form.idHab.data
+        try:
+            with sqlite3.connect("HRC.db") as con:
+                con.row_factory = sqlite3.Row #Convierte la respuesta de la BD en un diccionario
+                cur = con.cursor()
+                cur.execute("SELECT id, nombre, descripcion, cantCamas, capMax, precio FROM habitacion WHERE id = ?", [idHabitacion])
+                row = cur.fetchone()
+                if row is None:
+                    flash("Estudiante no se encuentra en la BD")
+                return render_template("agregaHab.html", row=row) 
+        except Error:
+            #con.rollback()
+            print(Error)
+    return "Error en el método"
+
+
+@app.route('/admin/panelAdm/gestionHab/editarH', methods=['POST']) 
+def editarH():
+    form = formHab()
+    if request.method == "POST":
+        idHabitacion = form.idHab.data
+        nombre = form.nomHab.data
+        capM = form.capMax.data
+        precio = form.precio.data
+        numC = form.numCama.data
+        desc = form.descrip.data
+        try:
+            with sqlite3.connect("HRC.db") as con:
+                cur = con.cursor() #Manipula la conexión a la BD
+                cur.execute("UPDATE habitacion SET nombre=?, descripcion=?, cantCamas=?, capMax=?, precio=? WHERE id=?", [nombre, desc, numC, capM, precio, idHabitacion])
+                con.commit()
+                if con.total_changes > 0:
+                    mensaje = " Habitación modificada exitosamente"
+                else:
+                    mensaje = " No fue posible modificar la habitación"
+        except Error:
+            #con.rollback()
+            print(Error)
+        finally:
+            return mensaje
+
+
+@app.route('/admin/panelAdm/gestionHab/eliminarH',  methods=['GET', 'POST'])
+def eliminarH():
+    form=formHab()
+    idHabitacion = form.idHab.data
+    try:
+        with sqlite3.connect("HRC.db") as con:
+            cur = con.cursor()
+            cur.execute("DELETE FROM habitacion WHERE id=?", [idHabitacion] )
+            if con.total_changes > 0:
+                mensaje = "Habitación eliminada con éxito"
+            else:
+                mensaje = "Es posible que la habitación no exista"
+    except Error:
+        #con.rollback()
+        print(Error)
+    finally:
+        return mensaje
 
 @app.route('/reserva/mensaje_reserva', methods=["GET", "POST"])
 def reserva():
@@ -494,6 +520,9 @@ def mishabitaciones():
     else:
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html')
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

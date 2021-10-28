@@ -50,7 +50,8 @@ body {
 }
 
 .busqueda {
-    border: 1px solid;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
     padding: 0px 0px 10px 0px;
     width: 100%;
     background-color: whitesmoke;
@@ -77,13 +78,22 @@ body {
  }
 
  #descripHab {
-     text-align:left;
+    text-align:left;
  }
  #otrosHab {
-     text-align:left;
-     padding-right: 30px;
+    text-align:left;
+    padding-right: 30px;
  }
 
  #mostrarHab {
-     text-align: center;
+    text-align: center;
+ }
+
+ #coments{
+    width: 150px;
+ }
+
+ .coment-content{
+    border-bottom: 1px solid black;
+    padding: 10px 5px;
  }

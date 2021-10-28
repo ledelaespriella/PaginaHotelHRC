@@ -149,7 +149,11 @@ menu li a{
 .container-send{
     text-align: center;
     position: relative;
-    top: 15px;
+    top: 45px;
+}
+
+#send{
+    top: 20px;
 }
 
 #pie{
@@ -178,8 +182,4 @@ menu li a{
         height: 1800px;
     }
   }
-<<<<<<< HEAD
   
-=======
-  
->>>>>>> main

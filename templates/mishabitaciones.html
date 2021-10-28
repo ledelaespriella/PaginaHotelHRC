@@ -1,7 +1,8 @@
-{%extends 'bases/index.html'%}
+{%extends 'bases/indexMishabitaciones.html'%}
 {%block styles %}
     <link rel="stylesheet" href="/static/estilos/mishabitaciones.css">
 {% endblock %}
+
 
 {%block content %}
     <h1 class="cidhabitacion">Mis habitaciones</h1>
@@ -9,7 +10,7 @@
     <div class="a">
         
     {% for r in row %}
-    <button  class="inf_habitacion" onclick="prueba(this.value);"  name="txtidhab" id="txtidhab" value='{{r["id"]}}'>
+    <button  class="inf_habitacion" onclick="obtener(this.value);"  name="txtidhab" id="txtidhab" value='{{r["id"]}}'>
         
         <span style="font-weight: bold;">{{r["id"]}}</span><br><span style="font-weight: italic; font-size: 10px;">{{r["checkout"]}}</span>
             

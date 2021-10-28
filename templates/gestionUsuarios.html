@@ -1,9 +1,22 @@
-{%extends 'bases/index.html'%}
+{%extends 'bases/indexMishabitaciones.html'%}
 {%block styles %}
-    <link rel="stylesheet" href="/static/estilos/mishabitaciones.css">
+    <link rel="stylesheet" href="/static/estilos/estiloGestionU.css">
 {% endblock %}
 
 {%block content %}
+<body>
+<div class="contenedor">
+<div class="a">
+{% for r in row %}
 
+    <button class="boton_lista" value="{{r['0']}}" id="usuario_g">
+        <img class="img_user" src="https://img.icons8.com/ios/50/000000/user--v1.png"/><img>
+        {{r[0]}} {{r[1]}} {{r[3]}} 
+    </button>
 
+{% endfor %}   
+    </div>
+</div>
+<script src="{{ url_for('static', filename='Script/gestionusuarios.js') }}"></script>
+</body>
 {%endblock%}

@@ -1,6 +1,6 @@
 
 .contenedor{
-  position: static;
+  position: relative;
   border-radius:10px;
   top: 10px;
   left: 10px;    

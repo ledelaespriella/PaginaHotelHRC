@@ -36,10 +36,11 @@ class formHab(FlaskForm):
     capMax = StringField('Capacidad Máxima', validators=[DataRequired(message='No dejar vacio')], default="Cap. máxima 4 personas", render_kw={'placeholder':'Capacidad máxima', 'class':'form_control' } )
     numCama = StringField('Camas', validators=[DataRequired(message='No dejar vacio')], default="2 camas tipo Queen", render_kw={'placeholder':'Número de camas', 'class':'form_control' } )
     descrip = TextAreaField('Descripción', default="Amplia habitación equipada con 2 camas Queen, closet, baño privado, TV LED, TV-Cable, Wi-Fi gratis, escritorio, minibar.", validators=[DataRequired()], render_kw={'placeholder':'Número de camas', 'class':'form_tArea' } )
-    
+    disp = BooleanField('Disponibilidad')
+
     guardar = SubmitField('Guardar', render_kw={'onmouseover':'guardarHab()', 'class':'form_boton'} )
     consultar = SubmitField('Consultar', render_kw={'onmouseover':'consultarHab()', 'class':'form_boton'} )
-    listar = SubmitField('Listar', render_kw={'onmouseover':'Habitaciones_list()', 'class':'form_boton'} )
+    listar = SubmitField('Listar', render_kw={'onmouseover':'listarHab()', 'class':'form_boton'} )
     actualizar = SubmitField('Actualizar', render_kw={'onmouseover':'actualizarHab()', 'class':'form_boton'} )
 
     eliminar = SubmitField('Eliminar', render_kw={'onmouseover':'eliminarHab()', 'class':'form_boton'} )

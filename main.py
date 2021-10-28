@@ -32,7 +32,7 @@ def login():
         passwordRequest = None
 
         try:
-            with sqlite3.connect("HRC.db") as con:
+            with sqlite3.connect("D:\database\HRC.db") as con:
                 cur = con.cursor()
                 consulta = cur.execute("SELECT email, password, rol, cedula FROM usuarios WHERE email=? and password = ?", [user, passw]).fetchone()
                 print(consulta)
@@ -502,8 +502,7 @@ def comentarios(idHab = 0):
 
 @app.route('/habitaciones/disponible', methods = ['GET', 'POST'])
 def disponible():
-    if request.method == 'POST':
-        return render_template('noDIsponible.html')
+    return render_template('noDisponible.html')
 
 #-----------------------------------------------------------------------------------JESUS--------------------------------------------------------
 @app.route("/misHabitaciones")

@@ -138,12 +138,7 @@ menu li a{
 .cal-L{
     width: 94%;
     height: 120px;
-    border: solid 1px black;
     margin-left: 4%;
-}
-
-.cal-L h1{
-    text-align: center;
 }
 
 .container-send{

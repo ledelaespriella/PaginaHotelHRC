@@ -1,0 +1,102 @@
+
+.contenedor{
+  position: static;
+  border-radius:10px;
+  top: 10px;
+  left: 10px;    
+  width: 1100px;
+  height: 410px;
+  background-color:#F1EEE9; 
+  border: #F1EEE9 1px solid;
+  border-bottom: #F1EEE9 2px solid;
+
+}
+.a{
+  position: relative;
+  border-radius:10px;
+  float: left;
+  background: url("https://img.freepik.com/foto-gratis/tablero-madera-sobre-fondo-borroso-fondo-interior-vista-dentro-hotel-recepcion-o-pasillo-moderno-fondo_1962-320.jpg?size=626&ext=jpg");
+  overflow-y:visible;overflow-y:auto;
+  width:440px;
+  height: 380px;
+  top: 10px;
+  left: 10px;
+  }
+.b{
+  right: 10px;
+  top: 10px;
+  position: relative;
+  float: right;
+
+  width:600px;
+  height: 320px;
+}
+.inf_habitacion{
+  position:relative;
+  left: -10px;
+  top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  display: inline-block;
+  cursor: pointer;
+  width: 110px;
+  height:180px;
+  background-color:rgba(224, 224, 224, 0.8);
+ 
+  border-style: none;
+  border-color:  #3B3838 ;
+  box-shadow: 0px 10px 10px -6px #3B3838;
+}
+.img_habitaciones{
+  position:relative;
+  top: 10px;
+  bottom: 10px;
+  height:95px;
+  width: 95px;
+}
+.img_grande{
+  
+  top: -100px;
+  right:10px;
+  float:right;
+  height:300px;
+  width: 300px;
+  
+ 
+}
+.comentario{
+  width: 240px;
+  height:100px;
+  top: -100px;
+  resize:none;
+}
+.co_com{
+  width: 250px;
+ 
+  top: -100px;
+}
+.hab_com{
+  width: 100px;
+  text-align: center;
+  background-color:#F1EEE9;
+  border-style: solid solid;
+  color:#A40F47
+  
+}
+.btn_enviar{
+  background-color:#8FAA4B;
+  color:#ffff;
+  border: none;
+  color: white;
+  padding: 15px 28px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+}
+.cidhabitacion{
+  text-align: center;
+  width: 500px;
+  border-bottom: #F1EEE9 2px solid;
+  background: linear-gradient(to top, #F1EEE9, white);
+  border-radius:10px;
+}

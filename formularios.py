@@ -27,3 +27,4 @@ class formHabitaciones(FlaskForm):
     buscar = SubmitField('Buscar', render_kw={'onclick':'buscarHab()', 'class':'form_boton'} )
     listar = SubmitField('Mostrar mas habitaciones', render_kw={'onclick':'listarHab()','id':'mostar', 'class':'form_boton'} )
     ocultar = SubmitField('Mostrar menos', render_kw={'onclick':'ocultarHab()','id':'ocultar', 'class':'form_boton'} )
+

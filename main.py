@@ -9,7 +9,8 @@ from werkzeug.utils import redirect
 from markupsafe import escape
 import yagmail
 import sqlite3
-
+from datetime import datetime #para obtener la fecha actual
+import json
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
@@ -27,16 +28,19 @@ def login():
         passw = escape(form.contrasena.data)
         userRequest = None
         passwordRequest = None
+        
         try:
             with sqlite3.connect("HRC.db") as con:
                 cur = con.cursor()
                 consulta = cur.execute("SELECT email, password, rol FROM usuarios WHERE email=? and password = ?", [user, passw]).fetchone()
                 print(consulta)
                 con.commit()
+                
                 if consulta!=None:
                     userRequest = consulta[0]
                     passwordRequest = consulta[1]
-                    rol = consulta[2]       
+                    rol = consulta[2]   
+                  
         except Error: 
             flash('Error al conectar con la base de datos')
         if (user == userRequest and passw == passwordRequest):
@@ -381,14 +385,43 @@ def reserva():
 
 @app.route("/misHabitaciones")
 def mishabitaciones():
-    if "rol" in session:
-        return render_template("gestion_comentarios.html")
-    else:
-        flash("Accion no permita por favor inicie sesión")
-        return render_template('error.html')
+    _cedula='564683464'
+    with sqlite3.connect("HRC.db") as con:
+        con.row_factory = sqlite3.Row 
+        cur = con.cursor()
+        cur.execute("SELECT habitacion.id, reserva.checkout FROM habitacion INNER JOIN reserva ON habitacion.id = reserva.idHabitacion AND reserva.cedula = ?",[_cedula])
+        row = cur.fetchall()
+        # [d1,  d2 for d1, d2 in res]
+                
+        #cur.execute("SELECT * FROM habitacion WHERE id IN (SELECT idHabitacion FROM reserva WHERE cedula = ?)",[_cedula])
+        #cur.execute("SELECT idHabitacion FROM reserva WHERE cedula = ?",[_cedula])
+        return render_template("mishabitaciones.html", row=row)
+   
+    return render_template("mishabitaciones.html", row=row)
 
-
-
+@app.route("/misHabitaciones/save", methods=["POST"])
+def guardar_comentario():
+    if request.method == 'POST':
+        _comentario = request.form['comentario_hab']
+        _fechaComentario = datetime.today().strftime('%Y-%m-%d')
+        _idHabitacion = request.form['hab_a_comentar']
+        _cedula = "564683464"
+        _calificacion=request.form['calificacion_hab']
+        try:
+            with sqlite3.connect('HRC.db') as con:
+                cur = con.cursor()
+                cur.execute('INSERT INTO comentario(comentario, fechaComentario, idHabitacion, cedula) VALUES (?,?,?,?)',(_comentario,_fechaComentario,_idHabitacion,_cedula))
+                con.commit() #Confirmar la transacción  
+                cur.execute('INSERT INTO calificacion(calificacion, idHabitacion, cedula) VALUES (?,?,?)',(_calificacion,_idHabitacion,_cedula))   
+                con.commit()
+                cur.execute("SELECT AVG(calificacion) FROM calificacion WHERE idHabitacion= ?",[_idHabitacion])
+                _vari=round(cur.fetchone()[0], 2)
+                cur.execute('UPDATE habitacion SET calificacion=? WHERE id=?',(_vari,_idHabitacion))   
+               
+        except sqlite3.Error:
+                print (sqlite3.Error)
+                return('<p>Error al realizar la operacion</p>')
+    return "guardado exitosamente"
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

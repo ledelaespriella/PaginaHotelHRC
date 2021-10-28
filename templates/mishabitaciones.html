@@ -1,0 +1,49 @@
+{%extends 'bases/index.html'%}
+{%block styles %}
+    <link rel="stylesheet" href="/static/estilos/mishabitaciones.css">
+{% endblock %}
+
+{%block content %}
+    <h1 class="cidhabitacion">Mis habitaciones</h1>
+    <div class="contenedor">   
+    <div class="a">
+        
+    {% for r in row %}
+    <button  class="inf_habitacion" onclick="prueba(this.value);"  name="txtidhab" id="txtidhab" value='{{r["id"]}}'>
+        
+        <span style="font-weight: bold;">{{r["id"]}}</span><br><span style="font-weight: italic; font-size: 10px;">{{r["checkout"]}}</span>
+            
+        <img src="{{url_for('static', filename='imagenes/hab.jpeg')}}" class="img_habitaciones" ></img>
+    </button>
+    {% endfor %}
+    </div>
+    
+    <div class="b">
+    <img src="{{url_for('static', filename='imagenes/hab.jpeg')}}" class="img_grande" id="imagen_hab"></img>
+    
+    <form action="/misHabitaciones/save" id="formulario" method="POST" style="color:blue">
+        <div class="co_com">
+        <h3 style="color:#000000">Habitación</h3>
+        <input required readonly="readonly" class="hab_com" type="text" name="hab_a_comentar" id="hab_a_comentar"></input><br><br>
+        <textarea required class="comentario" id="comentario_hab" name="comentario_hab"></textarea>
+        
+        <p> Calificacion: 
+            <select requerid name="calificacion_hab" id="calificacion_hab">
+              <option value=5>5</option>
+              <option value=4>4</option>
+              <option value=3>3</option>
+              <option value=2>2</option>
+              <option value=1>1</option>
+            </select>
+         </p>
+         <input class="btn_enviar" type="submit" id="enviar_comentario" name="enviar_comentario"></input>
+        </div>
+        
+    </form>
+    </div>
+
+</div>
+    <script src="{{ url_for('static', filename='Script/mishabitaciones.js') }}"></script>
+</body>
+
+{%endblock%}

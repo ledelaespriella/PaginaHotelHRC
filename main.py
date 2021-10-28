@@ -2,13 +2,17 @@ from sqlite3.dbapi2 import Error
 from formularios import FormLogin,FormRegistro, formCambio_password, formHabitaciones
 import os
 import utils
-from flask import Flask, request, flash, session, sessions
+from flask import Flask, request, flash, session
 from flask import render_template
 from flask.helpers import url_for
 from werkzeug.utils import redirect
 from markupsafe import escape
 import yagmail
 import sqlite3
+import hashlib
+from werkzeug.security import generate_password_hash as Gph
+from werkzeug.security import check_password_hash as Cph
+
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -37,12 +41,19 @@ def login():
                 print(consulta)
                 con.commit()
                 if consulta != None:
+                    hashPass=consulta[0]
+                    if Cph(hashPass,passw):
+                        #colocar la logica de que se logeo correctamente
+                        pass
+                    else:
+                        pass
                     userRequest = consulta[0]
                     passwordRequest = consulta[1]
                     rol = consulta[2]  
                     userId = consulta[3]
-        except Error: 
-            flash('Error al conectar con la base de datos')
+        except Error:
+            return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
+            #flash('Error al conectar con la base de datos')
 
         if (user == userRequest and passw == passwordRequest):
             session['rol'] = rol
@@ -87,6 +98,7 @@ def registro():
             passwVerificacion = escape(form.confirmacion_contrasena.data)
             error = None
             rol = 'final'
+            
             if not utils.isEmailValid(correo):
                 error = "Correo invalido."
                 flash(error)
@@ -98,6 +110,7 @@ def registro():
             if passw!=passwVerificacion:
                 return render_template("registro.html",form=form)
             else:
+                HashPass=Gph(passw)
                 try:
                     with sqlite3.connect('HRC.db') as con:
                         cur = con.cursor()
@@ -109,7 +122,7 @@ def registro():
                         return redirect(url_for("login"))
                 except Error:
                         flash("Error al guardar el usuario, por favor intente de nuevo.")
-                        return render_template('registro.html',form=form)
+                        return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
         else:
             return render_template('registro.html',form=form)
     except:
@@ -121,11 +134,7 @@ def recuperacion():
         correo = escape(request.form['correo'])
         error=None
 
-        if not utils.isEmailValid(correo):
-            error = "Correo invalido."
-            flash(error)
-            return render_template("recuperacion.html")
-        else:
+        if utils.isEmailValid(correo):
             try:
                 with sqlite3.connect("HRC.db") as con:
                     cur = con.cursor()
@@ -141,8 +150,11 @@ def recuperacion():
                         flash(error)
                         return redirect(url_for("registro"))
             except Error: 
-                flash('Error al conectar con la base de datos')
-                return render_template('recuperacion.html')
+                return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
+        else:
+            error = "Correo invalido."
+            flash(error)
+            return render_template("recuperacion.html")         
     else:
         return render_template('recuperacion.html')
 
@@ -156,31 +168,29 @@ def mensaje():
             nuevoPassword = escape(form.contrasenaNueva.data)
             confirmacionPassword = escape(form.confirmacion_contrasena.data)
             
-            if not utils.isPasswordValid(nuevoPassword):
-                error = "Contraseña invalida por favor registre una correcta."
-                flash(error)
-                return render_template("recuperacionPassw.html",form=form)
-            
-            if nuevoPassword==confirmacionPassword:
-                try:
-                    with sqlite3.connect("HRC.db") as con:
-                        cur = con.cursor()
-                        consulta = cur.execute("UPDATE usuarios SET password=? WHERE email=?",[nuevoPassword,usuario])
-                        con.commit()
-                        if consulta!=None:
-                            return render_template('mensaje.html')        
-                        else:
-                            error = "Error en la consulta a la base de datos"
-                            flash(error)
-                            return render_template('recuperacionPassw.html',form=form)
-                except Error: 
-                    flash('Error al conectar con la base de datos')
-                    print (Error)
+            if utils.isPasswordValid(nuevoPassword):    
+                if nuevoPassword==confirmacionPassword:
+                    try:
+                        with sqlite3.connect("HRC.db") as con:
+                            cur = con.cursor()
+                            consulta = cur.execute("UPDATE usuarios SET password=? WHERE email=?",[nuevoPassword,usuario])
+                            con.commit()
+                            if consulta!=None:
+                                return render_template('mensaje.html')        
+                            else:
+                                error = "Error en la consulta a la base de datos"
+                                flash(error)
+                                return render_template('recuperacionPassw.html',form=form)
+                    except Error: 
+                        return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
+                else:
+                    error = "Contraseñas no coinciden. Por favor verifique e intente de nuevo"
+                    flash(error)
                     return render_template('recuperacionPassw.html',form=form)
             else:
-                error = "Contraseñas no coinciden. Por favor verifique e intente de nuevo"
+                error = "Contraseña invalida por favor registre una correcta."
                 flash(error)
-                return render_template('recuperacionPassw.html',form=form)
+                return render_template("recuperacionPassw.html",form=form)  
         else:
             return render_template('recuperacionPassw.html',form=form)
     else:
@@ -190,6 +200,11 @@ def mensaje():
 @app.errorhandler(404)
 def page_not_found(error):
 	return render_template("errores.html",error="404 Pagina no encontrada",mensaje="Lo sentimos, se ha producido un error, no se ha encontrado la página solicitada."), 404
+
+@app.errorhandler(500)
+def internal_server_error(error):
+	return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente."), 500
+
 
 #--------------------------------------------------------------JOSE------------------------------------------------------------------------
 @app.route("/habitaciones", methods=['GET', 'POST'])

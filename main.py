@@ -32,30 +32,23 @@ def login():
         user = escape(form.correo.data)
         passw = escape(form.contrasena.data)
         userRequest = None
-        passwordRequest = None
 
         try:
             with sqlite3.connect("HRC.db") as con:
                 cur = con.cursor()
-                consulta = cur.execute("SELECT email, password, rol, cedula FROM usuarios WHERE email=? and password = ?", [user, passw]).fetchone()
+                consulta = cur.execute("SELECT email, password, rol, cedula FROM usuarios WHERE email=?", [user]).fetchone()
                 print(consulta)
                 con.commit()
                 if consulta != None:
-                    hashPass=consulta[0]
-                    if Cph(hashPass,passw):
-                        #colocar la logica de que se logeo correctamente
-                        pass
-                    else:
-                        pass
                     userRequest = consulta[0]
-                    passwordRequest = consulta[1]
+                    hashPass=consulta[1]
                     rol = consulta[2]  
                     userId = consulta[3]
         except Error:
             return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
             #flash('Error al conectar con la base de datos')
 
-        if (user == userRequest and passw == passwordRequest):
+        if (user == userRequest and Cph(hashPass,passw)):
             session['rol'] = rol
             #print(session)
             if(rol == 'final'):
@@ -68,7 +61,7 @@ def login():
         else:
             if(user != userRequest):
                 flash('Usuario incorrecto')
-            elif(passw != passwordRequest):
+            elif not(Cph(hashPass,passw)):
                 flash('Verifique la contraseña e intente nuevamente')
             return render_template('login.html',form=form)
     else:
@@ -114,11 +107,11 @@ def registro():
                 try:
                     with sqlite3.connect('HRC.db') as con:
                         cur = con.cursor()
-                        cur.execute('INSERT INTO usuarios(cedula, pNombre, sNombre, pApellido, sApellido, email, password, rol) VALUES (?,?,?,?,?,?,?,?)', (cedula, primerNombre, segudoNombre, primerApellido, segudoApellido, correo, passw, rol))
+                        cur.execute('INSERT INTO usuarios(cedula, pNombre, sNombre, pApellido, sApellido, email, password, rol) VALUES (?,?,?,?,?,?,?,?)', (cedula, primerNombre, segudoNombre, primerApellido, segudoApellido, correo, HashPass, rol))
                         con.commit()
                         yag = yagmail.SMTP("pruebasluismintic", "Darkluise2")
-                        yag.send(to=correo, subject="Activa tu cuenta",contents="Bienvenido, usa este link para activar tu cuenta")
-                        flash("Hola {} {} Revisa tu correo para activar tu cuenta".format(primerNombre,primerApellido))
+                        yag.send(to=correo, subject="Activa tu cuenta",contents="Bienvenido, usa este link para ingresar sesion:\n")
+                        flash("Hola {} {} Revisa tu correo para verificar la creación del usuario".format(primerNombre,primerApellido))
                         return redirect(url_for("login"))
                 except Error:
                         flash("Error al guardar el usuario, por favor intente de nuevo.")
@@ -170,10 +163,11 @@ def mensaje():
             
             if utils.isPasswordValid(nuevoPassword):    
                 if nuevoPassword==confirmacionPassword:
+                    HashPass=Gph(nuevoPassword)
                     try:
                         with sqlite3.connect("HRC.db") as con:
                             cur = con.cursor()
-                            consulta = cur.execute("UPDATE usuarios SET password=? WHERE email=?",[nuevoPassword,usuario])
+                            consulta = cur.execute("UPDATE usuarios SET password=? WHERE email=?",[HashPass,usuario])
                             con.commit()
                             if consulta!=None:
                                 return render_template('mensaje.html')        
@@ -199,11 +193,19 @@ def mensaje():
 
 @app.errorhandler(404)
 def page_not_found(error):
-	return render_template("errores.html",error="404 Pagina no encontrada",mensaje="Lo sentimos, se ha producido un error, no se ha encontrado la página solicitada."), 404
+    if "rol" in session:
+        session.pop("rol", None)
+        return render_template("errores.html",error="404 Pagina no encontrada",mensaje="Lo sentimos, se ha producido un error, no se ha encontrado la página solicitada."), 404
+    else:
+        return render_template("errores.html",error="404 Pagina no encontrada",mensaje="Lo sentimos, se ha producido un error, no se ha encontrado la página solicitada."), 404
 
 @app.errorhandler(500)
 def internal_server_error(error):
-	return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente."), 500
+    if "rol" in session:
+        session.pop("rol", None)
+        return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente."), 500
+    else:
+        return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente."), 500
 
 
 #--------------------------------------------------------------JOSE------------------------------------------------------------------------

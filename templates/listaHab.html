@@ -1,0 +1,38 @@
+{%extends 'bases/indexAdm.html'%}
+{% block title %}Listado de Habitaciones{% endblock %}
+
+
+{% block content %} 
+    <table style = "width: 80%" border= "1" align="center" >
+        <tbody>
+            <tr style="text-align: center;">
+                <td>ID</td>
+                <td>Nombre Habitación</td>
+                <td>Capacidad</td>
+                <td>Cantidad de camas</td>
+                <td>Precio</td>
+                <td>Disponibilidad</td>
+            </tr>
+            {% for r in row %}
+            <tr>
+                <td> {{ r["id"] }}  </td>
+                <td> {{ r["nombre"] }}  </td>
+                <td> {{ r["capMax"] }}  </td>
+                <td> {{ r["cantCamas"] }}  </td>
+                <td> {{ r["precio"] }}  </td>
+                <td> {{ r["disponibilidad"] }}  </td>
+
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+    <div class="fila">&nbsp;
+        <div class="error-actions">
+            <a href="/admin/panelAdm/gestionHab" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span>Gestión de Habitaciones </a>
+            <a href="/admin/panelAdm" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span>Panel Administrativo </a>
+        </div>
+    </div>
+
+{% endblock %}

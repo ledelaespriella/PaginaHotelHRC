@@ -1,0 +1,83 @@
+.contenedor{
+  position: relative;
+  border-radius:10px;
+  top: 10px;
+  left: 10px;    
+  width: 1100px;
+  height: 410px;
+  background-color:#F1EEE9; 
+  border: #F1EEE9 1px solid;
+  border-bottom: #F1EEE9 2px solid;
+
+}
+.a{
+    position: relative;
+    border-radius:10px;
+    float: left;
+    background-color:#866325; 
+    overflow-y:visible;overflow-y:auto;
+    width:440px;
+    height: 380px;
+    margin-top:10px;
+    margin-left:10px;
+    background: url("https://media.istockphoto.com/photos/wooden-table-on-christmas-bokeh-lights-background-picture-id871217988?k=20&m=871217988&s=170667a&w=0&h=5Zo5sDcLir-k6yHHCdFT2oj1RQRb0jO4EYE5XDQre5s=")
+}
+.boton_lista{
+    width:400px;
+    background-color:rgba(143, 170, 45, 0.8);
+    margin-top:4px;
+    border-color:  #3B3838 ;
+    box-shadow: 0px 10px 10px -6px #3B3838;
+}
+.estilo_texto{
+    color:rgb(236, 236, 236);
+    text-shadow: 1px 1px 1px rgb(14, 13, 13), 0 0 1em rgb(238, 238, 238), 0 0 0.2em rgb(255, 255, 255);
+}
+.img_user{
+    width:24px;height:24px;
+  
+    position:relative;
+
+}
+.btn_enviar{
+    background-color:#8FAA4B;
+    color:#ffff;
+    border: none;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    position: relative;
+    top:10px;
+  }
+
+  .b{
+    right: 10px;
+    top: 10px;
+    position: relative;
+    float: right;
+    background-color:#F1EEE9;
+    width:600px;
+    height: 320px;
+    border-radius:10px;
+    box-shadow: 0px 10px 10px -6px #3B3838;
+    border-bottom: #F1EEE9 2px solid;
+  }
+.id_usuario{
+    width: 150px;
+    text-align: center;
+    background-color:#F1EEE9;
+    border-style: solid solid;
+    color:#A40F47;
+    
+}
+.img_user_grande{
+  position: relative;
+  float: right;
+  border: #444443 1px solid;
+  margin-top: -70px;
+  margin-right: 10px;
+  width: 100px;
+  height: 100px;
+}

@@ -3,11 +3,12 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <meta charset="utf-8">
   <meta name="keywords" content="Spa Hotel">
   <meta name="description" content="">
   <meta name="page_type" content="np-template-header-footer-from-plugin">
-  <title>Inicio HRC</title>
+  <title> {% block title %} {% endblock %} </title>
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='estilos/normalize.css')}}">
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='estilos/nicepage.css')}}" media="screen">
   <link rel="stylesheet" href="{{url_for('static',filename='estilos/Home.css')}}" media="screen">
@@ -21,6 +22,8 @@
   <meta name="theme-color" content="#0354d8">
   <meta property="og:title" content="Home">
   <meta property="og:type" content="website">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body class="u-body" id="cuerpo" >

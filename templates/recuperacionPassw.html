@@ -4,20 +4,18 @@
 {% endblock %}
 
 {%block content %}
-<form action="" method="POST" id="formularioLogin" name="login">
+<form action="" method="POST" name="formularioRecuperacionPassw" onsubmit="validarContrasena()">
     {{ form.hidden_tag() }}
     {{csrf_token }}
-    <h1 class="h3 mb-3 fw-normal">Inicio de Sesion</h1>
+    <h1 class="h3 mb-3 fw-normal">Cambio de contraseña</h1>
     <br>
     <div class="form-floating">
-        {{form.correo()}}
-        <label for="floatingInput">Correo electronico</label>
+        {{form.contrasenaNueva()}}
+        <label for="floatingInput">Contraseña nueva</label>
     </div>
     <div class="form-floating">
-        {{form.contrasena()}}
-        <label for="floatingPassword">
-            Contraseña
-        </label>
+        {{form.confirmacion_contrasena()}}
+        <label for="floatingPassword">Confirmar contraseña</label>
     </div>
     <div class="row text-center pt-3">
         <div class="col-sm-3">
@@ -32,9 +30,5 @@
     <br>
     {{form.enviar()}}
     <br>
-    <div class="row text-center pt-3">
-        <div class="pt-2"><a href="\login\recuperacion">¿Olvido su contraseña?</a></div>
-        <div class="pt-2"><a href="\registro">Registrarse</a></div>
-    </div>
 </form>
 {%endblock%}

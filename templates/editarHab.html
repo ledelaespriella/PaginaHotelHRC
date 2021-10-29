@@ -1,104 +1,45 @@
-{%extends 'bases/indexHome.html'%}
+{%extends 'bases/indexAdm.html'%}
+{% block title %}Edición Habitaciones{% endblock %}
 
-{%block stylepages%}
-<link rel="stylesheet" href="{{url_for('static', filename='estilos/estilos.css')}}" media="screen">
-{%endblock%}
-
-
-{%block listaNav1%}
-{%if usuario%}
-<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\admin\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
-  </li>
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\admin\panelAdm" style="padding: 10px 20px;">Dashboard</a>
-  </li>
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
-  </li>
-</ul>
-
-{%else%}
-<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
-  </li>
-  <li class="u-nav-item"><a
-      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-      href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
-  </li>
-</ul>
-{%endif%}
-{%endblock%}
-
-{%block listaNav2%}
-
-{%if usuario%}
-<div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
-  <div class="u-inner-container-layout u-sidenav-overflow">
-    <div class="u-menu-close"></div>
-    <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-      <li class="u-nav-item"><a class="u-button-style u-nav-link" href="\habitaciones"
-          style="padding: 10px 20px;">Habitaciones</a>
-      </li>
-      <li class="u-nav-item"><a href="\admin\panelAdm" class="u-button-style u-nav-link" style="padding: 10px 20px;">
-          Dashboard</a>
-      </li>
-      <li class="u-nav-item"><a href="\login" class="u-button-style u-nav-link" style="padding: 10px 20px;">
-          Cerrar Sesión</a>
-      </li>
-    </ul>
-  </div>
-</div>
-{%else%}
-<div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
-  <div class="u-inner-container-layout u-sidenav-overflow">
-    <div class="u-menu-close"></div>
-    <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-      <li class="u-nav-item"><a class="u-button-style u-nav-link" href="\habitaciones"
-          style="padding: 10px 20px;">Habitaciones</a>
-      </li>
-      <li class="u-nav-item"><a href="\login" class="u-button-style u-nav-link" style="padding: 10px 20px;">
-          Cerrar Sesión</a>
-      </li>
-    </ul>
-  </div>
-</div>
-{%endif%}
-{%endblock%}
 
 {%block content%}
 
-<div class="ventana">
+<form action="/admin/panelAdm/gestionHab/agregarH" id="formulario" method="POST"  novalidate >
+    {{ form.hidden_tag() }}
     <table>
-        <tr>
-            <th class="encabezado"><input type="text" id="nameHab" name="name_hab" value="Suite Estándar" /></th>
-            <th></th>
-            <th class="id"><input type="text" id="idHab" name="id_hab" value="ID: H00101" /></th>
-        </tr>
-        <tr> 
-            <td rowspan="5" class="grafico"><img src="{{ url_for('static',filename='imagenes/hab.jpeg')}}" /></td>
-            <td class="campo"><input type="text" id="capMax" name="capacidad" value="Cap.máx 4 huéspedes"></td>
-            <td><label>COP $</label><input type="number" id="precio" name="precio" value="250.000" ></td>
+        <tr>            
+            <th colspan="3">{{ form.nomHab(size=20) }} </th>
+            <td >&nbsp;</td>
+            <th colspan="2">{{ form.idHab(size=15) }}</th>
         </tr>
         <tr>
-            <td class="campo"><input type="text" id="numcam" name="numero_camas" value="2 camas tipo Queen"></td>
-            <td class="info">Tarifa por noche.<br> Impuestos incluidos</td>
+            <td rowspan="4" ><img src="{{ url_for('static',filename='imagenes/hab.jpeg')}}" /></td>
+            <td colspan="2">{{ form.capMax(size=20) }}</td>
+            <td >&nbsp;</td>
+            <td colspan="2">{{ form.precio.label }}
+                {{ form.precio(size=5) }}</td>
         </tr>
         <tr>
-            <td class="campo"><textarea id="desc" name="descripcion" cols="35" rows="4" maxlength="120" >Amplia habitación equipada con 2 camas Queen, closet, baño privado, TV LED, TV-Cable, Wi-Fi gratis, escritorio, minibar.</textarea></td>
+            <td colspan="2">{{ form.numCama(size=20) }}</td>
+            <td colspan="2">&nbsp;</td>
+            <td >Tarifa por noche.<br> Impuestos incluidos</td>
         </tr>
         <tr>
-            <td class="boton"><input type="button" onclick="edit();" id="editHab" value="Editar"></td>
-            <td class="boton"><input type="submit" id="eliminarHab" value="Eliminar"></td>
+            <td colspan="3">{{ form.descrip(size=100) }}</td>
+            <td >&nbsp;</td>
+            <td>{{ form.disp.label }}<br>{{ form.disp() }}</td>
         </tr>
+        <tr>
+            <td>{{ form.consultar(size=10) }}</td> 
+            <td>{{ form.listar(size=10) }}</td>
+            <td>{{ form.guardar(size=10) }}</td> 
+            <td>{{ form.actualizar(size=10) }}</td> 
+            <td>{{ form.eliminar(size=10) }}</td> 
+        </tr>
+        
     </table>
+    </form>
+    
 
-</div>
-
+</form>
 {% endblock %}

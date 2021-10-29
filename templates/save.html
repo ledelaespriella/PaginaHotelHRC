@@ -1,0 +1,25 @@
+{%extends 'bases/indexAdm.html'%}
+
+
+{%block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="error-template">
+                <h2>
+                    {{error}}</h2>
+                <div class="error-details">
+                    {{mensaje}}
+                </div>
+                <br>
+                <div class="error-actions">
+                    <a href="/admin/panelAdm/gestionHab" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span>Gestión de Habitaciones </a>
+                    <a href="/admin/panelAdm" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span>Panel Administrativo </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

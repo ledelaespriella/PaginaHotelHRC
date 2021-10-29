@@ -18,6 +18,8 @@
     overflow-y:visible;overflow-y:auto;
     width:440px;
     height: 380px;
+    margin-top:10px;
+    margin-left:10px;
     background: url("https://media.istockphoto.com/photos/wooden-table-on-christmas-bokeh-lights-background-picture-id871217988?k=20&m=871217988&s=170667a&w=0&h=5Zo5sDcLir-k6yHHCdFT2oj1RQRb0jO4EYE5XDQre5s=")
 }
 .boton_lista{
@@ -55,15 +57,27 @@
     top: 10px;
     position: relative;
     float: right;
-    
+    background-color:#F1EEE9;
     width:600px;
     height: 320px;
+    border-radius:10px;
+    box-shadow: 0px 10px 10px -6px #3B3838;
+    border-bottom: #F1EEE9 2px solid;
   }
 .id_usuario{
     width: 150px;
     text-align: center;
     background-color:#F1EEE9;
     border-style: solid solid;
-    color:#A40F47
+    color:#A40F47;
     
+}
+.img_user_grande{
+  position: relative;
+  float: right;
+  border: #444443 1px solid;
+  margin-top: -70px;
+  margin-right: 10px;
+  width: 100px;
+  height: 100px;
 }

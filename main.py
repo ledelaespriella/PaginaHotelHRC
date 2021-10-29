@@ -660,17 +660,19 @@ def disponible():
 def mishabitaciones():
     if 'rol' in session:
         _cedula = session['cedula']
-        with sqlite3.connect("HRC.db") as con:
-            con.row_factory = sqlite3.Row 
-            cur = con.cursor()
-            cur.execute("SELECT habitacion.id, reserva.checkout FROM habitacion INNER JOIN reserva ON habitacion.id = reserva.idHabitacion AND reserva.cedula = ?",[_cedula])
-            row = cur.fetchall()
-        return render_template("mishabitaciones.html", row=row)
+        try:
+            with sqlite3.connect("HRC.db") as con:
+                con.row_factory = sqlite3.Row 
+                cur = con.cursor()
+                cur.execute("SELECT reserva.idHabitacion, reserva.checkout, comentario.comentario FROM reserva LEFT JOIN comentario ON comentario.idHabitacion = reserva.idHabitacion WHERE reserva.cedula = ?",[_cedula])
+                row = cur.fetchall()
+                return render_template("mishabitaciones.html", row=row)
+        except  Error:
+            return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
     else:
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html')
 
-    
 
 @app.route("/misHabitaciones/save", methods=["POST"])
 def guardar_comentario():
@@ -679,7 +681,7 @@ def guardar_comentario():
         if request.method == 'POST':
         
             _comentario = request.form['comentario_hab']
-            _fechaComentario = datetime.today().strftime('%Y-%m-%d')
+            _fechaComentario = datetime.today().strftime('%Y/%m/%d')
             _idHabitacion = request.form['hab_a_comentar']
             _cedula = session['cedula']
             _calificacion=request.form['calificacion_hab']
@@ -693,26 +695,133 @@ def guardar_comentario():
                     cur.execute("SELECT AVG(calificacion) FROM calificacion WHERE idHabitacion= ?",[_idHabitacion])
                     _vari=round(cur.fetchone()[0], 2)
                     cur.execute('UPDATE habitacion SET calificacion=? WHERE id=?',(_vari,_idHabitacion))   
+                    flash('Comentario guardado exitosamente')
+                    return redirect(url_for("mishabitaciones"))
                 
-            except sqlite3.Error:
-                    return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
-            return "guardado exitosamente"
+            except Error:
+                return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
     else:
         flash("Accion no permita por favor inicie sesión")
+        return render_template('error.html')
+        
+@app.route("/misHabitaciones/up", methods=["POST"])
+def actualizar_comentario():
+    if 'rol' in session:
+        rol=session['rol']
+        if request.method == 'POST':
+            _comentario = request.form['comentario_hab']
+            _fechaComentario = datetime.today().strftime('%Y/%m/%d')
+            _idHabitacion = request.form['hab_a_comentar']
+            _cedula = session['cedula']
+            _calificacion=request.form['calificacion_hab']
+            try:
+                with sqlite3.connect('HRC.db') as con:
+                    cur = con.cursor()
+                    cur.execute('UPDATE comentario SET comentario =?, fechaComentario=? WHERE idHabitacion=? AND cedula=?',(_comentario,_fechaComentario,_idHabitacion,_cedula))
+                    con.commit() 
+                    cur.execute('UPDATE calificacion SET calificacion=? WHERE idHabitacion=? AND cedula=?',(_calificacion,_idHabitacion,_cedula))   
+                    con.commit()
+                    cur.execute("SELECT AVG(calificacion) FROM calificacion WHERE idHabitacion= ?",[_idHabitacion])
+                    _vari=round(cur.fetchone()[0], 2)
+                    cur.execute('UPDATE habitacion SET calificacion=? WHERE id=?',(_vari,_idHabitacion))   
+                    flash('Comentario actualizado exitosamente')
+                    return redirect(url_for("mishabitaciones"))
+            except Error:
+                return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
+    else:
+        flash("Accion no permitida, por favor inicie sessión")
+        return render_template('error.html')
+
+@app.route("/misHabitaciones/delete", methods=["POST"])
+def eliminar_comentario():
+    if 'rol' in session:
+        rol=session['rol']
+        if request.method == 'POST':
+            _idHabitacion = request.form['hab_a_comentar']
+            _cedula = session['cedula']
+          
+            try:
+                with sqlite3.connect('HRC.db') as con:
+                    cur = con.cursor()
+                    cur.execute('DELETE FROM comentario WHERE idHabitacion=? AND cedula=?',(_idHabitacion,_cedula))
+                    con.commit() 
+                    cur.execute('DELETE FROM calificacion WHERE idHabitacion=? AND cedula=?',(_idHabitacion,_cedula))   
+                    con.commit()
+                    cur.execute("SELECT AVG(calificacion) FROM calificacion WHERE idHabitacion= ?",[_idHabitacion])
+                    if cur.fetchone():
+                        _vari=0
+                    else:
+                        _vari=round(cur.fetchone()[0], 2)
+                       
+                    cur.execute('UPDATE habitacion SET calificacion=? WHERE id=?',(_vari,_idHabitacion))   
+                    con.commit()
+                    flash('Comentario eliminado exitosamente')
+                    return redirect(url_for("mishabitaciones"))
+            except Error:
+                return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
+    else:
+        flash("Accion no permitida, por favor inicie sessión")
         return render_template('error.html')
 
 @app.route("/admin/panelAdm/gestion_usuarios", methods=['GET', 'POST'])
 def gestionusuarios():
-     with sqlite3.connect("HRC.db") as con:
-        con.row_factory = sqlite3.Row 
-        cur = con.cursor()
-        cur.execute("SELECT * FROM usuarios")
-        row = cur.fetchall()
-        return render_template("gestionUsuarios.html",row=row)
+    if ('rol' in session) and session['rol']=="supAdmin":
+        try:
+            with sqlite3.connect("HRC.db") as con:
+                con.row_factory = sqlite3.Row 
+                cur = con.cursor()
+                _correo="admin@gmail.com"
+                cur.execute('SELECT * FROM usuarios WHERE email!=?',[_correo])
+                row = cur.fetchall()
+                return render_template("gestionUsuarios.html",row=row)
+        except Error:
+            return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
+    else:
+        flash("Accion no permitida, por favor inicie sessión como adiministrador")
+        return render_template('error.html')
 
-    
+@app.route("/admin/panelAdm/gestion_usuarios/delete", methods=["POST"])
+def eliminar_usuarios():
+    if ('rol' in session) and session['rol']=="supAdmin":
+        _cedula_u=request.form['usuario_s']
+        if request.method == 'POST':
+            try:
+                with sqlite3.connect('HRC.db') as con:
+                    cur = con.cursor()
+                    #Borrar actividad del usuario 
+                    cur.execute('DELETE FROM comentario WHERE cedula=?',[_cedula_u])
+                    con.commit()#borrar comentarios
+                    cur.execute('DELETE FROM calificacion WHERE cedula=?',[_cedula_u])
+                    con.commit()#borrar calificacion       
+                    #Borrar Usuario
+                    cur.execute('DELETE FROM usuarios WHERE cedula=?',[_cedula_u])
+                    con.commit()
+                    flash('Usuario eliminado exitosamente')
+                    return redirect(url_for("gestionusuarios"))
+            except Error:
+                return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
+    else:
+        flash("Accion no permitida, por favor inicie sessión como adiministrador")
+        return render_template('error.html')
 
-
+@app.route("/admin/panelAdm/gestion_usuarios/up", methods=["POST"])
+def actualizar_usuarios():
+    if ('rol' in session) and session['rol']=="supAdmin":
+        _rol=request.form['rol_usuario']
+        _cedula_u=request.form['usuario_s']
+        if request.method == 'POST':
+            try:
+                with sqlite3.connect('HRC.db') as con:
+                    cur = con.cursor()
+                    cur.execute('UPDATE usuarios SET rol =? WHERE cedula=?',(_rol,_cedula_u))
+                    con.commit() 
+                    flash('Usuario actualizado exitosamente')
+                    return redirect(url_for("gestionusuarios"))
+            except Error:
+                return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.")                 
+    else:
+        flash("Accion no permitida, por favor inicie sessión como adiministrador")
+        return render_template('error.html')       
 
 
 if __name__ == '__main__':

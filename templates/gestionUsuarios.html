@@ -9,13 +9,35 @@
 <div class="a">
 {% for r in row %}
 
-    <button class="boton_lista" value="{{r['0']}}" id="usuario_g">
+    <button onclick="obtener(this.value,this.name);" class="boton_lista" name="{{r['rol']}}" value="{{r['cedula']}}" id="usuario_g">
         <img class="img_user" src="https://img.icons8.com/ios/50/000000/user--v1.png"/><img>
-        {{r[0]}} {{r[1]}} {{r[3]}} 
+        <spas class="estilo_texto">{{r[0]}} {{r[1]}} {{r[3]}} </spas>
     </button>
 
 {% endfor %}   
     </div>
+    <div class="b">
+        <h2>Usuario</h2>
+        <form method="POST" id="formulario_u" method="POST" style="color:rgb(0, 0, 0)">
+        <label for="id_usuario">Cedula</label> 
+        <input required class="id_usuario" readonly="readonly" type="text" name="usuario_s" id="usuario_s"></input><br>
+        <img class="img_user_grande" src="https://img.icons8.com/ios/50/000000/user--v1.png"/><img>
+        
+        <p> Rol de usuario: 
+            <input list="browsers" requerid name="rol_usuario" id="rol_usuario">
+            <datalist id="browsers">
+              <option value="final">Usuario final</option>
+              <option value="admi">Administrador</option>
+            </datalist>
+            </input>
+         </p>
+         
+        <button onclick="actualizar();" class="btn_enviar" id="actualizar_u" name="actualizar_u">Guardar<br>cambios</button>
+        <button onclick="eliminar();" style="float:right; left:-100px;" class="btn_enviar" id="eliminar_u" name="eliminar_u">Eliminar<br>usuario</button>
+        </form>
+    </div>
+
+
 </div>
 <script src="{{ url_for('static', filename='Script/gestionusuarios.js') }}"></script>
 </body>

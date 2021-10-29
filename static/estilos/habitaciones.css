@@ -79,6 +79,7 @@ body {
 
  #descripHab {
     text-align:left;
+    width: 650px;
  }
  #otrosHab {
     text-align:left;
@@ -90,7 +91,7 @@ body {
  }
 
  #coments{
-    width: 150px;
+    width: 200px;
  }
 
  .coment-content{

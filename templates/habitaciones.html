@@ -80,7 +80,7 @@
                 </div>
                 <div>
                     <h1 style="text-align:left;"><span>{{ row["nombre"] }}</span></h1>
-                    <h3 style="text-align:left;" >Habitacion <span>{{ row["id"] }}</span></h3>
+                    <h3 id="hab" style="text-align:left;" >Habitacion <span>{{ row["id"] }}</span></h3>
                     <p id="descripHab" style="margin-right: 25px;">
                         {{ row["descripcion"] }}
                     </p>
@@ -101,60 +101,22 @@
                     </p>
                 </div>
                 <div id="otrosHab">
-                    <h1 style="text-align:left;"><span>&#9733;{{row["calificacion"]}}</span></h1>
-                    <p style="text-align: left;" id="coments">(10 comentarios)</p>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        comentarios
-                    </button>
-                    <p style="text-align:left; font-size:20px;"><b>${{ row["precio"] }}</b></p>
+                    <h1 style="text-align:left;">&#9733; <span>{{row["calificacion"]}}</span></h1>
+                    <p id="coments" style="text-align:left;">({{cant}} comentarios)</p>
+                    <a href="/habitaciones/comentarios/{{row['id']}}"> ver comentarios</a> 
+                    <p style="text-align:left; font-size:20px"><b>${{ row["precio"] }}</b></p>
                     
                     {%if row["disponibilidad"] == 1%}
                         {%if rol == 'final'%}
-                        <a href='/reserva/{{ row["id"] }}'> Ver más </a>
+                        <a href='/reserva/{{ row["id"] }}'>Reservar</a>
                         {%else%}
-                        <a href='/reservaAdmin/{{ row["id"] }}'> Ver más </a>
+                        <a href='/reservaAdmin/{{ row["id"] }}'>Reservar</a>
                         {%endif%}
                     {%else%}
-                        <a href='/habitaciones/disponible'> Ver más </a>
+                        <a href='/habitaciones/disponible'>Reservar</a>
                     {%endif%}
                    
                 </div>
-
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Comentarios</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-
-                            <div class="coment-content">
-                                <h4 class="user float-start " >Julian M.</h4>
-                                <h4 class="float-end">4.5 &#9733;</h4>
-                                <label style="text-align: left;" for="">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laboriosam nisi ratione, enim non maxime eaque corrupti quod expedita quidem. Dignissimos ipsum omnis quos error nam possimus rerum magnam! Explicabo, reiciendis.</label>
-                            </div> 
-                            <br>
-                            <div class="coment-content">
-                                <h4 class="user float-start " >Julian M.</h4>
-                                <label style="text-align: left;" for="">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laboriosam nisi ratione, enim non maxime eaque corrupti quod expedita quidem. Dignissimos ipsum omnis quos error nam possimus rerum magnam! Explicabo, reiciendis.</label>
-                            </div> 
-                            <br>
-                            <div class="coment-content">
-                                <h4 class="user float-start " >Julian M.</h4>
-                                <label style="text-align: left;" for="">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laboriosam nisi ratione, enim non maxime eaque corrupti quod expedita quidem. Dignissimos ipsum omnis quos error nam possimus rerum magnam! Explicabo, reiciendis.</label>
-                            </div> 
-                            
-                        </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-
             </div>
         </section>  
     </div>

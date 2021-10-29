@@ -36,3 +36,27 @@
 </ul>
 {%endif%}
 {%endblock%}
+
+{%block content%}
+    <div class="container w-100">
+        <div class="border rounded mx-auto row align-items-center" style="width: 60%; height: 250px;">
+            <div class="col">
+                <img class="w-100" src="{{url_for('static', filename='imagenes/hab.jpeg')}}" alt="Habitacion" id="imgHab">   
+            </div>
+            <div class="col">
+                <h2 class="text-align-center align-top mt-0">Habitacion {{idHab}}</h2>
+                <h2 style="text-align:left;">&#9733; <span>{{row["calificacion"]}}</span></h2>
+            </div>
+        </div>
+    </div>
+    <div class="container w-50">
+        <div>
+            <h3 class="mt-3 mb-4">Comentarios:</h3>
+        </div>
+        {%for r in rowC%}
+                <p class="fs-6" style="color: gray;">{{r['fechaComentario']}}</p>
+                <p class="text-align-center">{{r['comentario']}}</p>
+                <hr>
+        {%endfor%}
+    </div    
+{%endblock%}

@@ -1,6 +1,7 @@
 {% extends "habitaciones.html" %}
 {% block contentHab %}
 {% for r in row %}
+{%set hab = r['id']%}
 <div>
     <section class="contenedor">
         <div class="habitaciones">
@@ -10,7 +11,7 @@
             </div>
             <div id="descrpcion">
                 <h1 style="text-align:left;"><span>{{ r["nombre"] }}</span></h1>
-                <h3 style="text-align:left;">Habitacion <span>{{ r["id"] }}</span></h3>
+                <h3 id='hab' style="text-align:left;">Habitacion <span>{{ r["id"] }}</span></h3>
                 <p id="descripHab" style="margin-right: 25px;">
                     {{ r["descripcion"] }}
                 </p>
@@ -32,23 +33,20 @@
             </div>
             <div id="otrosHab">
                 <h1 style="text-align:left;">&#9733; <span>{{r["calificacion"]}}</span></h1>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    comentarios
-                </button>
-                <p style="text-align:left;">(10 comentarios)</p>
+                <p id="coments" style="text-align:left;">({{rowC[r['id']]}} comentarios)</p>
+                <a href="/habitaciones/comentarios/{{r['id']}}"> ver comentarios</a> 
                 <p style="text-align:left; font-size:20px"><b>${{ r["precio"] }}</b></p>
                 {%if r["disponibilidad"] == 1%}
                     {%if rol == 'final'%}
-                    <a href='/reserva/{{ r["id"] }}'> Ver más </a>
+                    <a href='/reserva/{{ r["id"] }}'>Reservar</a>
                     {%else%}
-                    <a href='/habitaciones/gestionHab'> Ver más </a>
+                    <a href='/reservaAdmin/{{ r["id"] }}'>Reservar</a>
                     {%endif%}
                 {%else%}
-                    <a href='/habitaciones/disponible'> Ver más </a>
+                    <a href='/habitaciones/disponible'>Reservar</a>
                 {%endif%}
-            </div>
 
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -56,22 +54,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-
-                        <div class="coment-content">
-                            <h4 class="user float-start " >Julian M.</h4>
-                            <h4 class="float-end">4.5 &#9733;</h4>
-                            <label style="text-align: left;" for="">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laboriosam nisi ratione, enim non maxime eaque corrupti quod expedita quidem. Dignissimos ipsum omnis quos error nam possimus rerum magnam! Explicabo, reiciendis.</label>
-                        </div> 
-                        <br>
-                        <div class="coment-content">
-                            <h4 class="user float-start " >Julian M.</h4>
-                            <label style="text-align: left;" for="">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laboriosam nisi ratione, enim non maxime eaque corrupti quod expedita quidem. Dignissimos ipsum omnis quos error nam possimus rerum magnam! Explicabo, reiciendis.</label>
-                        </div> 
-                        <br>
-                        <div class="coment-content">
-                            <h4 class="user float-start " >Julian M.</h4>
-                            <label style="text-align: left;" for="">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laboriosam nisi ratione, enim non maxime eaque corrupti quod expedita quidem. Dignissimos ipsum omnis quos error nam possimus rerum magnam! Explicabo, reiciendis.</label>
-                        </div> 
+                        
+                            {%for rC in rowC%}
+                                <div class="coment-content">
+                                    <h4 class="user float-start " >{{hab}}</h4>
+                                    <h4 class="float-end">4.5 &#9733;</h4>
+                                    {%if rC['idHabitacion'] == hab%}
+                                        <label style="text-align: left;" for="">{{rC['comentario']}}</label>
+                                    {%endif%}
+                                </div>
+                            {%endfor%}
                         
                     </div>
                     <div class="modal-footer">
@@ -80,7 +72,7 @@
                 </div>
                 </div>
             </div>
-
+            </div>
         </div>
     </section>
 </div>

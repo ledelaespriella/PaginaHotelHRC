@@ -1,0 +1,30 @@
+.contenedor{
+  position: relative;
+  border-radius:10px;
+  top: 10px;
+  left: 10px;    
+  width: 1100px;
+  height: 410px;
+  background-color:#F1EEE9; 
+  border: #F1EEE9 1px solid;
+  border-bottom: #F1EEE9 2px solid;
+
+}
+.a{
+    position: relative;
+    border-radius:10px;
+    float: left;
+    background-color:#866325; 
+    overflow-y:visible;overflow-y:auto;
+    width:440px;
+    height: 380px;
+}
+.boton_lista{
+    width:400px;
+}
+.img_user{
+    width:24px;height:24px;
+  
+    position:relative;
+
+}

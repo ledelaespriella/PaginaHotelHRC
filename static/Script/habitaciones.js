@@ -33,5 +33,8 @@ function ocultarHab(){
     limpiar()
 }
 
+function recordId(){
+    console.log(document.getElementById('hab').textContent)
+}
 
 

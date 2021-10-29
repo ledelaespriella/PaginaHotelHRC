@@ -1,25 +1,4 @@
-{% extends "bases/indexHome.html"%}
-{%block stylepages%}
-<link rel="stylesheet" href="/static/estilos/estiloReserva.css">
-{% endblock %}
-
-{%block listaNav1%}
-<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
-    <li class="u-nav-item"><a
-            class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-            href="\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
-    </li>
-    <li class="u-nav-item"><a
-            class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-            href="\dashboard" style="padding: 10px 20px;">Mis habitaciones</a>
-    </li>
-    <li class="u-nav-item"><a
-            class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
-            href="\login" style="padding: 10px 20px;">Cerrar sesion</a>
-    </li>
-</ul>
-
-{%endblock%}
+{%extends 'reserva.html'%}
 
 {%block content%}
 
@@ -51,6 +30,10 @@
                 <input name="emailR" class="email form-control" type="email" placeholder="E-mail" required>
             </div>
 
+            <div class="col-sm-6">
+                <input name="cedulaR" class="cedula form-control" type="text" placeholder="Cedula" required>
+            </div>
+
             <div class="">
                 <textarea name="preferenciasR" class="form-control" id="" cols="53" rows="8"
                 placeholder="Escribe acá tus preferencias"></textarea>
@@ -59,13 +42,13 @@
             <div class="short-data col-sm-6">
                 <input class="form-control" type="text" name="habitacion" style="display: none;" value="{{idHab}}">
             </div>
-
+ 
             <hr class="my-2">
             <h5 class="" for="">Metodo de pago</h5>
 
             <div class="">
                 <div class="form-check">
-                    <input class="form-check-input" id="check1" name="typePay" type="radio" value="efectivo">
+                    <input class="form-check-input" id="check1" name="typePay" type="radio" value="hotel">
                     <label class="form-check-label float-start" for="check1 ">Pago en el hotel</label>
                 </div>
 
@@ -92,7 +75,7 @@
                 <input class="caducidad border form-control" type="text" placeholder="MM/AA" name="caducidad">
             </div>
         </div>
-        <div class="container-send">
+        <div id="send" class="container-send">
             <input class="send" type="submit">
         </div>
     </form>

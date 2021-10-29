@@ -13,7 +13,6 @@ U_CONFIRMED = 'CONFIRMED'
 
 def isEmailValid(email):
     is_valid = validate_email(email)
-    print(is_valid)
     return is_valid
 
 def isPasswordValid(password):

@@ -1,0 +1,62 @@
+{%extends 'bases/indexHome.html'%}
+
+{%block listaNav1%}
+{%if rol == 'admin' or rol == 'supAdmin' %}
+<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
+  <li class="u-nav-item"><a
+      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+      href="\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
+  </li>
+  <li class="u-nav-item"><a
+      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+      href="\habitaciones\panelAdm" style="padding: 10px 20px;">Dashboard</a>
+  </li>
+  <li class="u-nav-item"><a
+      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+      href="\logout" style="padding: 10px 20px;">Cerrar sesion</a>
+  </li>
+</ul>
+
+{%else%}
+<ul class="u-nav u-spacing-2 u-unstyled u-nav-1">
+    <li class="u-nav-item"><a
+        class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+        href="\habitaciones" style="padding: 10px 20px;">Habitaciones</a>
+    </li>
+  
+    <li class="u-nav-item"><a
+            class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+            href="\misHabitaciones" style="padding: 10px 20px;">Mis Habitaciones</a>
+    </li>
+
+  <li class="u-nav-item"><a
+      class="u-active-palette-1-base u-border-active-palette-1-base u-border-hover-palette-1-light-1 u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-grey-90 u-text-hover-white"
+      href="\logout" style="padding: 10px 20px;">Cerrar sesion</a>
+  </li>
+</ul>
+{%endif%}
+{%endblock%}
+
+{%block content%}
+    <div class="container w-100">
+        <div class="border rounded mx-auto row align-items-center" style="width: 60%; height: 250px;">
+            <div class="col">
+                <img class="w-100" src="{{url_for('static', filename='imagenes/hab.jpeg')}}" alt="Habitacion" id="imgHab">   
+            </div>
+            <div class="col">
+                <h2 class="text-align-center align-top mt-0">Habitacion {{idHab}}</h2>
+                <h2 style="text-align:left;">&#9733; <span>{{row["calificacion"]}}</span></h2>
+            </div>
+        </div>
+    </div>
+    <div class="container w-50">
+        <div>
+            <h3 class="mt-3 mb-4">Comentarios:</h3>
+        </div>
+        {%for r in rowC%}
+                <p class="fs-6" style="color: gray;">{{r['fechaComentario']}}</p>
+                <p class="text-align-center">{{r['comentario']}}</p>
+                <hr>
+        {%endfor%}
+    </div    
+{%endblock%}

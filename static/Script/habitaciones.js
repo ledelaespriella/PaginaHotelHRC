@@ -1,4 +1,3 @@
-
 function limpiar(){
     document.getElementById("estadoHab").checked = false;
     document.getElementById("numHab").value="";
@@ -34,5 +33,8 @@ function ocultarHab(){
     limpiar()
 }
 
+function recordId(){
+    console.log(document.getElementById('hab').textContent)
+}
 
 

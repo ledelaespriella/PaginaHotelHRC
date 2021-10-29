@@ -1,4 +1,3 @@
-
 {% extends "habitaciones.html" %}
 {% block contentHab %}
 {% if row %}
@@ -6,30 +5,45 @@
     <section class="contenedor">
         <div class="habitaciones">
             <div>
-                <img src="{{url_for('static', filename='imagenes/Habitacion.jpg')}}" alt="Habitacion" width="250"
+                <img src="{{url_for('static', filename='imagenes/hab.jpeg')}}" alt="Habitacion" width="250"
                     height="250" id="imgHab">
             </div>
             <div>
                 <h1 style="text-align:left;"><span>{{ row["nombre"] }}</span></h1>
-                <h1 style="text-align:left;">Habitacion <span>{{ row["id"] }}</span></h1>
-                <p id="descripHab">
+                <h3 style="text-align:left;">Habitacion <span>{{ row["id"] }}</span></h3>   
+                <p id="descripHab" style="margin-right: 25px;">
                     {{ row["descripcion"] }}
                 </p>
-                <p style="text-align:left;"><b>Estado:</b> <span>{{ row["disponibilidad"] }}</span> <b>Max:</b> 4 personas
-                    <b>#Camas:</b> 2
+                <p style="text-align:left;"><b>Estado:</b>
+                    {%if row["disponibilidad"] == 1%}
+                    <span>
+                        Disponible
+                    </span> 
+                    {%else%}
+                    <span>
+                        No disponible
+                    </span>
+                    {%endif%}
+                    <br>
+                    <b>Max:</b> 4 personas
+                    <br>
+                    <b>Camas:</b> 2
                 </p>
             </div>
             <div id="otrosHab">
-                <h1 style="text-align:left;">&#9733; <span>{{row["calificacion"]}}</span></h1><br>
-                <p style="text-align:left;">(10 comentarios)</p><br>
+                <h1 style="text-align:left;">&#9733; <span>{{row["calificacion"]}}</span></h1>
+                <p id="coments"  style="text-align:left;">(10 comentarios)</p>
+                <a href="/habitaciones/comentarios/{{row['id']}}"> ver comentarios</a> 
                 <p style="text-align:left; font-size:20px"><b>${{ row["precio"] }}</b></p>
-                {%block vermas%}
-                {%if rol == 'final'%}
-                <a href='/reserva/{{ row["id"] }}'> Ver más </a>
+                {%if row["disponibilidad"] == 1%}
+                    {%if rol == 'final'%}
+                    <a href='/reserva/{{ row["id"] }}'>Reservar</a>
+                    {%else%}
+                    <a href='/reservaAdmin/{{row["id"]}}'>Reservar</a>
+                    {%endif%}
                 {%else%}
-                <a href='/habitaciones/gestionHab'> Ver más </a>
+                    <a href='/habitaciones/disponible'>Reservar</a>
                 {%endif%}
-                {%endblock%}
             </div>
         </div>
     </section>
@@ -38,7 +52,7 @@
 <form action="/habitaciones" id="formularios" method="POST" novalidate>
     {{ form.hidden_tag() }}
     <div id="mostrarHab">
-        <hr width="80%">
+        <hr width="80%" style="margin-left: 10%;">
         {{ form.listar(size=9) }}
     </div>
 </form>

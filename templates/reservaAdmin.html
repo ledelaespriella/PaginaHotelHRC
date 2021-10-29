@@ -1,0 +1,98 @@
+{%extends 'reserva.html'%}
+
+{%block content%}
+
+{% for message in get_flashed_messages() %}
+<div class="flash"> {{message}} </div>
+{%endfor%}
+
+<div class="main-container">
+    <form class="needs-validations" method="post" action="{{ url_for('reserva')}}">
+        <div class="row g-3">
+
+            <h5 class="" for="">Metodo de pago</h5>
+
+            <div class="col-sm-6">
+                <label for="checkin" class="form-label">Check in</label>
+                <input name="checkin" class="form-control float-end" id="checkin" type="date">
+            </div>
+
+            <div class="col-sm-6">
+                <label class="form-label" for="checkout">Check out</label>
+                <input name="checkout" class="form-control float-end" id="checkout" type="date" required>
+            </div>
+
+            <div class="col-sm-6">
+                <input name="numeroR" class="telefono form-control" type="text" placeholder="Telefono" required>
+            </div>
+
+            <div class="col-sm-6">
+                <input name="emailR" class="email form-control" type="email" placeholder="E-mail" required>
+            </div>
+
+            <div class="col-sm-6">
+                <input name="cedulaR" class="cedula form-control" type="text" placeholder="Cedula" required>
+            </div>
+
+            <div class="">
+                <textarea name="preferenciasR" class="form-control" id="" cols="53" rows="8"
+                placeholder="Escribe acá tus preferencias"></textarea>
+            </div>
+
+            <div class="short-data col-sm-6">
+                <input class="form-control" type="text" name="habitacion" style="display: none;" value="{{idHab}}">
+            </div>
+ 
+            <hr class="my-2">
+            <h5 class="" for="">Metodo de pago</h5>
+
+            <div class="">
+                <div class="form-check">
+                    <input class="form-check-input" id="check1" name="typePay" type="radio" value="hotel">
+                    <label class="form-check-label float-start" for="check1 ">Pago en el hotel</label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" id="check2" name="typePay" type="radio" value="tarjeta">
+                    <label class="form-check-label float-start" for="check2">Pago con tarjeta</label>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <input class="form-control" type="text" value="" placeholder="Nombre de la tarjeta" name="name-card">
+            </div>
+
+            <div class="col-sm-6">
+                <input class="number-card form-control" type="text" placeholder="Numero de la tarjeta"
+                    name="number-card">
+            </div>
+
+            <div class="short-data col-sm-6">
+                <input class="cvc border form-control" type="text" placeholder="CVC" name="cvc">
+            </div>
+
+            <div class="short-data col-sm-6">
+                <input class="caducidad border form-control" type="text" placeholder="MM/AA" name="caducidad">
+            </div>
+        </div>
+        <div id="send" class="container-send">
+            <input class="send" type="submit">
+        </div>
+    </form>
+</div>
+
+<aside class="al-lado">
+    <div class="container-habitacion">
+        <img class="habitacion" src="/static/imagenes/hab.jpeg" alt="">
+    </div>
+    <hr style="width: 98%; margin-left: 1%">
+    <div>
+        <h6 class="descripcion">Habitacion {{ idHab}} </h6>
+        <p class="descripcion">Descripcion: {{row['descripcion']}}</p>
+        <h4 class="descripcion">Precio: {{row['precio']}}</h4>
+        <div class="cal-L">
+            <p style="margin-bottom: 0px; margin-top: 0px; font-size: 36px; font-weight: 600;">{{row['calificacion']}} &#9733;</p>
+        </div>
+    </div>
+</aside>
+{% endblock %}

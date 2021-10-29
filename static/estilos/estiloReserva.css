@@ -138,18 +138,17 @@ menu li a{
 .cal-L{
     width: 94%;
     height: 120px;
-    border: solid 1px black;
     margin-left: 4%;
-}
-
-.cal-L h1{
-    text-align: center;
 }
 
 .container-send{
     text-align: center;
     position: relative;
-    top: 15px;
+    top: 45px;
+}
+
+#send{
+    top: 20px;
 }
 
 #pie{
@@ -178,8 +177,4 @@ menu li a{
         height: 1800px;
     }
   }
-<<<<<<< HEAD
   
-=======
-  
->>>>>>> main

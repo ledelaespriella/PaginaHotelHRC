@@ -4,32 +4,38 @@
 
 {%block content%}
 
-<table>
+
+<table class="ventana">
     {% if row %}
     <tr>            
-        <th colspan="3">{{ row["nombre"] }} </th>
+        <th colspan="3" class="form_control">{{ row["nombre"] }} </th>
         <td >&nbsp;</td>
-        <th colspan="2">{{ row["id"] }}</th>
+        <th colspan="2" class="form_control">{{ row["id"] }}</th>
     </tr>
     <tr>
-        <td rowspan="4" ><img src="{{ url_for('static',filename='imagenes/hab.jpeg')}}" /></td>
-        <td colspan="2">{{ row["capMax"] }}</td>
+        <td rowspan="4"><img src="{{ url_for('static',filename='imagenes/hab.jpeg')}}" /></td>
+        <td colspan="2" class="form_control">{{ row["capMax"] }}</td>
         <td >&nbsp;</td>
-        <td colspan="2">
+        <td colspan="2" class="form_control">
             {{ row["precio"] }}</td>
     </tr>
     <tr>
-        <td colspan="2">{{ row["cantCamas"] }}</td>
+        <td colspan="2" class="form_control">{{ row["cantCamas"] }}</td>
         <td>&nbsp;</td>
-        <td colspan="2">Tarifa por noche.<br> Impuestos incluidos</td>
+        <td colspan="2" class="form_control">Tarifa por noche.<br> Impuestos incluidos</td>
     </tr>
     <tr>
-        <td colspan="3">{{ row["descripcion"] }}</td>
+        <td colspan="3" class="form_control">{{ row["descripcion"] }}</td>
         <td >&nbsp;</td>
-        <td>Disponibilidad<br>{{ row["disponibilidad"] }}</td>
+        <td class="form_control">Disponibilidad<br>{{ row["disponibilidad"] }}</td>
     </tr>
 
     {% endif %}
 </table>
-
+<div class="fila">&nbsp;
+    <div class="error-actions">
+        <a href="/admin/panelAdm/gestionHab" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span>Gestión de Habitaciones </a>
+        <a href="/admin/panelAdm" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span>Panel Administrativo </a>
+    </div>
+</div>
 {% endblock %}

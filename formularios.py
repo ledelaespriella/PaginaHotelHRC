@@ -4,10 +4,9 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextA
 from wtforms.validators import DataRequired, Length, Email
 from wtforms.fields.html5 import EmailField
 
-
 class FormLogin(FlaskForm):
     correo = EmailField('usuario', validators=[DataRequired(message='No dejar vacio') ],render_kw={'placeholder':'name@example.com', 'class':'form-control'})
-    contrasena = PasswordField('contrasena', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Contraseña', 'class':'form-control'})
+    contrasena = PasswordField('contrasena', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Contraseña', 'class':'form-control password1'})
     enviar= SubmitField('Iniciar sesion', render_kw={'onmouseover':'validarLogin()','class':'w-100 btn btn-lg btn-primary'})
     
 class FormRegistro(FlaskForm):
@@ -17,8 +16,8 @@ class FormRegistro(FlaskForm):
     Segundo_apellido=StringField('Segundo apellido', validators=[DataRequired(message='No dejar vacio')], render_kw={'placeholder':'Segundo apellido','class':'form-control'})
     correo=EmailField('Correo', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Correo electronico','class':'form-control','id':'email'})
     identificacion=StringField('Identificacion', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Identificación','class':'form-control'})
-    contrasena=PasswordField('Contraseña', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Contraseña','class':'form-control','id':'pass'})
-    confirmacion_contrasena=PasswordField('Confirmar contraseña', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Confirmar contraseña','class':'form-control','id':'passVer'})
+    contrasena=PasswordField('Contraseña', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Contraseña','class':'form-control password1','id':'pass'})
+    confirmacion_contrasena=PasswordField('Confirmar contraseña', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Confirmar contraseña','class':'form-control password2','id':'passVer'})
     enviar_registro=SubmitField('Registrarse',render_kw={'onclick':'validarRegistro()','class':'btn btn-lg btn-primary'})
     
 class formHabitaciones(FlaskForm):
@@ -42,5 +41,9 @@ class formHab(FlaskForm):
     consultar = SubmitField('Consultar', render_kw={'onmouseover':'consultarHab()', 'class':'form_boton'} )
     listar = SubmitField('Listar', render_kw={'onmouseover':'listarHab()', 'class':'form_boton'} )
     actualizar = SubmitField('Actualizar', render_kw={'onmouseover':'actualizarHab()', 'class':'form_boton'} )
-
     eliminar = SubmitField('Eliminar', render_kw={'onmouseover':'eliminarHab()', 'class':'form_boton'} )
+
+class formCambio_password(FlaskForm):
+    contrasenaNueva=PasswordField('Contraseña Nueva', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Contraseña nueva','class':'form-control password1','id':'pass'})
+    confirmacion_contrasena=PasswordField('Confirmar contraseña', validators=[DataRequired(message='No dejar vacio')],render_kw={'placeholder':'Confirmar contraseña','class':'form-control password2','id':'passVer'})
+    enviar=SubmitField('Recuperar contraseña',render_kw={'onclick':'validarContrasena()','class':'btn btn-lg btn-primary'})

@@ -1,9 +1,12 @@
-{%extends 'bases/indexAdm.html'%}
-{% block title %}Error{% endblock %}
+{%extends 'bases/indexError.html'%}
 
-{% block content %}
-    <h3>
-        Haga click aquí para <a href="/login"> iniciar sesión </a>
-    </h3>
 
-{% endblock%}
+{%block content %}
+<div class="mensaje">
+    <h1 class="h3 mb-3 fw-normal ">ERROR</h1>
+    <div>
+        <label class="pt-2"">Por favor inicie sesión <a href="/login">aquí</a></label>
+    </div>
+    <br>
+</div>
+{%endblock%}

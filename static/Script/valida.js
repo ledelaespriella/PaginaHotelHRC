@@ -7,8 +7,8 @@ function consultarHab(){
     document.getElementById("formulario").action="/admin/panelAdm/gestionHab/get"
 }
 
-function Habitaciones_list(){
-    document.getElementById("formulario").action="/habitaciones/list"
+function listarHab(){
+    document.getElementById("formulario").action="/admin/panelAdm/gestionHab/lista"
 }
 
 function actualizarHab(){

@@ -528,6 +528,7 @@ def eliminarH():
 @app.route('/reservaAdmin/<idHab>')
 def load_reservaAdmin(idHab = None):
     if "rol" in session:
+        rol= session['rol']
         try:
             with sqlite3.connect("HRC.db") as con:
                 con.row_factory = sqlite3.Row 
@@ -537,7 +538,7 @@ def load_reservaAdmin(idHab = None):
                 con.commit()
                 if row is None:
                     flash("No hay habitaciones disponibles")
-                return render_template('reservaAdmin.html', idHab = idHab, row = row)
+                return render_template('reservaAdmin.html', idHab = idHab, row = row,rol=rol)
         except Error:
             return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
     else:
@@ -547,6 +548,7 @@ def load_reservaAdmin(idHab = None):
 @app.route('/reserva/mensaje_reserva', methods=["GET", "POST"])
 def reserva():
     if "rol" in session:
+        rol= session["rol"]
         if request.method == 'POST':
             if session['rol'] == 'final':
                 checkin = request.form['checkin']
@@ -568,7 +570,7 @@ def reserva():
                 if utils.isEmailValid(correo):
                     if checkin == checkout:
                         flash('Las fechas de entrada y salida no pueden ser iguales')
-                        return render_template('reserva.html')
+                        return render_template('reserva.html',rol=rol)
                     try:
                         with sqlite3.connect('HRC.db') as con:
                             cur = con.cursor()
@@ -583,7 +585,7 @@ def reserva():
                                 con.commit()
                     except Error:
                         return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
-                    return render_template('reservaExitosa.html')
+                    return render_template('reservaExitosa.html',rol=rol)
                 else:
                     flash('Email  incorrecto')
                     return render_template('reserva.html')
@@ -617,7 +619,7 @@ def reserva():
                                 con.commit()
                                 cur.execute('INSERT INTO pagoTarjeta(numCard, nameCard, cvc, mmaa, idReserva) VALUES (?,?,?,?,?)', (cardNum, cardName, cvc, caducidad, row[0]))
                                 con.commit()
-                        return render_template('reservaExitosa.html')
+                        return render_template('reservaExitosa.html',rol=rol)
                     except Error:
                         return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
                 else:
@@ -659,6 +661,7 @@ def disponible():
 @app.route("/misHabitaciones", methods = ['GET', 'POST'])
 def mishabitaciones():
     if 'rol' in session:
+        rol=session['rol']
         _cedula = session['cedula']
         try:
             with sqlite3.connect("HRC.db") as con:
@@ -666,7 +669,7 @@ def mishabitaciones():
                 cur = con.cursor()
                 cur.execute("SELECT reserva.idHabitacion, reserva.checkout, comentario.comentario FROM reserva LEFT JOIN comentario ON comentario.idHabitacion = reserva.idHabitacion WHERE reserva.cedula = ?",[_cedula])
                 row = cur.fetchall()
-                return render_template("mishabitaciones.html", row=row)
+                return render_template("mishabitaciones.html", row=row,rol=rol)
         except  Error:
             return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
     else:
@@ -766,14 +769,15 @@ def eliminar_comentario():
 @app.route("/admin/panelAdm/gestion_usuarios", methods=['GET', 'POST'])
 def gestionusuarios():
     if ('rol' in session) and session['rol']=="supAdmin":
+        rol=session['rol']
         try:
             with sqlite3.connect("HRC.db") as con:
                 con.row_factory = sqlite3.Row 
                 cur = con.cursor()
-                _correo="admin@gmail.com"
-                cur.execute('SELECT * FROM usuarios WHERE email!=?',[_correo])
+                _rol="supAdmin"
+                cur.execute('SELECT * FROM usuarios WHERE rol!=?',[_rol])
                 row = cur.fetchall()
-                return render_template("gestionUsuarios.html",row=row)
+                return render_template("gestionUsuarios.html",row=row,rol=rol)
         except Error:
             return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
     else:

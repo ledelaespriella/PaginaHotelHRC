@@ -397,8 +397,9 @@ def panelAdm():
 @app.route('/admin/panelAdm/gestionHab', methods=['GET', 'POST'])
 def gestHab():
     if "rol" in session:
+        rol = session["rol"]
         form = formHab()
-        return render_template("editarHab.html", form=form)
+        return render_template("editarHab.html", form=form,rol=rol)
     else:
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html')    
@@ -406,6 +407,7 @@ def gestHab():
 @app.route('/admin/panelAdm/gestionHab/agregarH', methods=['POST'])
 def nuevaH():
     if "rol" in session:
+        rol = session["rol"]
         form = formHab()
         if request.method == 'POST':
             idHabitacion = form.idHab.data
@@ -414,15 +416,18 @@ def nuevaH():
             precio = form.precio.data
             numC = form.numCama.data
             desc = form.descrip.data
-            try:
-                with sqlite3.connect("HRC.db") as con:
-                    cur = con.cursor() #Manipula la conexión a la BD
-                    cur.execute("INSERT INTO habitacion(id, nombre, descripcion, disponibilidad, cantCamas, capMax, precio, calificacion) VALUES (?,?,?,True,?,?,?,0)", (idHabitacion, nombre, desc, numC, capM, precio) )
-                    con.commit() #Confirmar la transacción
-                    return render_template("save.html",error="Felicidades",mensaje="La información se ha guardado satisfactoriamente en la base de datos")                    
-            except Error:
-                return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.")
-        return render_template("save.html",error="Error",mensaje="No se pudo guardar la información")
+            if idHabitacion=="" and nombre=="" and desc=="":
+                return render_template("save.html",error="Error",mensaje="No se pudo guardar la información",rol=rol)
+            else:
+                try:
+                    with sqlite3.connect("HRC.db") as con:
+                        cur = con.cursor() #Manipula la conexión a la BD
+                        cur.execute("INSERT INTO habitacion(id, nombre, descripcion, disponibilidad, cantCamas, capMax, precio, calificacion) VALUES (?,?,?,True,?,?,?,0)", (idHabitacion, nombre, desc, numC, capM, precio) )
+                        con.commit() #Confirmar la transacción
+                        return render_template("save.html",error="Felicidades",mensaje="La información se ha guardado satisfactoriamente en la base de datos",rol=rol)                    
+                except Error:
+                    return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.")
+        return render_template("save.html",error="Error",mensaje="No se pudo guardar la información",rol=rol)
     else:
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html')
@@ -430,13 +435,14 @@ def nuevaH():
 @app.route("/admin/panelAdm/gestionHab/lista", methods=["GET", "POST"])
 def listH():
     if "rol" in session:
+        rol = session["rol"]
         try:
             with sqlite3.connect("HRC.db") as con:
                 con.row_factory = sqlite3.Row #Convierte la respuesta de la BD en un diccionario
                 cur = con.cursor()
                 cur.execute("SELECT id, nombre, cantCamas, capMax, precio, disponibilidad FROM habitacion ORDER BY id")
                 row = cur.fetchall()
-                return render_template("listaHab.html", row=row)
+                return render_template("listaHab.html", row=row,rol=rol)
         except  Error:
             return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.")
     else:
@@ -447,6 +453,7 @@ def listH():
 @app.route("/admin/panelAdm/gestionHab/get", methods=['GET', 'POST'])
 def buscaH():
     if "rol" in session:
+        rol = session["rol"]
         form = formHab()
         if request.method == 'POST':
             idHabitacion = form.idHab.data
@@ -457,11 +464,13 @@ def buscaH():
                     cur.execute("SELECT id, nombre, descripcion, cantCamas, capMax, precio, disponibilidad FROM habitacion WHERE id = ?", [idHabitacion])
                     row = cur.fetchone()
                     if row is None:
-                        flash("Habitación no encontrada en la BD")
-                    return render_template("agregaHab.html", row=row) 
+                        return render_template("save.html",error="Error",mensaje="Es posible que la habitación no exista.",rol=rol)
+                    else: 
+                        return render_template("agregaHab.html", row=row,rol=rol) 
             except Error:
                 return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.")
-        return "Error en el método"
+        else:
+            return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.")
     else:
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html')
@@ -470,6 +479,7 @@ def buscaH():
 @app.route('/admin/panelAdm/gestionHab/editarH', methods=['POST']) 
 def editarH():
     if "rol" in session:
+        rol = session["rol"]
         form = formHab()
         if request.method == "POST":
             idHabitacion = form.idHab.data
@@ -485,9 +495,9 @@ def editarH():
                     cur.execute("UPDATE habitacion SET nombre=?, descripcion=?, cantCamas=?, capMax=?, precio=?, disponibilidad=? WHERE id=?", [nombre, desc, numC, capM, precio, dispo, idHabitacion])
                     con.commit()
                     if con.total_changes > 0:
-                        return render_template("save.html",error="Bien Hecho",mensaje="Habitación modificada correctamente.")
+                        return render_template("save.html",error="Bien Hecho",mensaje="Habitación modificada correctamente.",rol=rol)
                     else:
-                        return render_template("save.html",error="Error",mensaje=" No fue posible modificar la habitación.") 
+                        return render_template("save.html",error="Error",mensaje=" No fue posible modificar la habitación.",rol=rol) 
             except Error:
                 return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.")
     else:
@@ -497,6 +507,7 @@ def editarH():
 @app.route('/admin/panelAdm/gestionHab/eliminarH',  methods=['GET', 'POST'])
 def eliminarH():
     if "rol" in session:
+        rol = session["rol"]
         form=formHab()
         idHabitacion = form.idHab.data
         try:
@@ -504,9 +515,9 @@ def eliminarH():
                 cur = con.cursor()
                 cur.execute("DELETE FROM habitacion WHERE id=?", [idHabitacion] )
                 if con.total_changes > 0:
-                    return render_template("save.html",error="¡Hecho!",mensaje="La habitación ha sido eliminada correctamente.")
+                    return render_template("save.html",error="¡Hecho!",mensaje="La habitación ha sido eliminada correctamente.",rol=rol)
                 else:
-                    return render_template("save.html",error="Error",mensaje="Es posible que la habitación no exista.")
+                    return render_template("save.html",error="Error",mensaje="Es posible que la habitación no exista.",rol=rol)
         except Error:
             return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.")
     else:

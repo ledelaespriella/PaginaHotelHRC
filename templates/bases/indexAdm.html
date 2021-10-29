@@ -133,6 +133,11 @@
     </header>
     {%block content%}{% endblock %}
 
+    <section>
+        {% for message in get_flashed_messages() %}
+          <div class="flash"> {{message}} </div>
+        {%endfor%}
+    </section>
     <footer id="pie" class="my-3 pt-2 text-muted text-center text-small">
         <div class="text-center">
             <p class="mb-1 text-center">© 2021 Hyatt Regency Colombo</p>

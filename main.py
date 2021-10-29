@@ -349,7 +349,7 @@ def pagina_admin():
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html')
 
-@app.route('/habitaciones/panelAdm', methods=['GET'])
+@app.route('/admin/panelAdm', methods=['GET'])
 def panelAdm():
     if "rol" in session:
         rol = session["rol"]

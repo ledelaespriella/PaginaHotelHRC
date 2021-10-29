@@ -524,6 +524,24 @@ def eliminarH():
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html')
 
+@app.route('/reserva/<idHab>')
+def load_reserva(idHab = None):
+    if "rol" in session:
+        try:
+            with sqlite3.connect("/home/Julian13/mysite/HRC.db") as con:
+                con.row_factory = sqlite3.Row
+                cur = con.cursor()
+                cur.execute("SELECT * FROM habitacion WHERE id = ?", [idHab])
+                row= cur.fetchone()
+                con.commit()
+                if row is None:
+                    flash("No hay habitaciones disponibles")
+                return render_template('reserva.html', idHab = idHab, row = row, rol = session['rol'])
+        except Error:
+            return 'Error al conectar la base de datos'
+    else:
+        flash("Accion no permita por favor inicie sesión")
+        return render_template('error.html')
 
 @app.route('/reservaAdmin/<idHab>')
 def load_reservaAdmin(idHab = None):
@@ -619,7 +637,8 @@ def reserva():
                                 con.commit()
                                 cur.execute('INSERT INTO pagoTarjeta(numCard, nameCard, cvc, mmaa, idReserva) VALUES (?,?,?,?,?)', (cardNum, cardName, cvc, caducidad, row[0]))
                                 con.commit()
-                        return render_template('reservaExitosa.html',rol=rol)
+                                return render_template('reservaExitosa.html',rol=rol)
+                            return render_template('reservaExitosa.html',rol=rol)
                     except Error:
                         return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.")
                 else:

@@ -36,7 +36,7 @@ def login():
         #passwordRequest = None
         
         try:
-            with sqlite3.connect("D:\database\HRC.db") as con:
+            with sqlite3.connect("HRC.db") as con:
                 cur = con.cursor()
                 consulta = cur.execute("SELECT email, password, rol, cedula FROM usuarios WHERE email=?", [user]).fetchone()
                 print(consulta)
@@ -55,7 +55,6 @@ def login():
             session['rol'] = rol
             session['user']= userRequest
             session['cedula']=userId
-            print(type(session))
             if(rol == 'final'):
                 print(session['rol'])
                 return redirect(url_for("home"))
@@ -119,8 +118,8 @@ def registro():
                         flash("Hola {} {} Revisa tu correo para verificar la creación del usuario".format(primerNombre,primerApellido))
                         return redirect(url_for("login"))
                 except Error:
-                        flash("Error al guardar el usuario, por favor intente de nuevo.")
-                        return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
+                    flash("Error al guardar el usuario, por favor intente de nuevo.")
+                    return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
         else:
             return render_template('registro.html',form=form)
     except:
@@ -234,13 +233,11 @@ def home():
                         flash("Habitacion no existente")
                     return render_template("habitaciones.html", form=form, row=row, rol=rol, cant = len(rowC))
             except Error:
-                #con.rollback()
-                print(Error)
-                return "Error en el método"
+                return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
         elif request.method == 'POST':
             form = formHabitaciones()
             try:
-                with sqlite3.connect("D:\database\HRC.db") as con:
+                with sqlite3.connect("HRC.db") as con:
                     con.row_factory = sqlite3.Row 
                     cur = con.cursor()
                     cur.execute("SELECT * FROM habitacion")
@@ -252,10 +249,9 @@ def home():
                         flash("Habitacion no existente")
                     return render_template("habitaciones.html", form=form, row=row, rol=rol, cant = len(rowC))
             except Error:
-                #con.rollback()
-                print(Error)
+                return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
         else:
-            return "Error en el método"
+            return render_template("errores.html",error="Error en el metodo",mensaje="Lo sentimos, se ha producido un error. Estaremos solucionando a la mayor brevedad el inconveniente.") 
     else:
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html')    
@@ -368,9 +364,7 @@ def pagina_admin():
                         flash("Habitacion no existente")
                     return render_template("habitaciones.html",form=form, row=row, rol=rol)
             except Error:
-                #con.rollback()
-                print(Error)
-                return "Error en el método"
+                return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
         elif request.method == 'POST':
             form = formHabitaciones()
             try:
@@ -383,32 +377,12 @@ def pagina_admin():
                         flash("Habitacion no existente")
                     return render_template("habitaciones.html",form=form, row=row,rol=rol)
             except Error:
-                #con.rollback()
-                print(Error)
+                return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
         else:
             return "Error en el método"
     else:
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html')
-
-#------------------------------------------------JULIAN----------------------------------------------------------    
-#julian
-@app.route('/reserva/<idHab>')
-def load_reserva(idHab = None):
-    if "rol" in session:
-        try:
-            with sqlite3.connect("HRC.db") as con:
-                con.row_factory = sqlite3.Row 
-                cur = con.cursor()
-                cur.execute("SELECT * FROM habitacion WHERE id = ?", [idHab])
-                row= cur.fetchone()
-                con.commit()
-                if row is None:
-                    flash("No hay habitaciones disponibles")
-                return render_template('reserva.html', idHab = idHab, row = row)
-        except Error:
-            flash("Accion no permita por favor inicie sesión")
-            return render_template('error.html')
 
 @app.route('/admin/panelAdm', methods=['GET'])
 def panelAdm():
@@ -510,11 +484,35 @@ def eliminarH():
     finally:
         return mensaje
     
+
+#------------------------------------------------JULIAN----------------------------------------------------------    
+
+@app.route('/reserva/<idHab>')
+def load_reserva(idHab = None):
+    if "rol" in session:
+        try:
+            with sqlite3.connect("HRC.db") as con:
+                con.row_factory = sqlite3.Row 
+                cur = con.cursor()
+                cur.execute("SELECT * FROM habitacion WHERE id = ?", [idHab])
+                row= cur.fetchone()
+                con.commit()
+                if row is None:
+                    flash("No hay habitaciones disponibles")
+                return render_template('reserva.html', idHab = idHab, row = row)
+        except Error:
+            flash("Accion no permita por favor inicie sesión")
+            return render_template('error.html')
+    else:
+        flash("Accion no permita por favor inicie sesión")
+        return render_template('error.html')
+
+
 @app.route('/reservaAdmin/<idHab>')
 def load_reservaAdmin(idHab = None):
     if "rol" in session:
         try:
-            with sqlite3.connect("D:\database\HRC.db") as con:
+            with sqlite3.connect("HRC.db") as con:
                 con.row_factory = sqlite3.Row 
                 cur = con.cursor()
                 cur.execute("SELECT * FROM habitacion WHERE id = ?", [idHab])
@@ -524,7 +522,7 @@ def load_reservaAdmin(idHab = None):
                     flash("No hay habitaciones disponibles")
                 return render_template('reservaAdmin.html', idHab = idHab, row = row)
         except Error:
-            return 'Error al conectar la base de datos'
+            return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
     else:
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html')
@@ -555,7 +553,7 @@ def reserva():
                         flash('Las fechas de entrada y salida no pueden ser iguales')
                         return render_template('reserva.html')
                     try:
-                        with sqlite3.connect('D:\database\HRC.db') as con:
+                        with sqlite3.connect('HRC.db') as con:
                             cur = con.cursor()
                             cur.execute('INSERT INTO reserva(checkin, checkout, email, telefono, preferencias, fPago, idHabitacion, cedula) VALUES(?,?,?,?,?,?,?,?)', (checkin, checkout, correo, telefono, preferencia, check, idHab, cedula))
                             con.commit()
@@ -567,10 +565,11 @@ def reserva():
                                 cur.execute('INSERT INTO pagoTarjeta(numCard, nameCard, cvc, mmaa, idReserva) VALUES (?,?,?,?,?)', (cardNum, cardName, cvc, caducidad, row[0]))
                                 con.commit()
                     except Error:
-                        return "<h1>Error al realizar la conexion</h1>"
+                        return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
                     return render_template('reservaExitosa.html')
                 else:
-                    return "<h1>Error al realizar la reserva</h1>"
+                    flash('Email  incorrecto')
+                    return render_template('reserva.html')
             elif session['rol'] == 'supAdmin' or session['rol'] == 'Admin':
                 checkin = request.form['checkin']
                 checkout = request.form['checkout']
@@ -579,7 +578,7 @@ def reserva():
                 preferencia = request.form['preferenciasR']
                 check = request.form['typePay']
                 idHab = int(request.form['habitacion'])
-                cedula = int(request.form['cedula'])
+                cedula = int(request.form['cedulaR'])
                 cardName = request.form['name-card']
                 cardNum = request.form['number-card']
                 cvc = request.form['cvc']
@@ -590,7 +589,7 @@ def reserva():
                         flash('Las fechas de entrada y salida no pueden ser iguales')
                         return render_template('reserva.html')
                     try:
-                        with sqlite3.connect('D:\database\HRC.db') as con:
+                        with sqlite3.connect('HRC.db') as con:
                             cur = con.cursor()
                             cur.execute('INSERT INTO reserva(checkin, checkout, email, telefono, preferencias, fPago, idHabitacion, cedula) VALUES(?,?,?,?,?,?,?,?)', (checkin, checkout, correo, telefono, preferencia, check, idHab, cedula))
                             con.commit()
@@ -601,11 +600,12 @@ def reserva():
                                 con.commit()
                                 cur.execute('INSERT INTO pagoTarjeta(numCard, nameCard, cvc, mmaa, idReserva) VALUES (?,?,?,?,?)', (cardNum, cardName, cvc, caducidad, row[0]))
                                 con.commit()
+                        return render_template('reservaExitosa.html')
                     except Error:
-                        return "<h1>Error al realizar la conexion</h1>"
-                    return render_template('reservaExitosa.html')
+                        return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
                 else:
-                    return "<h1>Error al realizar la reserva</h1>"
+                    flash('Email  incorrecto')
+                    return render_template('reserva.html') 
     else:
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html')
@@ -616,7 +616,7 @@ def comentarios(idHab = None):
     if "rol" in session:
         form = formHabitaciones()
         try:
-            with sqlite3.connect("D:\database\HRC.db") as con:
+            with sqlite3.connect("HRC.db") as con:
                 con.row_factory = sqlite3.Row
                 cur = con.cursor() 
                 cur.execute("SELECT * FROM habitacion WHERE id = ?", [idHab])
@@ -625,30 +625,33 @@ def comentarios(idHab = None):
                 con.commit()
                 return render_template("comentarios.html",form=form, row=row, rowC = rowC, idHab = idHab)
         except  Error:
-            #con.rollback()
-            print(Error)
+            return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
     else:
         flash("Accion no permita por favor inicie sesión")
         return render_template('error.html')
-    return render_template('comentario.html')
 
 @app.route('/habitaciones/disponible', methods = ['GET', 'POST'])
 def disponible():
-    return render_template('noDisponible.html')
+    if "rol" in session:
+        return render_template('noDisponible.html')
+    else:
+        flash("Accion no permita por favor inicie sesión")
+        return render_template('error.html')
 
 #-----------------------------------------------------------------------------------JESUS--------------------------------------------------------
 @app.route("/misHabitaciones", methods = ['GET', 'POST'])
 def mishabitaciones():
     if 'rol' in session:
         _cedula = session['cedula']
-        with sqlite3.connect("D:\database\HRC.db") as con:
+        with sqlite3.connect("HRC.db") as con:
             con.row_factory = sqlite3.Row 
             cur = con.cursor()
             cur.execute("SELECT habitacion.id, reserva.checkout FROM habitacion INNER JOIN reserva ON habitacion.id = reserva.idHabitacion AND reserva.cedula = ?",[_cedula])
             row = cur.fetchall()
         return render_template("mishabitaciones.html", row=row)
     else:
-        flash("Accion no permitida, por favor inicie sessión")
+        flash("Accion no permita por favor inicie sesión")
+        return render_template('error.html')
 
     
 
@@ -664,7 +667,7 @@ def guardar_comentario():
             _cedula = session['cedula']
             _calificacion=request.form['calificacion_hab']
             try:
-                with sqlite3.connect('D:\database\HRC.db') as con:
+                with sqlite3.connect('HRC.db') as con:
                     cur = con.cursor()
                     cur.execute('INSERT INTO comentario(comentario, fechaComentario, idHabitacion, cedula) VALUES (?,?,?,?)',(_comentario,_fechaComentario,_idHabitacion,_cedula))
                     con.commit() #Confirmar la transacción  
@@ -675,11 +678,11 @@ def guardar_comentario():
                     cur.execute('UPDATE habitacion SET calificacion=? WHERE id=?',(_vari,_idHabitacion))   
                 
             except sqlite3.Error:
-                    print (sqlite3.Error)
-                    return('<p>Error al realizar la operacion</p>')
-        return "guardado exitosamente"
+                    return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.") 
+            return "guardado exitosamente"
     else:
-        flash("Accion no permitida, por favor inicie sessión")
+        flash("Accion no permita por favor inicie sesión")
+        return render_template('error.html')
 
 @app.route("/admin/panelAdm/gestion_usuarios", methods=['GET', 'POST'])
 def gestionusuarios():

@@ -145,8 +145,12 @@ def recuperacion():
 def mensaje():
     return render_template('mensaje.html')
 
-#jose
 
+@app.errorhandler(404)
+def page_not_found(error):
+	return render_template("errores.html",error="404 Pagina no encontrada",mensaje="Lo sentimos, se ha producido un error, no se ha encontrado la página solicitada."), 404
+
+#jose
 
 @app.route("/habitaciones", methods=['GET', 'POST'])
 def home():
@@ -314,22 +318,19 @@ def nuevaH():
 @app.route("/admin/panelAdm/gestionHab/lista", methods=["GET", "POST"])
 def listH():
     if "rol" in session:
-        if "rol" in session:
-            try:
-                with sqlite3.connect("HRC.db") as con:
-                    con.row_factory = sqlite3.Row #Convierte la respuesta de la BD en un diccionario
-                    cur = con.cursor()
-                    cur.execute("SELECT id, nombre, cantCamas, capMax, precio, disponibilidad FROM habitacion")
-                    row = cur.fetchall()
-                    return render_template("listaHab.html", row=row)
-            except  Error:
-                return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.")
-        else:
-            flash("Accion no permita por favor inicie sesión")
-            return render_template('error.html')
+        try:
+            with sqlite3.connect("HRC.db") as con:
+                con.row_factory = sqlite3.Row #Convierte la respuesta de la BD en un diccionario
+                cur = con.cursor()
+                cur.execute("SELECT id, nombre, cantCamas, capMax, precio, disponibilidad FROM habitacion")
+                row = cur.fetchall()
+                return render_template("listaHab.html", row=row)
+        except  Error:
+            return render_template("errores.html",error="500 Error en el servidor",mensaje="Lo sentimos, se ha producido un error en el servidor. Estaremos solucionando a la mayor brevedad el inconveniente.")
     else:
         flash("Accion no permita por favor inicie sesión")
-        return render_template('error.html')    
+        return render_template('error.html')
+
 
 @app.route("/admin/panelAdm/gestionHab/get", methods=['GET', 'POST'])
 def buscaH():
